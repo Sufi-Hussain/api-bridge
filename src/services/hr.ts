@@ -39,7 +39,7 @@ export const employeeService = {
     const raw = await apiGet<any>("/api/hr/employees/", { params: snakeizeKeys(params) });
     return unwrapList<Employee>(raw, (r) => camelizeKeys<Employee>(r));
   },
-  async get(id: string): Promise<Employee> {
+  async get(id: string): Promise<Employee | undefined> {
     if (USE_MOCKS) return employeeMock.get(id);
     const raw = await apiGet<any>(`/api/hr/employees/${id}/`);
     return camelizeKeys<Employee>(raw);

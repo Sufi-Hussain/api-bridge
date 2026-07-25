@@ -39,7 +39,7 @@ export const authService = {
     return {
       id: String(raw.id ?? raw.userId ?? raw.employeeId ?? ""),
       name:
-        raw.name ??
+        raw.name ||
         [raw.firstName, raw.lastName].filter(Boolean).join(" ").trim() ||
         raw.username ||
         "",
