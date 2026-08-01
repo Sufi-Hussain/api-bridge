@@ -28,7 +28,6 @@ from .services import update_employee
 
 def _my_employee(request):
     emp = get_employee_for_user(request.user)
-    print("Employee: ", EmployeeProfileSerializer(emp).data)
     if not emp:
         raise NotFound("Employee profile not found for current user.")
     return emp
@@ -36,9 +35,8 @@ def _my_employee(request):
 
 class ProfileView(APIView):
     permission_classes = [IsAuthenticated]
-    print("Profile vies is called...")
+
     def get(self, request):
-        print("Profile get method is called...")
         return Response(EmployeeProfileSerializer(_my_employee(request)).data)
 
     def patch(self, request):

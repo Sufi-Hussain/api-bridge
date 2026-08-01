@@ -19,17 +19,34 @@ class RolePermission(BasePermission):
         return user_role in self.required_roles
 
 
+#: Every role is at least an employee.
+ALL_ROLES = (
+    "employee",
+    "manager",
+    "recruiter",
+    "payroll",
+    "finance",
+    "hr",
+    "admin",
+    "super_admin",
+)
+
+
 class IsEmployee(RolePermission):
-    required_roles = ("employee", "manager", "hr", "admin")
+    required_roles = ALL_ROLES
 
 
 class IsManager(RolePermission):
-    required_roles = ("manager", "hr", "admin")
+    required_roles = ("manager", "hr", "admin", "super_admin")
 
 
 class IsHR(RolePermission):
-    required_roles = ("hr", "admin")
+    required_roles = ("hr", "recruiter", "admin", "super_admin")
+
+
+class IsPayroll(RolePermission):
+    required_roles = ("payroll", "finance", "hr", "admin", "super_admin")
 
 
 class IsAdminRole(RolePermission):
-    required_roles = ("admin",)
+    required_roles = ("admin", "super_admin")
