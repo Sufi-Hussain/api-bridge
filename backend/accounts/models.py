@@ -117,10 +117,21 @@ class User(AbstractBaseUser, PermissionsMixin):
     def role(self) -> str:
         """Single coarse role string used by the legacy `apps.common` permission
         classes (`IsHR`, `IsAdminRole`, …)."""
-        slugs = self.role_slugs
-        for candidate in ("super_admin", "admin", "hr", "payroll", "finance", "recruiter", "manager"):
+        slugs = set(self.role_slugs)
+        # Ordered most- to least-privileged; "org_admin" is the seeded slug for
+        # the coarse "admin" role used by apps.common.permissions.
+        for candidate, coarse in (
+            ("super_admin", "super_admin"),
+            ("admin", "admin"),
+            ("org_admin", "admin"),
+            ("hr", "hr"),
+            ("payroll", "payroll"),
+            ("finance", "finance"),
+            ("recruiter", "recruiter"),
+            ("manager", "manager"),
+        ):
             if candidate in slugs:
-                return candidate
+                return coarse
         return "employee"
 
 
