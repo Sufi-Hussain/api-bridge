@@ -19,10 +19,17 @@ export function hasAnyRole(u: AuthUser | null | undefined, roles: string[]): boo
   return roles.some((r) => hasRole(u, r));
 }
 
+/** A grant may be an exact id, a scope wildcard ("hr.*") or "*" (all). */
+function grants(list: string[], perm: string): boolean {
+  return list.some(
+    (g) => g === "*" || g === perm || (g.endsWith(".*") && perm.startsWith(g.slice(0, -1))),
+  );
+}
+
 export function hasPermission(u: AuthUser | null | undefined, perm: string): boolean {
   if (!u) return false;
   if (isSuperAdmin(u)) return true;
-  return (u.permissions ?? []).includes(perm);
+  return grants((u.permissions ?? []) as string[], perm);
 }
 
 export function hasAllPermissions(u: AuthUser | null | undefined, perms: string[]): boolean {

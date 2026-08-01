@@ -40,6 +40,16 @@ interface AuthState {
   setSession: (user: User | null, organizations?: Organization[]) => void;
 }
 
+/** Backend grants may be exact ids, scope wildcards ("hr.*"), or "*". */
+function grants(list: string[], permission: string): boolean {
+  return list.some(
+    (g) =>
+      g === "*" ||
+      g === permission ||
+      (g.endsWith(".*") && permission.startsWith(g.slice(0, -1))),
+  );
+}
+
 const isSuperAdmin = (u: User) =>
   (u.roles as string[]).includes("super_admin") || (u.roles as string[]).includes("admin");
 
@@ -53,7 +63,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     if (!permission) return true;
     const u = get().user;
     if (isSuperAdmin(u)) return true;
-    return u.permissions.includes(permission);
+    return grants(u.permissions as string[], permission);
   },
   hasRole: (role) => (get().user.roles as string[]).includes(role),
   setSession: (user, organizations) =>
