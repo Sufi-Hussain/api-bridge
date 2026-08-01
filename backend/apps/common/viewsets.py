@@ -11,7 +11,18 @@ from apps.common.permissions import IsEmployee
 
 
 def current_organization(request):
-    org = getattr(request.user, "organization", None)
+    """Resolve the caller's tenant.
+
+    Order: the org resolved by `OrganizationMiddleware` (honours the
+    `X-Organization-Id` tenant switch), then the user's primary membership,
+    then the org on the user's employee record.
+    """
+    org = getattr(request, "organization", None)
+    if org is None:
+        org = getattr(request.user, "organization", None)
+    if org is None:
+        emp = getattr(request.user, "employee", None)
+        org = getattr(emp, "organization", None)
     if org is None:
         raise PermissionDenied("User is not attached to an organization.")
     return org
