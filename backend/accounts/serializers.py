@@ -9,6 +9,7 @@ from __future__ import annotations
 from django.contrib.auth import authenticate, password_validation
 from rest_framework import serializers
 from .models import User, Organization
+from .services.ui_permissions import ui_scopes_for_roles
 from .services.rbac import user_permission_codenames, user_role_slugs
 
 
