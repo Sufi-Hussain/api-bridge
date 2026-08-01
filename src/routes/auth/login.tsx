@@ -16,6 +16,7 @@ function LoginPage() {
   const nav = useNavigate();
   const { redirect } = useSearch({ from: "/auth/login" });
   const [form, setForm] = React.useState({ username: "", password: "" });
+  const [remember, setRemember] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
   const [busy, setBusy] = React.useState(false);
 
@@ -24,7 +25,7 @@ function LoginPage() {
     setError(null);
     setBusy(true);
     try {
-      await login(form.username, form.password);
+      await login(form.username, form.password, remember);
       nav({ to: redirect || "/" });
     } catch (err: any) {
       setError(err?.message ?? "Invalid credentials");
