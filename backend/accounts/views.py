@@ -30,6 +30,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.exceptions import InvalidToken
 
+from accounts.services.email import send_verification_email
 from .models import Organization, OrganizationMember, LoginHistory, PasswordHistory
 from .serializers import (
     RegisterSerializer, ForgotPasswordSerializer, ResetPasswordSerializer,
@@ -137,14 +138,12 @@ class RegisterView(APIView):
         s = RegisterSerializer(data=request.data)
         s.is_valid(raise_exception=True)
         data = s.validated_data
-
         user = User.objects.create_user(
             email=data["email"], password=data["password"],
             first_name=data["first_name"], last_name=data["last_name"],
             is_active=True, email_verified=False,
         )
         PasswordHistory.objects.create(user=user, password_hash=user.password)
-
         # Create org OR attach via invitation. Real invitation lookup omitted
         # here — wire to your invites table.
         if data.get("organization_name"):
@@ -155,10 +154,10 @@ class RegisterView(APIView):
             OrganizationMember.objects.create(
                 organization=org, user=user, is_primary=True, status="active",
             )
+        # TODO: send email with link `${FRONTEND_URL}/auth/verify-email?token=${raw}`
 
         raw = token_service.issue(user, "email_verify", ttl_minutes=60 * 24)
-        # TODO: send email with link `${FRONTEND_URL}/auth/verify-email?token=${raw}`
-        _ = raw
+        send_verification_email(user, raw)
         return Response({"detail": "Registered. Check your email to verify."},
                         status=status.HTTP_201_CREATED)
 

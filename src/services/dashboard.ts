@@ -6,7 +6,7 @@ import { apiGet, camelizeKeys, unwrapList } from "@/lib/api";
 import { authService } from "@/lib/api/auth";
 import { mockService as mock } from "./_mocks/dashboard.mock";
 
-const USE_MOCKS = (import.meta as any)?.env?.VITE_USE_MOCKS === "true";
+const USE_MOCKS = import.meta.env.VITE_USE_MOCKS === "true";
 
 export const mockService = {
   ...mock,

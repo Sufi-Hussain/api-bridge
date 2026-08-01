@@ -22,6 +22,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.utils import timezone
+# from openai import organization
 
 
 class UserManager(BaseUserManager):
@@ -54,6 +55,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, db_index=True)
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
+    avatar = models.ImageField(upload_to="avatars/", blank=True, null=True)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)          # Django admin gate
@@ -84,6 +86,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def is_locked(self) -> bool:
         return bool(self.locked_until and self.locked_until > timezone.now())
+    
+    def has_role(self, slug: str, organization=None) -> bool:
+        qs = self.role_assignments.filter(role__slug=slug)
+        if organization is not None:
+            qs = qs.filter(organization=organization)
+        return qs.exists()
 
 
 class Organization(models.Model):

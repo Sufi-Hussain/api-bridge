@@ -24,12 +24,14 @@ import type {
   NotificationItem,
 } from "./_mocks/ess.mock";
 
-const USE_MOCKS = (import.meta as any)?.env?.VITE_USE_MOCKS === "true";
+const USE_MOCKS = false;
+// const USE_MOCKS = import.meta.env.VITE_USE_MOCKS === "true";
 
 // ---- ESS profile ------------------------------------------------------------
 async function getProfile(): Promise<EmployeeProfile> {
   if (USE_MOCKS) return mock.getProfile();
   const raw = await apiGet<any>("/api/ess/profile");
+  console.log(raw)
   // The backend response is a flat DRF representation; camelize and merge
   // over the mock skeleton so any nested UI-only fields (skills endorsements,
   // family arrays, etc.) that the backend doesn't return still have a value.

@@ -15,7 +15,7 @@ import { tokenStore } from "./tokens";
 import { normalizeAxiosError, ApiError } from "./errors";
 
 const BASE_URL =
-  (import.meta as any)?.env?.VITE_API_BASE_URL?.replace(/\/$/, "") ??
+  import.meta.env.VITE_API_BASE_URL ??
   "http://localhost:8000";
 
 // Optional hook the auth module wires up so a hard 401 (no refresh, or

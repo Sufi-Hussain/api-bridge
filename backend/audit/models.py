@@ -10,8 +10,12 @@ Also ships a signal handler that records login/logout/failed-login via
 django.contrib.auth signals (wire in apps.py's ready()).
 """
 from __future__ import annotations
+
 import uuid
+
 from django.conf import settings
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 
@@ -26,8 +30,16 @@ class AuditEvent(models.Model):
         null=True, blank=True, related_name="audit_actions",
     )
     action = models.CharField(max_length=100, db_index=True)   # "employee.update"
-    target_type = models.CharField(max_length=100, blank=True)  # "accounts.Employee"
-    target_id = models.CharField(max_length=64, blank=True)
+
+    # Generic relation to the affected record. object_id is a CharField
+    # (not IntegerField) because target PKs in this project are UUIDs.
+    content_type = models.ForeignKey(
+        ContentType, on_delete=models.SET_NULL,
+        null=True, blank=True, related_name="+",
+    )
+    object_id = models.CharField(max_length=64, null=True, blank=True)
+    target = GenericForeignKey("content_type", "object_id")
+
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     user_agent = models.CharField(max_length=500, blank=True)
     metadata = models.JSONField(default=dict, blank=True)
@@ -37,5 +49,9 @@ class AuditEvent(models.Model):
         indexes = [
             models.Index(fields=["organization", "-created_at"]),
             models.Index(fields=["action", "-created_at"]),
+            models.Index(fields=["content_type", "object_id"]),
         ]
         ordering = ["-created_at"]
+
+    def __str__(self) -> str:
+        return f"{self.action} @ {self.created_at:%Y-%m-%d %H:%M}"

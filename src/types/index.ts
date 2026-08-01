@@ -1,6 +1,8 @@
-// Shared frontend types referenced across services.
-// The `User` type is consumed by the dashboard mock (`mock.ts`) and by the
-// auth layer.  Keep this shape stable — the UI expects it verbatim.
+import type { LucideIcon } from "lucide-react";
+
+export type Permission = string;
+
+export type Role = "employee" | "manager" | "hr" | "admin";
 
 export interface User {
   id: string;
@@ -9,14 +11,37 @@ export interface User {
   jobTitle: string;
   department: string;
   employeeId: string;
-  roles: string[];
-  permissions: string[];
+  avatarUrl?: string;
+  roles: Role[];
+  permissions: Permission[];
   organizationId: string;
 }
 
-export interface Paginated<T> {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: T[];
+export interface Organization {
+  id: string;
+  name: string;
+  domain: string;
+  logo?: string;
 }
+
+export interface NavItem {
+  label: string;
+  path?: string;
+  icon?: LucideIcon;
+  permission?: Permission;
+  badge?: string;
+  children?: NavItem[];
+}
+
+export interface NavSection {
+  label: string;
+  items: NavItem[];
+}
+
+export type StatusTone =
+  | "default"
+  | "success"
+  | "warning"
+  | "destructive"
+  | "info"
+  | "muted";

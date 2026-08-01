@@ -5,7 +5,7 @@
 import { apiGet, camelizeKeys, unwrapList } from "@/lib/api";
 import { hrService as mock } from "./_mocks/hr-basic.mock";
 
-const USE_MOCKS = (import.meta as any)?.env?.VITE_USE_MOCKS === "true";
+const USE_MOCKS = import.meta.env.VITE_USE_MOCKS === "true";
 
 export const hrService = {
   ...mock,
