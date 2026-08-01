@@ -9,6 +9,8 @@ import { camelizeKeys } from "./mappers";
 export interface LoginInput {
   username: string;
   password: string;
+  /** Keep the session across browser restarts. Defaults to true. */
+  remember?: boolean;
 }
 export interface TokenPair {
   access: string;
@@ -18,7 +20,9 @@ export interface TokenPair {
 export const authService = {
   async login(input: LoginInput): Promise<TokenPair> {
     // /api/auth/login uses SimpleJWT's TokenObtainPair — plain username/password.
-    const data = await apiPost<TokenPair>("/api/auth/login", input);
+    const { remember = true, ...credentials } = input;
+    tokenStore.setPersistence(remember);
+    const data = await apiPost<TokenPair>("/api/auth/login", credentials);
     tokenStore.set(data.access, data.refresh);
     return data;
   },

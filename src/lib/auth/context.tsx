@@ -9,7 +9,7 @@ import type { AuthSession, AuthUser, RouteAuthMeta } from "./types";
 import * as P from "./permissions";
 
 interface AuthContextValue extends AuthSession {
-  login: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string, remember?: boolean) => Promise<void>;
   logout: () => Promise<void>;
   refresh: () => Promise<void>;
   hasRole: (r: string) => boolean;
@@ -52,8 +52,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const value: AuthContextValue = {
     user,
     status,
-    login: async (username, password) => {
-      await authService.login({ username, password });
+    login: async (username, password, remember = true) => {
+      await authService.login({ username, password, remember });
       await loadMe();
     },
     logout: async () => {
