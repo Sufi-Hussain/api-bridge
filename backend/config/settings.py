@@ -174,9 +174,16 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
 }
 
-CORS_ALLOWED_ORIGINS = _env_list(
-    "CORS_ALLOWED_ORIGINS", "http://localhost:8080,http://127.0.0.1:8080"
-)
+# CORS_ALLOWED_ORIGINS = _env_list(
+#     "CORS_ALLOWED_ORIGINS", "http://localhost:8080,http://127.0.0.1:8080"
+# )
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:8080",
+    "http://192.168.137.1:8080",  # Your frontend origin
+    "http://127.0.0.1:8080"
+]
+
 CORS_ALLOW_CREDENTIALS = True
 # --- CORS --------------------------------------------------------------------
 # CORS_ALLOWED_ORIGINS = ["https://your-frontend.example.com"]

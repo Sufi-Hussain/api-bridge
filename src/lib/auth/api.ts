@@ -8,7 +8,7 @@ export interface RegisterInput {
   password: string;
   firstName: string;
   lastName: string;
-  organizationName?: string;   // optional: create-org-on-signup flow
+  organizationId?: string;   // optional: create-org-on-signup flow
   invitationToken?: string;    // optional: join-org flow
 }
 

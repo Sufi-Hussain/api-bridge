@@ -45,7 +45,7 @@ from apps.leave.models import Holiday, LeaveRequest, LeaveType
 from apps.payroll.models import Payslip, PayslipLine
 from core.seeds.roles import seed_system_roles
 
-DEMO_PASSWORD = "Passw0rd!123"
+DEMO_PASSWORD = "Ss1234567890"
 
 ORGS = [
     {"name": "Acme Corporation", "slug": "acme", "domain": "acme.com", "share": 0.6},

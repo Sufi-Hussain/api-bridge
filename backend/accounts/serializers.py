@@ -11,14 +11,27 @@ from rest_framework import serializers
 from .models import User, Organization
 from .services.ui_permissions import ui_scopes_for_roles
 from .services.rbac import user_permission_codenames, user_role_slugs
+from accounts.models import Organization
 
+
+class OrganizationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Organization
+        fields = [
+            "id",
+            "name",
+        ]
 
 class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True, min_length=12)
     first_name = serializers.CharField(max_length=150)
     last_name = serializers.CharField(max_length=150)
-    organization_name = serializers.CharField(required=False, allow_blank=True)
+    organization_id = serializers.PrimaryKeyRelatedField(
+        queryset=Organization.objects.all(),
+        source="organization",
+        required=True,
+    )
     invitation_token = serializers.CharField(required=False, allow_blank=True)
 
     def validate_password(self, value):

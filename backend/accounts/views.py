@@ -34,10 +34,11 @@ from accounts.services.email import send_verification_email
 from .models import Organization, OrganizationMember, LoginHistory, PasswordHistory
 from .serializers import (
     RegisterSerializer, ForgotPasswordSerializer, ResetPasswordSerializer,
-    VerifyEmailSerializer, ChangePasswordSerializer, MeSerializer,
+    VerifyEmailSerializer, ChangePasswordSerializer, MeSerializer, OrganizationSerializer
 )
 from .services import tokens as token_service
 from .services import lockout
+from rest_framework import generics
 
 User = get_user_model()
 
@@ -63,19 +64,20 @@ class LoginView(TokenObtainPairView):
       - record login history
     """
     throttle_classes = [LoginThrottle]
-
+    # print('Called LoginView')
     def post(self, request, *args, **kwargs):
+        print("Check login")
         email = (request.data.get("email") or request.data.get("username") or "").lower()
         password = request.data.get("password") or ""
         ip = _client_ip(request)
         ua = request.META.get("HTTP_USER_AGENT", "")[:500]
-
+        print("Login attempt", email, ip, ua)
         user = User.objects.filter(email__iexact=email).first()
         if user and user.is_locked():
             LoginHistory.objects.create(user=user, email_attempted=email, ip_address=ip,
                                         user_agent=ua, success=False, reason="locked")
             return Response({"detail": "Account temporarily locked."}, status=423)
-
+        print("User found", user)
         if not user or not user.check_password(password) or not user.is_active:
             if user:
                 lockout.register_failure(user)
@@ -92,6 +94,7 @@ class LoginView(TokenObtainPairView):
         refresh = RefreshToken.for_user(user)
         LoginHistory.objects.create(user=user, email_attempted=email, ip_address=ip,
                                     user_agent=ua, success=True, reason="ok")
+        print(f"User logged in: {user.email}", str(refresh.access_token))
         return Response({"access": str(refresh.access_token), "refresh": str(refresh)})
 
 
@@ -124,7 +127,10 @@ class MeView(APIView):
     def get(self, request):
         return Response(MeSerializer(request.user, context={"request": request}).data)
 
-
+class OrganizationListAPIView(generics.ListAPIView):
+    queryset = Organization.objects.all().order_by("name")
+    serializer_class = OrganizationSerializer
+    permission_classes = [AllowAny]
 # ---------------------------------------------------------------------------
 # Registration + email verification
 # ---------------------------------------------------------------------------

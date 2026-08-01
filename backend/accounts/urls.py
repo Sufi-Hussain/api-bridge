@@ -15,4 +15,6 @@ urlpatterns = [
     path("forgot-password", views.forgot_password, name="auth-forgot"),
     path("reset-password",  views.reset_password,  name="auth-reset"),
     path("change-password", views.ChangePasswordView.as_view(), name="auth-change"),
+
+    path("organizations/", views.OrganizationListAPIView.as_view(), name="organization-list"),
 ]

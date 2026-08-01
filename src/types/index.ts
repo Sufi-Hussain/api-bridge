@@ -36,8 +36,8 @@ export interface User {
 export interface Organization {
   id: string;
   name: string;
-  domain: string;
-  logo?: string;
+  // domain: string;
+  // logo?: string;
 }
 
 export interface NavItem {
