@@ -7,6 +7,7 @@ import { authService } from "@/lib/api/auth";
 import { tokenStore } from "@/lib/api/tokens";
 import type { AuthSession, AuthUser, RouteAuthMeta } from "./types";
 import * as P from "./permissions";
+import { syncAuthStore } from "@/stores/auth.store";
 
 interface AuthContextValue extends AuthSession {
   login: (username: string, password: string, remember?: boolean) => Promise<void>;
@@ -27,15 +28,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const loadMe = React.useCallback(async () => {
     if (!tokenStore.getAccess()) {
       setUser(null);
+      syncAuthStore(null);
       setStatus("unauthenticated");
       return;
     }
     try {
       const me = (await authService.me()) as AuthUser;
       setUser(me);
+      // Keep the UI-chrome projection in step with the real session so the
+      // sidebar/topbar never render permissions the backend didn't grant.
+      syncAuthStore(me, me.organizations);
       setStatus("authenticated");
     } catch {
       setUser(null);
+      syncAuthStore(null);
       setStatus("unauthenticated");
     }
   }, []);
@@ -44,6 +50,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loadMe();
     authService.onUnauthorized(() => {
       setUser(null);
+      syncAuthStore(null);
       setStatus("expired");
     });
     return () => authService.onUnauthorized(null);
@@ -59,6 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     logout: async () => {
       await authService.logout();
       setUser(null);
+      syncAuthStore(null);
       setStatus("unauthenticated");
     },
     refresh: loadMe,
