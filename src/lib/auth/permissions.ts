@@ -6,12 +6,12 @@ export const isAuthenticated = (u: AuthUser | null | undefined): u is AuthUser =
   !!u && !!u.id;
 
 export const isSuperAdmin = (u: AuthUser | null | undefined) =>
-  !!u?.isSuperAdmin || (u?.roles ?? []).includes("super_admin");
+  !!u?.isSuperAdmin || ((u?.roles ?? []) as string[]).includes("super_admin");
 
 export function hasRole(u: AuthUser | null | undefined, role: string): boolean {
   if (!u) return false;
   if (isSuperAdmin(u)) return true;
-  return (u.roles ?? []).includes(role);
+  return ((u.roles ?? []) as string[]).includes(role);
 }
 
 export function hasAnyRole(u: AuthUser | null | undefined, roles: string[]): boolean {

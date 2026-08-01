@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
-import type { OrgNode } from "@/services/hr-mock";
+import type { OrgNode } from "@/services/_mocks/hr-mock";
 
 function Node({ node, root }: { node: OrgNode; root?: boolean }) {
   const inits = node.name

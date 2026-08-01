@@ -2,7 +2,23 @@ import type { LucideIcon } from "lucide-react";
 
 export type Permission = string;
 
-export type Role = "employee" | "manager" | "hr" | "admin";
+export type Role =
+  | "employee"
+  | "manager"
+  | "hr"
+  | "payroll"
+  | "finance"
+  | "recruiter"
+  | "admin"
+  | "super_admin";
+
+/** DRF page envelope, normalized by `unwrapList` / `unwrapPage`. */
+export interface Paginated<T> {
+  results: T[];
+  count: number;
+  next: string | null;
+  previous: string | null;
+}
 
 export interface User {
   id: string;

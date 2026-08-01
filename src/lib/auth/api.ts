@@ -6,7 +6,7 @@ import { apiPost } from "@/lib/api/client";
 export interface RegisterInput {
   email: string;
   password: string;
-  firsName: string;
+  firstName: string;
   lastName: string;
   organizationName?: string;   // optional: create-org-on-signup flow
   invitationToken?: string;    // optional: join-org flow

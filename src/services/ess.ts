@@ -181,6 +181,12 @@ export const essService = {
   getBenefits: mock.getBenefits,
   getExpenses: mock.getExpenses,
   getAssets: mock.getAssets,
+  getCourses: mock.getCourses,
+  getGoals: mock.getGoals,
+  getDirectory: mock.getDirectory,
+  getTickets: mock.getTickets,
+  getActivity: mock.getActivity,
+  getSessions: mock.getSessions,
   // Any other essService.* method still resolves via the star re-export below.
 };
 
