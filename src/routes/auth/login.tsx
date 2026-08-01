@@ -16,6 +16,7 @@ function LoginPage() {
   const nav = useNavigate();
   const { redirect } = useSearch({ from: "/auth/login" });
   const [form, setForm] = React.useState({ username: "", password: "" });
+  const [remember, setRemember] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
   const [busy, setBusy] = React.useState(false);
 
@@ -24,7 +25,7 @@ function LoginPage() {
     setError(null);
     setBusy(true);
     try {
-      await login(form.username, form.password);
+      await login(form.username, form.password, remember);
       nav({ to: redirect || "/" });
     } catch (err: any) {
       setError(err?.message ?? "Invalid credentials");
@@ -54,7 +55,17 @@ function LoginPage() {
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           required
         />
+        <label className="flex items-center gap-2 text-sm text-muted-foreground">
+          <input
+            type="checkbox"
+            checked={remember}
+            onChange={(e) => setRemember(e.target.checked)}
+            className="h-4 w-4 rounded border-input"
+          />
+          Keep me signed in on this device
+        </label>
         {error && <p className="text-sm text-red-600">{error}</p>}
+
         <button
           type="submit"
           disabled={busy}

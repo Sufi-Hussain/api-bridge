@@ -1,11 +1,13 @@
 // Auth domain types shared across the auth layer.
 // Extends the base `User` shape from @/types with fields needed for
 // RBAC + multi-tenancy checks on the client.
-import type { User } from "@/types";
+import type { Organization, User } from "@/types";
 
 export interface AuthUser extends User {
   emailVerified?: boolean;
   isSuperAdmin?: boolean;
+  /** Organizations this user is a member of (multi-tenant switcher). */
+  organizations?: Organization[];
 }
 
 export interface AuthSession {

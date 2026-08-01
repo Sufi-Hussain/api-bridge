@@ -93,6 +93,48 @@ class User(AbstractBaseUser, PermissionsMixin):
             qs = qs.filter(organization=organization)
         return qs.exists()
 
+    @property
+    def organization(self):
+        """The user's primary tenant.
+
+        Derived from `OrganizationMember` (there is no denormalized FK on the
+        user), so tenant-scoped viewsets and serializers can rely on
+        `request.user.organization` even outside the request middleware.
+        """
+        member = (
+            self.memberships.select_related("organization")
+            .filter(status="active")
+            .order_by("-is_primary", "joined_at")
+            .first()
+        )
+        return member.organization if member else None
+
+    @property
+    def role_slugs(self) -> list[str]:
+        return list(self.role_assignments.values_list("role__slug", flat=True).distinct())
+
+    @property
+    def role(self) -> str:
+        """Single coarse role string used by the legacy `apps.common` permission
+        classes (`IsHR`, `IsAdminRole`, …)."""
+        slugs = set(self.role_slugs)
+        # Ordered most- to least-privileged; "org_admin" is the seeded slug for
+        # the coarse "admin" role used by apps.common.permissions.
+        for candidate, coarse in (
+            ("super_admin", "super_admin"),
+            ("admin", "admin"),
+            ("org_admin", "admin"),
+            ("hr", "hr"),
+            ("payroll", "payroll"),
+            ("finance", "finance"),
+            ("recruiter", "recruiter"),
+            ("manager", "manager"),
+        ):
+            if candidate in slugs:
+                return coarse
+        return "employee"
+
+
 
 class Organization(models.Model):
     """A tenant. Every business record ultimately hangs off one of these."""

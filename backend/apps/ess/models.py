@@ -42,8 +42,17 @@ class WorkMode(models.TextChoices):
 
 
 class Employee(UUIDTimestampedModel):
+    # Tenant owner. `accounts.Organization` is the canonical tenant model
+    # (the one `accounts.middleware.OrganizationMiddleware` resolves); the old
+    # `org.Organization` app is not installed. Nullable only so the column can
+    # be added to existing databases — every write path sets it.
     organization = models.ForeignKey(
-        "org.Organization", on_delete=models.CASCADE, related_name="employees"
+        "accounts.Organization",
+        on_delete=models.CASCADE,
+        related_name="employees",
+        null=True,
+        blank=True,
+        db_index=True,
     )
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,

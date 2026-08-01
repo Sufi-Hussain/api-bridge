@@ -9,6 +9,7 @@ from __future__ import annotations
 from django.contrib.auth import authenticate, password_validation
 from rest_framework import serializers
 from .models import User, Organization
+from .services.ui_permissions import ui_scopes_for_roles
 from .services.rbac import user_permission_codenames, user_role_slugs
 
 
@@ -77,39 +78,79 @@ class MeSerializer(serializers.ModelSerializer):
     roles = serializers.SerializerMethodField()
     permissions = serializers.SerializerMethodField()
     organization_id = serializers.SerializerMethodField()
+    organizations = serializers.SerializerMethodField()
+    avatar_url = serializers.SerializerMethodField()
     is_super_admin = serializers.BooleanField(source="is_superuser")
 
     class Meta:
         model = User
         fields = [
             "id", "email", "name", "first_name", "last_name",
-            "job_title", "department", "employee_id",
-            "roles", "permissions", "organization_id",
+            "job_title", "department", "employee_id", "avatar_url",
+            "roles", "permissions", "organization_id", "organizations",
             "email_verified", "is_super_admin",
         ]
         read_only_fields = fields
 
-    def get_name(self, u): return u.full_name
-    def get_job_title(self, u): return getattr(getattr(u, "employee_profile", None), "job_title", "")
-    def get_department(self, u):
-        emp = getattr(u, "employee_profile", None)
-        return getattr(getattr(emp, "department", None), "name", "")
-    def get_employee_id(self, u):
-        return str(getattr(getattr(u, "employee_profile", None), "id", "") or "")
+    # -- employee-derived fields (related_name is `employee`; job title and
+    #    department live on the one-to-one `employment` row) -----------------
+    @staticmethod
+    def _employee(u):
+        return getattr(u, "employee", None)
 
+    def get_name(self, u):
+        emp = self._employee(u)
+        if emp:
+            return f"{emp.first_name} {emp.last_name}".strip()
+        return u.full_name
+
+    def get_job_title(self, u):
+        emp = self._employee(u)
+        return getattr(getattr(emp, "employment", None), "job_title", "") or ""
+
+    def get_department(self, u):
+        emp = self._employee(u)
+        return getattr(getattr(emp, "employment", None), "department", "") or ""
+
+    def get_employee_id(self, u):
+        emp = self._employee(u)
+        return getattr(emp, "employee_id", "") or ""
+
+    def get_avatar_url(self, u):
+        if not u.avatar:
+            return None
+        request = self.context.get("request")
+        url = u.avatar.url
+        return request.build_absolute_uri(url) if request else url
+
+    # -- tenant / RBAC ------------------------------------------------------
     def _org(self):
         req = self.context.get("request")
-        return getattr(req, "organization", None)
+        return getattr(req, "organization", None) or getattr(self.instance, "organization", None)
 
     def get_roles(self, u):
         org = self._org()
-        return sorted(user_role_slugs(u, org)) if org else []
+        slugs = sorted(user_role_slugs(u, org)) if org else []
+        if u.is_superuser and "super_admin" not in slugs:
+            slugs.append("super_admin")
+        return slugs
 
     def get_permissions(self, u):
+        """Backend RBAC codenames plus the UI scope wildcards the frontend
+        navigation is gated on (see accounts.services.ui_permissions)."""
         org = self._org()
-        perms = user_permission_codenames(u, org) if org else set()
-        return [] if "*" in perms else sorted(perms)
+        codenames = user_permission_codenames(u, org) if org else set()
+        if "*" in codenames or u.is_superuser:
+            return ["*"]
+        scopes = ui_scopes_for_roles(self.get_roles(u))
+        return sorted(set(codenames) | set(scopes))
 
     def get_organization_id(self, u):
         org = self._org()
         return str(org.id) if org else ""
+
+    def get_organizations(self, u):
+        orgs = [m.organization for m in
+                u.memberships.select_related("organization").filter(status="active")]
+        return OrganizationBriefSerializer(orgs, many=True).data
+
