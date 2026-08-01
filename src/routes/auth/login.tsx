@@ -55,7 +55,17 @@ function LoginPage() {
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           required
         />
+        <label className="flex items-center gap-2 text-sm text-muted-foreground">
+          <input
+            type="checkbox"
+            checked={remember}
+            onChange={(e) => setRemember(e.target.checked)}
+            className="h-4 w-4 rounded border-input"
+          />
+          Keep me signed in on this device
+        </label>
         {error && <p className="text-sm text-red-600">{error}</p>}
+
         <button
           type="submit"
           disabled={busy}
