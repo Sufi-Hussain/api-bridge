@@ -1,7 +1,7 @@
 // Authentication flow. Wraps the four /api/auth/* endpoints and manages
 // token lifecycle. The UI should only ever talk to this module for auth.
 
-import type { User } from "@/types";
+import type { Organization, User } from "@/types";
 import { api, apiPost, setUnauthorizedHandler } from "./client";
 import { tokenStore } from "./tokens";
 import { camelizeKeys } from "./mappers";
@@ -35,7 +35,7 @@ export const authService = {
     }
   },
 
-  async me(): Promise<User> {
+  async me(): Promise<User & { organizations?: Organization[] }> {
     const { data } = await api.get("/api/auth/me");
     // Backend returns an unspecified shape ("No response body" in the spec).
     // We camelize and coerce to the frontend User contract.
@@ -53,7 +53,26 @@ export const authService = {
       employeeId: String(raw.employeeId ?? raw.empCode ?? ""),
       roles: Array.isArray(raw.roles) ? raw.roles : raw.role ? [raw.role] : [],
       permissions: Array.isArray(raw.permissions) ? raw.permissions : [],
-      organizationId: String(raw.organizationId ?? raw.tenantId ?? ""),
+      organizationId: String(
+        raw.organizationId ?? raw.organization?.id ?? raw.tenantId ?? "",
+      ),
+      organizations: Array.isArray(raw.organizations)
+        ? raw.organizations.map((o: any) => ({
+            id: String(o.id ?? ""),
+            name: o.name ?? "",
+            domain: o.domain ?? "",
+            logo: o.logo ?? undefined,
+          }))
+        : raw.organization
+          ? [
+              {
+                id: String(raw.organization.id ?? ""),
+                name: raw.organization.name ?? "",
+                domain: raw.organization.domain ?? "",
+                logo: raw.organization.logo ?? undefined,
+              },
+            ]
+          : [],
     };
   },
 
