@@ -20,6 +20,13 @@ class MaritalStatus(models.TextChoices):
     DIVORCED = "divorced", "Divorced"
     WIDOWED = "widowed", "Widowed"
 
+class EmploymentStatus(models.TextChoices):
+    ACTIVE = "active", "Active"
+    ON_LEAVE = "on_leave", "On leave"
+    NOTICE = "notice", "Notice period"
+    PROBATION = "probation", "Probation"
+    EXITED = "exited", "Exited"
+
 
 class EmploymentType(models.TextChoices):
     FULL_TIME = "full-time", "Full-time"
@@ -35,12 +42,16 @@ class WorkMode(models.TextChoices):
 
 
 class Employee(UUIDTimestampedModel):
+    organization = models.ForeignKey(
+        "org.Organization", on_delete=models.CASCADE, related_name="employees"
+    )
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="employee",
     )
     employee_id = models.CharField(max_length=32, unique=True)
+
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
     preferred_name = models.CharField(max_length=64, blank=True)
@@ -96,6 +107,33 @@ class Employment(UUIDTimestampedModel):
     probation_end = models.DateField(blank=True, null=True)
     cost_center = models.CharField(max_length=32, blank=True)
     business_unit = models.CharField(max_length=64, blank=True)
+    # HR-administration attributes (src/services/hr.ts → Employee)
+    team = models.CharField(max_length=96, blank=True)
+    band = models.CharField(max_length=32, blank=True)
+    country = models.CharField(max_length=64, blank=True)
+    status = models.CharField(
+        max_length=16, choices=EmploymentStatus.choices, default=EmploymentStatus.ACTIVE
+    )
+    salary_base = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    currency = models.CharField(max_length=8, default="USD")
+    performance_rating = models.DecimalField(max_digits=3, decimal_places=1, default=3)
+    potential = models.CharField(
+        max_length=8,
+        choices=(("low", "Low"), ("medium", "Medium"), ("high", "High")),
+        default="medium",
+    )
+    exit_date = models.DateField(blank=True, null=True)
+
+    @property
+    def tenure_months(self) -> int:
+        from datetime import date
+
+        if not self.join_date:
+            return 0
+        today = date.today()
+        return max(
+            0, (today.year - self.join_date.year) * 12 + today.month - self.join_date.month
+        )
 
 
 class EmergencyContact(UUIDTimestampedModel):
