@@ -16,7 +16,8 @@ import { normalizeAxiosError, ApiError } from "./errors";
 
 const BASE_URL =
   import.meta.env.VITE_API_BASE_URL ??
-  "http://16.176.182.210";
+  "https://api.nexuscare.in";
+  // "http://16.176.182.210";
   // "http://localhost:8000";
 
 console.log("VITE_API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
