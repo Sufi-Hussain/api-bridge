@@ -18,6 +18,9 @@ const BASE_URL =
   import.meta.env.VITE_API_BASE_URL ??
   "http://localhost:8000";
 
+console.log("VITE_API_BASE_URL:", import.meta.env.VITE_API_BASE_URL);
+console.log("All env vars:", import.meta.env);
+
 // Optional hook the auth module wires up so a hard 401 (no refresh, or
 // refresh failed) can redirect / clear session without importing a router
 // here.
