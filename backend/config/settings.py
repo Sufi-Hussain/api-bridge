@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "apps.attendance",
     "apps.payroll",
     "apps.documents",
+    "apps.ai",
     "apps.notifications",
     "accounts",
     "audit",
