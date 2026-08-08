@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { sendAIMessage } from "@/services/ai";
 import { Sparkles, X, Send, Wand2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -17,31 +18,38 @@ const SUGGESTIONS = [
 interface Message {
   role: "user" | "assistant";
   text: string;
+  citations?: Array<{ title?: string; source?: string }>;
 }
 
 export function AIAssistant() {
   const open = useUIStore((s) => s.aiOpen);
   const setOpen = useUIStore((s) => s.setAiOpen);
   const [input, setInput] = useState("");
+  const [conversationId, setConversationId] = useState<string>();
+  const [sending, setSending] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      text: "Hi Aarav — I'm your workplace AI. I can help with leave, payroll, policies, and more. What would you like to do?",
-    },
+    { role: "assistant", text: "Hi — I’m your workplace AI. I can help with leave, payroll, policies, and more. What would you like to do?" },
   ]);
 
-  const send = (text: string) => {
+  const send = async (text: string) => {
     const t = text.trim();
-    if (!t) return;
-    setMessages((prev) => [
-      ...prev,
-      { role: "user", text: t },
-      {
-        role: "assistant",
-        text: "This is a UI preview — connect an AI provider to enable live responses.",
-      },
-    ]);
+    if (!t || sending) return;
     setInput("");
+    setMessages((prev) => [...prev, { role: "user", text: t }]);
+    setSending(true);
+    try {
+      const response = await sendAIMessage(t, conversationId);
+      setConversationId(response.conversationId);
+      setMessages((prev) => [...prev, {
+        role: "assistant",
+        text: response.message.content,
+        citations: response.message.citations,
+      }]);
+    } catch {
+      setMessages((prev) => [...prev, { role: "assistant", text: "I couldn’t complete that request. Please try again." }]);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -110,6 +118,11 @@ export function AIAssistant() {
                       )}
                     >
                       {m.text}
+                      {m.citations?.length ? (
+                        <div className="mt-2 border-t border-border/60 pt-2 text-[11px] text-muted-foreground">
+                          Sources: {m.citations.map((citation) => citation.title || citation.source).filter(Boolean).join(", ")}
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                 ))}
@@ -147,7 +160,7 @@ export function AIAssistant() {
                   placeholder="Ask anything…"
                   className="h-10"
                 />
-                <Button type="submit" size="icon" className="h-10 w-10" aria-label="Send">
+                <Button type="submit" size="icon" className="h-10 w-10" aria-label="Send" disabled={sending}>
                   <Send className="h-4 w-4" />
                 </Button>
               </div>

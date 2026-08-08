@@ -38,6 +38,14 @@ PERMISSIONS: dict[str, tuple[str, str]] = {
     "org.billing":         ("Manage billing", "Admin"),
     "user.invite":         ("Invite users", "Admin"),
     "role.manage":         ("Manage roles", "Admin"),
+    "ai.chat":              ("Use workplace AI", "AI"),
+    "ai.policy.read":       ("Search policy documents", "AI"),
+    "ai.employee.read":     ("Ask about employees", "AI"),
+    "ai.leave.read":        ("Ask about leave", "AI"),
+    "ai.attendance.read":   ("Ask about attendance", "AI"),
+    "ai.payroll.read":      ("Ask about payroll", "AI"),
+    "ai.documents.read":    ("Retrieve HR documents", "AI"),
+    "ai.report.generate":   ("Generate HR reports", "AI"),
 }
 
 
@@ -45,11 +53,13 @@ ROLES: dict[str, tuple[str, list[str]]] = {
     "employee": ("Employee", [
         "employee.read_self", "employee.write_self",
         "payslip.read_self", "leave.request", "attendance.clock",
+        "ai.chat", "ai.policy.read", "ai.leave.read", "ai.attendance.read",
     ]),
     "manager": ("Manager", [
         "employee.read_self", "employee.write_self",
         "payslip.read_self", "leave.request", "attendance.clock",
         "employee.read", "leave.read", "leave.approve", "attendance.read",
+        "ai.chat", "ai.policy.read", "ai.employee.read", "ai.leave.read", "ai.attendance.read",
     ]),
     "hr": ("HR", [
         "employee.read", "employee.write", "employee.delete",

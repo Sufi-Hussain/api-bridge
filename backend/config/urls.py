@@ -13,6 +13,7 @@ api_patterns = [
     path("payroll/", include("apps.payroll.urls")),
     path("documents/", include("apps.documents.urls")),
     path("notifications/", include("apps.notifications.urls")),
+    path("ai/", include("apps.ai.urls")),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "docs/",
