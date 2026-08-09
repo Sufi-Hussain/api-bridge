@@ -27,8 +27,9 @@ class OpenAIProvider:
         self.model = settings.AI_OPENAI_MODEL
         self.api_key = settings.AI_OPENAI_API_KEY
 
-    def chat(self, messages: Iterable[dict[str, str]], tools=None):
-        return _chat_completion(self.base_url, self.model, self.api_key, messages, tools)
+    def chat(self, messages: Iterable[dict[str, str]]) -> str:
+        print(f"OpenAIProvider.chat called with messages: {messages}")
+        return _chat_completion(self.base_url, self.model, self.api_key, messages)
 
 
 class DeepSeekProvider:
@@ -39,8 +40,9 @@ class DeepSeekProvider:
         self.model = settings.AI_DEEPSEEK_MODEL
         self.api_key = settings.AI_DEEPSEEK_API_KEY
 
-    def chat(self, messages: Iterable[dict[str, str]], tools=None):
-        return _chat_completion(self.base_url, self.model, self.api_key, messages, tools)
+    def chat(self, messages: Iterable[dict[str, str]]) -> str:
+        print(f"DeepSeekProvider.chat called with messages: {messages}")
+        return _chat_completion(self.base_url, self.model, self.api_key, messages)
 
 
 def _chat_completion(base_url: str, model: str, api_key: str, messages: Iterable[dict[str, str]], tools=None):

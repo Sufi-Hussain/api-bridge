@@ -37,11 +37,18 @@ class ConversationListView(APIView):
 
 
 class ChatView(APIView):
-    permission_classes = [IsAuthenticated, CanUseAI]
+    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated, CanUseAI]
+    
 
     def post(self, request):
+        # print("USER:", request.user)
+        # print("AUTH:", request.auth)
+        print("AUTHENTICATED:", request.user.is_authenticated)
+        print(f"ChatView POST request data: {request.data}")
         serializer = ChatSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        # print(f"ChatView POST serializer validated data: {serializer.validated_data}")
         context = build_context(request)
         conversation_id = serializer.validated_data.get("conversation_id")
         conversation = None
@@ -50,7 +57,9 @@ class ChatView(APIView):
             if conversation is None:
                 return Response({"detail": "Conversation not found."}, status=status.HTTP_404_NOT_FOUND)
         conversation = conversation or AIConversation.objects.create(organization=context.organization, user=request.user)
+        # print(f"ChatView POST conversation: {conversation}")
         question = serializer.validated_data["message"]
+        # print(f"ChatView POST question: {question}")
         AIMessage.objects.create(conversation=conversation, role=AIMessage.Role.USER, content=question)
         history = list(conversation.messages.values("role", "content"))
         if history:
@@ -59,11 +68,13 @@ class ChatView(APIView):
             answer, tool_events = AIGateway().answer(context, history, question)
         except PermissionError as exc:
             log_event(actor=request.user, action="ai.chat.denied", organization=context.organization, metadata={"request_id": context.request_id})
+            print(f"PermissionError: {exc}")
             return Response({"code": "forbidden", "detail": str(exc)}, status=status.HTTP_403_FORBIDDEN)
         except Exception as exc:
             code = getattr(exc, "code", "ai_unavailable")
             detail = getattr(exc, "message", "The AI assistant is temporarily unavailable.")
             log_event(actor=request.user, action="ai.chat.failed", organization=context.organization, metadata={"request_id": context.request_id, "error_code": code})
+            print(f"Exception: {exc}, code: {code}, detail: {detail}")
             return Response({"code": code, "detail": detail}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         for event in tool_events:
             AIToolExecution.objects.create(conversation=conversation, name=event["name"], status=event["status"])

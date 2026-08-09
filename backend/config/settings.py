@@ -8,6 +8,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+# print("BASE_DIR:", BASE_DIR)
+# print(".env exists:", (BASE_DIR / ".env").exists())
 load_dotenv(BASE_DIR / ".env")
 
 
@@ -38,6 +40,11 @@ AI_DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
 AI_REQUEST_TIMEOUT = int(os.getenv("AI_REQUEST_TIMEOUT", "45"))
 AI_MAX_HISTORY = int(os.getenv("AI_MAX_HISTORY", "12"))
 AI_MAX_MESSAGE_LENGTH = int(os.getenv("AI_MAX_MESSAGE_LENGTH", "4000"))
+# print(f"AI_PROVIDER={AI_PROVIDER}, AI_OPENAI_MODEL={AI_OPENAI_MODEL}, AI_DEEPSEEK_MODEL={AI_DEEPSEEK_MODEL}")
+# print(f"AI_OPENAI_BASE_URL={AI_OPENAI_BASE_URL}, AI_DEEPSEEK_BASE_URL={AI_DEEPSEEK_BASE_URL}")
+# print(f"OPENAI_API_KEY='{AI_OPENAI_API_KEY[:4]}...{AI_OPENAI_API_KEY[-4:]}'")
+# print(f"DEEPSEEK_API_KEY='{AI_DEEPSEEK_API_KEY[:4]}...{AI_DEEPSEEK_API_KEY[-4:]}'")
+# print(os.getenv("CHECK", "Environment variable CHECK not set."))
 
 # Dev: prints emails to console instead of actually sending
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
