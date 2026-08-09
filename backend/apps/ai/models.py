@@ -51,7 +51,7 @@ class AIInteraction(models.Model):
     organization = models.ForeignKey("accounts.Organization", on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     request_id = models.CharField(max_length=100, db_index=True)
-    provider = models.CharField(max_length=40, default="deepseek")
+    provider = models.CharField(max_length=40, default="openai")
     model = models.CharField(max_length=100, blank=True)
     latency_ms = models.PositiveIntegerField(default=0)
     prompt_tokens = models.PositiveIntegerField(default=0)
