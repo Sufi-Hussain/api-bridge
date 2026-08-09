@@ -28,6 +28,7 @@ class OpenAIProvider:
         self.api_key = settings.AI_OPENAI_API_KEY
 
     def chat(self, messages: Iterable[dict[str, str]]) -> str:
+        print(f"OpenAIProvider.chat called with messages: {messages}")
         return _chat_completion(self.base_url, self.model, self.api_key, messages)
 
 
@@ -40,6 +41,7 @@ class DeepSeekProvider:
         self.api_key = settings.AI_DEEPSEEK_API_KEY
 
     def chat(self, messages: Iterable[dict[str, str]]) -> str:
+        print(f"DeepSeekProvider.chat called with messages: {messages}")
         return _chat_completion(self.base_url, self.model, self.api_key, messages)
 
 
