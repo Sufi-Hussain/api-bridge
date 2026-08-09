@@ -16,7 +16,7 @@ class ProviderError(Exception):
 
 
 class LLMProvider(Protocol):
-    def chat(self, messages: Iterable[dict[str, str]]) -> str: ...
+    def chat(self, messages: Iterable[dict[str, str]], tools=None): ...
 
 
 class OpenAIProvider:
@@ -27,8 +27,8 @@ class OpenAIProvider:
         self.model = settings.AI_OPENAI_MODEL
         self.api_key = settings.AI_OPENAI_API_KEY
 
-    def chat(self, messages: Iterable[dict[str, str]]) -> str:
-        return _chat_completion(self.base_url, self.model, self.api_key, messages)
+    def chat(self, messages: Iterable[dict[str, str]], tools=None):
+        return _chat_completion(self.base_url, self.model, self.api_key, messages, tools)
 
 
 class DeepSeekProvider:
@@ -39,14 +39,17 @@ class DeepSeekProvider:
         self.model = settings.AI_DEEPSEEK_MODEL
         self.api_key = settings.AI_DEEPSEEK_API_KEY
 
-    def chat(self, messages: Iterable[dict[str, str]]) -> str:
-        return _chat_completion(self.base_url, self.model, self.api_key, messages)
+    def chat(self, messages: Iterable[dict[str, str]], tools=None):
+        return _chat_completion(self.base_url, self.model, self.api_key, messages, tools)
 
 
-def _chat_completion(base_url: str, model: str, api_key: str, messages: Iterable[dict[str, str]]) -> str:
+def _chat_completion(base_url: str, model: str, api_key: str, messages: Iterable[dict[str, str]], tools=None):
     if not api_key:
         raise ProviderError("provider_unconfigured", "AI provider is not configured.")
-    body = json.dumps({"model": model, "messages": list(messages), "temperature": 0.2}).encode()
+    payload = {"model": model, "messages": list(messages), "temperature": 0.2}
+    if tools:
+        payload["tools"] = tools
+    body = json.dumps(payload).encode()
     request = urllib.request.Request(
         f"{base_url}/chat/completions", data=body,
         headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
@@ -62,6 +65,7 @@ def _chat_completion(base_url: str, model: str, api_key: str, messages: Iterable
     except (urllib.error.URLError, TimeoutError) as exc:
         raise ProviderError("provider_timeout", "The AI provider did not respond in time.") from exc
     try:
-        return str(payload["choices"][0]["message"]["content"])
+        message = payload["choices"][0]["message"]
+        return message if message.get("tool_calls") else str(message.get("content", ""))
     except (KeyError, IndexError, TypeError) as exc:
         raise ProviderError("provider_malformed", "The AI provider returned an invalid response.") from exc

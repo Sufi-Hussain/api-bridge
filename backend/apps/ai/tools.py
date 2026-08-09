@@ -9,12 +9,10 @@ class AITool:
 
 
 TOOLS = {
-    "employee_search": AITool("employee_search", "ai.employee.read"),
+    "current_employee": AITool("current_employee", "ai.employee.read"),
     "leave_summary": AITool("leave_summary", "ai.leave.read"),
     "attendance_summary": AITool("attendance_summary", "ai.attendance.read"),
     "payroll_summary": AITool("payroll_summary", "ai.payroll.read"),
-    "policy_search": AITool("policy_search", "ai.policy.read"),
-    "report_generate": AITool("report_generate", "ai.report.generate"),
 }
 
 

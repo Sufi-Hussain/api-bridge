@@ -9,7 +9,7 @@ from audit.services import log_event
 
 from .context import build_context
 from .gateway import AIGateway
-from .models import AIConversation, AIMessage
+from .models import AIConversation, AIMessage, AIToolExecution
 
 
 class CanUseAI(BasePermission):
@@ -53,8 +53,10 @@ class ChatView(APIView):
         question = serializer.validated_data["message"]
         AIMessage.objects.create(conversation=conversation, role=AIMessage.Role.USER, content=question)
         history = list(conversation.messages.values("role", "content"))
+        if history:
+            history.pop()
         try:
-            answer = AIGateway().answer(context, history, question)
+            answer, tool_events = AIGateway().answer(context, history, question)
         except PermissionError as exc:
             log_event(actor=request.user, action="ai.chat.denied", organization=context.organization, metadata={"request_id": context.request_id})
             return Response({"code": "forbidden", "detail": str(exc)}, status=status.HTTP_403_FORBIDDEN)
@@ -63,6 +65,8 @@ class ChatView(APIView):
             detail = getattr(exc, "message", "The AI assistant is temporarily unavailable.")
             log_event(actor=request.user, action="ai.chat.failed", organization=context.organization, metadata={"request_id": context.request_id, "error_code": code})
             return Response({"code": code, "detail": detail}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
-        AIMessage.objects.create(conversation=conversation, role=AIMessage.Role.ASSISTANT, content=answer)
+        for event in tool_events:
+            AIToolExecution.objects.create(conversation=conversation, name=event["name"], status=event["status"])
+        AIMessage.objects.create(conversation=conversation, role=AIMessage.Role.ASSISTANT, content=answer, metadata={"tools": tool_events})
         log_event(actor=request.user, action="ai.chat.completed", organization=context.organization, metadata={"request_id": context.request_id})
         return Response({"conversationId": str(conversation.id), "message": {"role": "assistant", "content": answer, "citations": []}})
