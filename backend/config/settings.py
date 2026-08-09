@@ -27,6 +27,18 @@ ALLOWED_HOSTS = _env_list("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,*")
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:8080")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "no-reply@hirechamps.com")
 
+# AI provider configuration. OpenAI is the default; DeepSeek remains an explicit fallback.
+AI_PROVIDER = os.getenv("AI_PROVIDER", "openai").lower()
+AI_OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+AI_OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1").rstrip("/")
+AI_OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+AI_DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
+AI_DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com").rstrip("/")
+AI_DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
+AI_REQUEST_TIMEOUT = int(os.getenv("AI_REQUEST_TIMEOUT", "45"))
+AI_MAX_HISTORY = int(os.getenv("AI_MAX_HISTORY", "12"))
+AI_MAX_MESSAGE_LENGTH = int(os.getenv("AI_MAX_MESSAGE_LENGTH", "4000"))
+
 # Dev: prints emails to console instead of actually sending
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # Prod: swap to SMTP or a provider backend (SES, SendGrid, etc.)

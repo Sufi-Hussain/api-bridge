@@ -16,8 +16,9 @@ export function listAIConversations() {
 }
 
 export function sendAIMessage(message: string, conversationId?: string) {
+  const trimmed = message.trim().slice(0, 4000);
   return apiPost<AIChatResponse>("/api/ai/chat/", {
-    message,
+    message: trimmed,
     ...(conversationId ? { conversationId } : {}),
   });
 }
