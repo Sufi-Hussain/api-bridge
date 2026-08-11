@@ -117,12 +117,12 @@ function AdminDashboard() {
         actions={
           <>
             <Button variant="outline" size="sm" asChild>
-              <Link to="/admin/security">
+              <Link to={"/admin/security" as never}>
                 <ShieldCheck className="mr-1.5 h-3.5 w-3.5" /> Security Center
               </Link>
             </Button>
             <Button size="sm" asChild>
-              <Link to="/admin/users/invite">
+              <Link to={"/admin/users/invite" as never}>
                 <Send className="mr-1.5 h-3.5 w-3.5" /> Invite user
               </Link>
             </Button>
@@ -168,7 +168,7 @@ function AdminDashboard() {
           className="lg:col-span-2"
           action={
             <Button variant="ghost" size="sm" asChild>
-              <Link to="/admin/reports/access">Details <ArrowRight className="ml-1 h-3 w-3" /></Link>
+              <Link to={"/admin/reports/access" as never}>Details <ArrowRight className="ml-1 h-3 w-3" /></Link>
             </Button>
           }
         >
@@ -260,7 +260,7 @@ function AdminDashboard() {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <SectionCard
           title="Security alerts"
-          action={<Button variant="ghost" size="sm" asChild><Link to="/admin/security/events">View all</Link></Button>}
+          action={<Button variant="ghost" size="sm" asChild><Link to={"/admin/security/events" as never}>View all</Link></Button>}
         >
           <ul className="space-y-2">
             {alerts.map((a) => (
@@ -280,7 +280,7 @@ function AdminDashboard() {
 
         <SectionCard
           title={`Pending access requests · ${k.pendingAccessRequests}`}
-          action={<Button variant="ghost" size="sm" asChild><Link to="/admin/roles/assignment">Review</Link></Button>}
+          action={<Button variant="ghost" size="sm" asChild><Link to={"/admin/roles/assignment" as never}>Review</Link></Button>}
         >
           <ul className="space-y-2">
             {requests.map((r) => (
@@ -318,7 +318,7 @@ function AdminDashboard() {
           className="lg:col-span-2"
           action={
             <Button variant="ghost" size="sm" asChild>
-              <Link to="/admin/security/audit"><FileClock className="mr-1 h-3.5 w-3.5" /> Audit log</Link>
+              <Link to={"/admin/security/audit" as never}><FileClock className="mr-1 h-3.5 w-3.5" /> Audit log</Link>
             </Button>
           }
         >
@@ -343,7 +343,7 @@ function AdminDashboard() {
 
         <SectionCard
           title="AI security insights"
-          action={<Button variant="ghost" size="sm" asChild><Link to="/admin/ai"><Sparkles className="mr-1 h-3.5 w-3.5" /> Open assistant</Link></Button>}
+          action={<Button variant="ghost" size="sm" asChild><Link to={"/admin/ai" as never}><Sparkles className="mr-1 h-3.5 w-3.5" /> Open assistant</Link></Button>}
         >
           <ul className="space-y-2">
             {insights.map((i) => (

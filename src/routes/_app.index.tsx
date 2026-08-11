@@ -126,7 +126,7 @@ function DashboardPage() {
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Button asChild size="sm">
-                <Link to="/attendance/clock-in">
+                <Link to={"/attendance/clock-in" as never}>
                   <Clock className="mr-1.5 h-3.5 w-3.5" /> Clock in
                 </Link>
               </Button>
@@ -244,7 +244,7 @@ function DashboardPage() {
               title="Tasks"
               action={
                 <Button asChild variant="ghost" size="sm" className="text-xs">
-                  <Link to="/tasks">All tasks</Link>
+                  <Link to={"/tasks" as never}>All tasks</Link>
                 </Button>
               }
             >
@@ -288,7 +288,7 @@ function DashboardPage() {
               title="Leave balance"
               action={
                 <Button asChild variant="ghost" size="sm" className="text-xs">
-                  <Link to="/leave/balance">Details</Link>
+                  <Link to={"/leave/balance" as never}>Details</Link>
                 </Button>
               }
             >
@@ -392,7 +392,7 @@ function DashboardPage() {
             title="Announcements"
             action={
               <Button asChild variant="ghost" size="sm" className="text-xs">
-                <Link to="/org/announcements">All</Link>
+                <Link to={"/org/announcements" as never}>All</Link>
               </Button>
             }
           >

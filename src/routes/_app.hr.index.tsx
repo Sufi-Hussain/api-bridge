@@ -141,7 +141,7 @@ function HRDashboardPage() {
               </Link>
             </Button>
             <Button size="sm" asChild>
-              <Link to="/hr/recruitment/openings">
+              <Link to={"/hr/recruitment/openings" as never}>
                 <UserPlus className="mr-1.5 h-3.5 w-3.5" /> Post job
               </Link>
             </Button>
@@ -188,7 +188,7 @@ function HRDashboardPage() {
                 </Link>
               </Button>
               <Button asChild size="sm" variant="ghost" className="text-primary">
-                <Link to="/hr/analytics/reports">
+                <Link to={"/hr/analytics/reports" as never}>
                   <Sparkles className="mr-1.5 h-3.5 w-3.5" /> Ask AI
                 </Link>
               </Button>
@@ -498,7 +498,7 @@ function HRDashboardPage() {
             title="Recent activity"
             action={
               <Button asChild variant="ghost" size="sm" className="text-xs">
-                <Link to="/hr/activity">All</Link>
+                <Link to={"/hr/activity" as never}>All</Link>
               </Button>
             }
           >
@@ -509,7 +509,7 @@ function HRDashboardPage() {
             title="Organization snapshot"
             action={
               <Button asChild variant="ghost" size="sm" className="text-xs">
-                <Link to="/hr/org/chart">
+                <Link to={"/hr/org/chart" as never}>
                   <Network className="mr-1 h-3 w-3" /> Org chart
                 </Link>
               </Button>
