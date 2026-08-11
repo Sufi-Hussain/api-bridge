@@ -152,3 +152,61 @@ class EmployeeProfileSerializer(serializers.ModelSerializer):
             "bank",
             "skills",
         )
+
+
+class DirectoryPersonSerializer(serializers.ModelSerializer):
+    """Org directory row — matches the frontend `DirectoryPerson`."""
+
+    name = serializers.SerializerMethodField()
+    title = serializers.SerializerMethodField()
+    department = serializers.SerializerMethodField()
+    location = serializers.SerializerMethodField()
+    email = serializers.CharField(source="work_email", read_only=True)
+    phone = serializers.CharField(source="work_phone", read_only=True)
+    manager_id = serializers.SerializerMethodField()
+    timezone = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Employee
+        fields = (
+            "id",
+            "name",
+            "title",
+            "department",
+            "location",
+            "email",
+            "phone",
+            "manager_id",
+            "timezone",
+            "status",
+        )
+
+    def _employment(self, obj):
+        return getattr(obj, "employment", None)
+
+    def get_name(self, obj) -> str:
+        return f"{obj.first_name} {obj.last_name}".strip()
+
+    def get_title(self, obj) -> str:
+        return getattr(self._employment(obj), "job_title", "") or ""
+
+    def get_department(self, obj) -> str:
+        return getattr(self._employment(obj), "department", "") or ""
+
+    def get_location(self, obj) -> str:
+        return getattr(self._employment(obj), "location", "") or ""
+
+    def get_manager_id(self, obj):
+        emp = self._employment(obj)
+        return str(emp.manager_id) if emp and emp.manager_id else None
+
+    def get_timezone(self, obj) -> str:
+        from django.conf import settings
+
+        return settings.TIME_ZONE
+
+    def get_status(self, obj) -> str:
+        emp = self._employment(obj)
+        state = getattr(emp, "status", "active")
+        return "on-leave" if state == "on_leave" else "available"

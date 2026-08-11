@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 
 from .models import (
     Education,
+    Employee,
     EmergencyContact,
     EmployeeSkill,
     Experience,
@@ -16,6 +17,7 @@ from .models import (
 )
 from .selectors import get_employee_for_user
 from .serializers import (
+    DirectoryPersonSerializer,
     EducationSerializer,
     EmergencyContactSerializer,
     EmployeeProfileSerializer,
@@ -57,6 +59,23 @@ class ProfileView(APIView):
         payload = {k: v for k, v in request.data.items() if k in allowed}
         update_employee(emp, payload)
         return Response(EmployeeProfileSerializer(emp).data)
+
+
+class DirectoryViewSet(viewsets.ReadOnlyModelViewSet):
+    """Colleague directory, always scoped to the caller's organization."""
+
+    serializer_class = DirectoryPersonSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        emp = get_employee_for_user(self.request.user)
+        if not emp or emp.organization_id is None:
+            return Employee.objects.none()
+        return (
+            Employee.objects.filter(organization_id=emp.organization_id)
+            .select_related("employment")
+            .order_by("first_name", "last_name")
+        )
 
 
 class OwnedViewSet(viewsets.ModelViewSet):

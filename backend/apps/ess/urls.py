@@ -2,6 +2,7 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from .views import (
+    DirectoryViewSet,
     EducationViewSet,
     EmergencyContactViewSet,
     ExperienceViewSet,
@@ -15,6 +16,7 @@ router.register("emergency-contacts", EmergencyContactViewSet, basename="emergen
 router.register("family", FamilyViewSet, basename="family")
 router.register("education", EducationViewSet, basename="education")
 router.register("experience", ExperienceViewSet, basename="experience")
+router.register("directory", DirectoryViewSet, basename="directory")
 router.register("skills", SkillViewSet, basename="skill")
 
 urlpatterns = [
