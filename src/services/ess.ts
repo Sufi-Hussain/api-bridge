@@ -143,6 +143,23 @@ async function deleteDocument(id: string): Promise<void> {
   await apiDelete(`/api/documents/${id}/`);
 }
 
+// ---- Newly backend-backed ESS surfaces --------------------------------------
+const list = async <T>(url: string): Promise<T[]> =>
+  unwrapList<T>(await apiGet<any>(url), (r) => camelizeKeys<T>(r));
+
+const getLeaveBalances = () => list<any>("/api/leave/requests/balances/");
+const getBenefits = () => list<any>("/api/benefits/enrollments/");
+const getExpenses = () => list<any>("/api/benefits/expenses/");
+const getTravel = () => list<any>("/api/benefits/travel/");
+const getLoans = () => list<any>("/api/benefits/loans/");
+const getAssets = () => list<any>("/api/assets/assets/");
+const getAssetRequests = () => list<any>("/api/assets/asset-requests/");
+const getCourses = () => list<any>("/api/learning/courses/");
+const getCertifications = () => list<any>("/api/learning/certifications/");
+const getGoals = () => list<any>("/api/performance/goals/");
+const getReviews = () => list<any>("/api/performance/reviews/");
+const getDirectory = () => list<any>("/api/ess/directory/");
+
 // ---- Public service surface -------------------------------------------------
 // Matches the original mock so consuming pages do not change.
 // Methods without a Django endpoint are proxied to the mock.
@@ -176,14 +193,21 @@ export const essService = {
   family: familyApi,
   skills: skillsApi,
 
+  // Backend-backed (benefits / expenses / assets / learning / performance)
+  getLeaveBalances,
+  getBenefits,
+  getExpenses,
+  getTravel,
+  getLoans,
+  getAssets,
+  getAssetRequests,
+  getCourses,
+  getCertifications,
+  getGoals,
+  getReviews,
+  getDirectory,
+
   // ---- Not yet in the Django spec: delegate to mock -------------------------
-  getLeaveBalances: mock.getLeaveBalances,
-  getBenefits: mock.getBenefits,
-  getExpenses: mock.getExpenses,
-  getAssets: mock.getAssets,
-  getCourses: mock.getCourses,
-  getGoals: mock.getGoals,
-  getDirectory: mock.getDirectory,
   getTickets: mock.getTickets,
   getActivity: mock.getActivity,
   getSessions: mock.getSessions,
