@@ -26,6 +26,7 @@ from decimal import Decimal
 
 from django.core.management.base import BaseCommand
 from django.db import transaction
+from django.core.files.base import ContentFile
 
 from accounts.models import Organization, OrganizationMember, Role, UserRole, User
 from apps.attendance.models import AttendancePunch, TimesheetEntry
@@ -43,6 +44,10 @@ from apps.ess.models import (
 from apps.hr.models import Department
 from apps.leave.models import Holiday, LeaveRequest, LeaveType
 from apps.payroll.models import Payslip, PayslipLine
+from apps.assets.models import Asset, AssetRequest, SoftwareLicense
+from apps.benefits.models import Benefit, BenefitEnrollment, ExpenseClaim, ExpenseReceipt, Loan, TravelRequest
+from apps.learning.models import Certification, Course, Enrollment, SkillMatrixEntry, TrainingProgram
+from apps.performance.models import Competency, Goal, KeyResult, PerformanceCycle, Review, SuccessionPlan
 from core.seeds.roles import seed_system_roles
 
 DEMO_PASSWORD = "Ss1234567890"
@@ -131,6 +136,10 @@ class Command(BaseCommand):
             self._seed_managers(people, rng)
             for emp in people:
                 self._seed_timeline(emp, rng, leave_types)
+            self._seed_assets(org, people, rng)
+            self._seed_benefits(org, people, rng)
+            self._seed_learning(org, people, rng)
+            self._seed_performance(org, people, rng)
             created_employees += len(people)
 
         self.stdout.write(self.style.SUCCESS(
@@ -296,6 +305,119 @@ class Command(BaseCommand):
 
             people.append(emp)
         return people
+
+    def _seed_assets(self, org, people, rng):
+        assets = [
+            ("MacBook Pro 14", Asset.Category.LAPTOP, "excellent", "assigned", Decimal("2199.00")),
+            ("ThinkPad X1 Carbon", Asset.Category.LAPTOP, "good", "assigned", Decimal("1599.00")),
+            ("Dell UltraSharp 27", Asset.Category.MONITOR, "good", "assigned", Decimal("599.00")),
+            ("iPhone 15", Asset.Category.PHONE, "excellent", "in_stock", Decimal("899.00")),
+            ("Noise-cancelling headset", Asset.Category.ACCESSORY, "good", "in_stock", Decimal("249.00")),
+            ("Adobe Creative Cloud", Asset.Category.SOFTWARE, "good", "assigned", Decimal("659.88")),
+        ]
+        for index, (name, category, condition, status, value) in enumerate(assets):
+            employee = people[index % len(people)] if status == "assigned" else None
+            Asset.objects.get_or_create(
+                organization=org, serial=f"{org.slug.upper()}-AST-{index + 1:03d}",
+                defaults={"name": name, "category": category, "condition": condition, "status": status,
+                          "value": value, "warranty_end": date.today() + timedelta(days=365),
+                          "assigned_to": employee, "assigned_on": date.today() - timedelta(days=30) if employee else None},
+            )
+        for employee in people[:3]:
+            AssetRequest.objects.get_or_create(
+                organization=org, employee=employee, category=Asset.Category.ACCESSORY,
+                justification="Ergonomic home-office setup", defaults={"status": "approved"},
+            )
+        for name, vendor, seats, cost in [("Google Workspace", "Google", 120, Decimal("18.00")),
+                                          ("GitHub Enterprise", "GitHub", 80, Decimal("21.00"))]:
+            SoftwareLicense.objects.get_or_create(organization=org, name=name,
+                defaults={"vendor": vendor, "seats_total": seats, "seats_used": min(seats, len(people)),
+                          "cost_per_seat": cost, "renewal_date": date.today() + timedelta(days=180)})
+
+    def _seed_benefits(self, org, people, rng):
+        benefits = [
+            ("Health Plus", Benefit.Category.HEALTH, "Aetna", "Employee + family", Decimal("420.00"), Decimal("320.00")),
+            ("Life Cover", Benefit.Category.INSURANCE, "MetLife", "$100,000 cover", Decimal("38.00"), Decimal("38.00")),
+            ("Retirement Match", Benefit.Category.RETIREMENT, "Fidelity", "Up to 6% match", Decimal("0.00"), Decimal("0.00")),
+            ("Wellness Wallet", Benefit.Category.WELLNESS, "Wellable", "$600 annual wallet", Decimal("50.00"), Decimal("50.00")),
+        ]
+        for name, category, provider, coverage, premium, contribution in benefits:
+            benefit, _ = Benefit.objects.get_or_create(organization=org, name=name, defaults={
+                "category": category, "provider": provider, "coverage": coverage, "premium": premium,
+                "employer_contribution": contribution, "renewal_date": date.today() + timedelta(days=240)})
+            for employee in people[:max(1, len(people) // 2)]:
+                BenefitEnrollment.objects.get_or_create(organization=org, employee=employee, benefit=benefit,
+                    defaults={"status": Benefit.Status.ACTIVE, "claims": rng.randint(0, 4), "usage": rng.randint(0, 80),
+                              "enrolled_on": date.today() - timedelta(days=120)})
+        for employee in people[:2]:
+            claim, _ = ExpenseClaim.objects.get_or_create(organization=org, employee=employee,
+                title="Client workshop travel", date=date.today() - timedelta(days=20), defaults={
+                    "category": ExpenseClaim.Category.TRAVEL, "amount": Decimal("486.50"), "currency": "USD",
+                    "status": ExpenseClaim.Status.APPROVED, "approver": "Finance Manager", "notes": "Customer workshop"})
+            if not claim.receipts.exists():
+                receipt = ExpenseReceipt(claim=claim, organization=org, caption="Workshop receipt")
+                receipt.file.save(f"seed-{org.slug}-{employee.id}.txt", ContentFile(b"Seed receipt"), save=True)
+        for employee in people[:2]:
+            TravelRequest.objects.get_or_create(organization=org, employee=employee, destination="Singapore",
+                from_date=date.today() + timedelta(days=45), defaults={"purpose": "Regional planning", "to_date": date.today() + timedelta(days=48),
+                    "estimated_cost": Decimal("1200.00"), "status": TravelRequest.Status.SUBMITTED, "approver": "People Operations Lead"})
+            Loan.objects.get_or_create(organization=org, employee=employee, type="Education loan",
+                defaults={"principal": Decimal("12000.00"), "outstanding": Decimal("7200.00"), "emi": Decimal("450.00"),
+                          "tenure_months": 36, "interest_rate": Decimal("5.50"), "start_date": date.today() - timedelta(days=365),
+                          "status": Loan.Status.ACTIVE})
+
+    def _seed_learning(self, org, people, rng):
+        courses = []
+        for title, category, level, mandatory in [("Secure Engineering Foundations", "Security", Course.Level.INTERMEDIATE, True),
+                                                   ("Manager Essentials", "Leadership", Course.Level.BEGINNER, False),
+                                                   ("Advanced Data Storytelling", "Analytics", Course.Level.ADVANCED, False)]:
+            course, _ = Course.objects.get_or_create(organization=org, title=title, defaults={"provider": "HireChamps Academy",
+                "category": category, "level": level, "duration_hours": Decimal("6.0"), "rating": Decimal("4.6"),
+                "mandatory": mandatory})
+            courses.append(course)
+        for employee in people[:min(6, len(people))]:
+            for index, course in enumerate(courses[:2]):
+                Enrollment.objects.get_or_create(organization=org, employee=employee, course=course,
+                    defaults={"progress": 100 if index == 0 else 55, "completed_on": date.today() - timedelta(days=10) if index == 0 else None,
+                              "due_date": date.today() + timedelta(days=30)})
+        for name, category, fmt in [("New Manager Accelerator", "Leadership", TrainingProgram.Format.BLENDED),
+                                    ("Security Awareness", "Security", TrainingProgram.Format.SELF_PACED)]:
+            TrainingProgram.objects.get_or_create(organization=org, name=name, defaults={"category": category, "format": fmt,
+                "duration_hrs": Decimal("8.0"), "enrolled": len(people), "completed": len(people) // 3,
+                "rating": Decimal("4.4"), "status": TrainingProgram.Status.ACTIVE, "mandatory": category == "Security"})
+        for employee in people[:3]:
+            Certification.objects.get_or_create(organization=org, employee=employee, name="AWS Certified Cloud Practitioner",
+                defaults={"issuer": "Amazon Web Services", "credential_id": f"AWS-{org.slug}-{employee.id.hex[:8]}",
+                          "issued_on": date.today() - timedelta(days=180), "expires_on": date.today() + timedelta(days=550),
+                          "status": Certification.Status.VALID})
+        for skill, category, values in [("Python", "Technical", (8, 14, 20, 6)), ("Leadership", "Behavioral", (12, 10, 5, 2)),
+                                        ("Data Analysis", "Functional", (10, 12, 8, 3))]:
+            SkillMatrixEntry.objects.get_or_create(organization=org, skill=skill, defaults={"category": category,
+                "beginner": values[0], "intermediate": values[1], "advanced": values[2], "expert": values[3], "gap": 4})
+
+    def _seed_performance(self, org, people, rng):
+        cycle, _ = PerformanceCycle.objects.get_or_create(organization=org, name="2026 Mid-Year Review", defaults={
+            "period_start": date(2026, 1, 1), "period_end": date(2026, 6, 30), "review_window": "Jun 1 - Jun 30",
+            "status": PerformanceCycle.Status.MANAGER_REVIEW, "eligible": len(people), "completed": len(people) // 2,
+            "template": "Standard mid-year review"})
+        for employee in people[:min(5, len(people))]:
+            goal, _ = Goal.objects.get_or_create(organization=org, owner=employee, cycle=cycle,
+                title="Deliver quarterly roadmap", defaults={"description": "Ship committed roadmap outcomes with quality.",
+                    "type": Goal.Type.INDIVIDUAL, "category": "team", "weight": 40, "progress": 65,
+                    "status": Goal.Status.ON_TRACK, "due": date(2026, 6, 30)})
+            KeyResult.objects.get_or_create(organization=org, goal=goal, title="Complete priority releases",
+                defaults={"progress": 65, "target": "3 releases"})
+            Review.objects.get_or_create(organization=org, employee=employee, cycle=cycle, reviewer="People Manager",
+                defaults={"role": employee.employment.job_title, "reviewer_title": "People Manager", "status": Review.Status.SUBMITTED,
+                    "self_rating": Decimal("4.0"), "manager_rating": Decimal("4.2"), "final_rating": Decimal("4.1"),
+                    "strengths": ["Ownership", "Collaboration"], "improvements": ["Delegation"], "submitted_at": date.today()})
+        for name, category in [("Ownership", Competency.Category.BEHAVIORAL), ("Technical Excellence", Competency.Category.TECHNICAL),
+                               ("People Leadership", Competency.Category.LEADERSHIP)]:
+            Competency.objects.get_or_create(organization=org, name=name, defaults={"category": category,
+                "description": f"{name} competency framework", "levels": 5, "applies": ["all employees"]})
+        SuccessionPlan.objects.get_or_create(organization=org, role="Engineering Manager", incumbent="Current Engineering Manager",
+            defaults={"ready_now": [str(people[0])] if people else [], "ready_1yr": [str(people[1])] if len(people) > 1 else [],
+                      "ready_2yr": [], "risk": "medium"})
 
     @staticmethod
     def _role_for(title: str, index: int) -> str:
