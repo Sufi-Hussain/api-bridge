@@ -73,8 +73,14 @@ INSTALLED_APPS = [
     "apps.attendance",
     "apps.payroll",
     "apps.documents",
+    "apps.benefits",
+    "apps.assets",
+    "apps.learning",
+    "apps.performance",
+    "apps.compensation",
     "apps.ai",
     "apps.notifications",
+
     "accounts",
     "audit",
 ]
