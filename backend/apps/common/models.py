@@ -34,7 +34,8 @@ class OrgOwnedModel(UUIDTimestampedModel):
     """
 
     organization = models.ForeignKey(
-        "org.Organization",
+        "accounts.Organization",
+
         on_delete=models.CASCADE,
         related_name="%(app_label)s_%(class)s_set",
     )

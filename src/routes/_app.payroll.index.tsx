@@ -182,12 +182,12 @@ function PayrollDashboardPage() {
         actions={
           <>
             <Button variant="outline" size="sm" asChild>
-              <Link to="/pay/reports/executive">
+              <Link to={"/pay/reports/executive" as never}>
                 <FileText className="mr-1.5 h-3.5 w-3.5" /> Reports
               </Link>
             </Button>
             <Button size="sm" asChild>
-              <Link to="/pay/runs/processing">
+              <Link to={"/pay/runs/processing" as never}>
                 <Wallet className="mr-1.5 h-3.5 w-3.5" /> Run payroll
               </Link>
             </Button>
@@ -221,22 +221,22 @@ function PayrollDashboardPage() {
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Button asChild size="sm">
-                <Link to="/pay/runs/approvals">
+                <Link to={"/pay/runs/approvals" as never}>
                   <Inbox className="mr-1.5 h-3.5 w-3.5" /> Approvals
                 </Link>
               </Button>
               <Button asChild size="sm" variant="outline">
-                <Link to="/pay/comp/increments">
+                <Link to={"/pay/comp/increments" as never}>
                   <BadgeDollarSign className="mr-1.5 h-3.5 w-3.5" /> Compensation
                 </Link>
               </Button>
               <Button asChild size="sm" variant="outline">
-                <Link to="/pay/compliance">
+                <Link to={"/pay/compliance" as never}>
                   <ShieldCheck className="mr-1.5 h-3.5 w-3.5" /> Compliance
                 </Link>
               </Button>
               <Button asChild size="sm" variant="ghost" className="text-primary">
-                <Link to="/pay/ai">
+                <Link to={"/pay/ai" as never}>
                   <Sparkles className="mr-1.5 h-3.5 w-3.5" /> Ask AI
                 </Link>
               </Button>
@@ -350,7 +350,7 @@ function PayrollDashboardPage() {
             title="Payroll cost trend"
             action={
               <Button asChild variant="ghost" size="sm" className="text-xs">
-                <Link to="/pay/analytics/payroll">
+                <Link to={"/pay/analytics/payroll" as never}>
                   Analytics <ArrowRight className="ml-1 h-3 w-3" />
                 </Link>
               </Button>
@@ -447,7 +447,7 @@ function PayrollDashboardPage() {
               title="Department-wise cost"
               action={
                 <Button asChild variant="ghost" size="sm" className="text-xs">
-                  <Link to="/pay/reports/dept-cost">Details</Link>
+                  <Link to={"/pay/reports/dept-cost" as never}>Details</Link>
                 </Button>
               }
             >
@@ -525,7 +525,7 @@ function PayrollDashboardPage() {
             title="Recent payroll runs"
             action={
               <Button asChild variant="ghost" size="sm" className="text-xs">
-                <Link to="/pay/runs">All runs</Link>
+                <Link to={"/pay/runs" as never}>All runs</Link>
               </Button>
             }
           >
@@ -566,7 +566,7 @@ function PayrollDashboardPage() {
             title="Payroll calendar"
             action={
               <Button asChild variant="ghost" size="sm" className="text-xs">
-                <Link to="/pay/runs/calendar">Open</Link>
+                <Link to={"/pay/runs/calendar" as never}>Open</Link>
               </Button>
             }
           >
@@ -596,7 +596,7 @@ function PayrollDashboardPage() {
             title="Payroll alerts"
             action={
               <Button asChild variant="ghost" size="sm" className="text-xs">
-                <Link to="/pay/compliance">View all</Link>
+                <Link to={"/pay/compliance" as never}>View all</Link>
               </Button>
             }
           >
@@ -624,32 +624,32 @@ function PayrollDashboardPage() {
           <SectionCard title="Quick actions">
             <div className="grid grid-cols-2 gap-2">
               <Button asChild variant="outline" size="sm" className="justify-start">
-                <Link to="/pay/payslips/current">
+                <Link to={"/pay/payslips/current" as never}>
                   <ReceiptText className="mr-1.5 h-3.5 w-3.5" /> Payslip
                 </Link>
               </Button>
               <Button asChild variant="outline" size="sm" className="justify-start">
-                <Link to="/pay/tax/declarations">
+                <Link to={"/pay/tax/declarations" as never}>
                   <FileText className="mr-1.5 h-3.5 w-3.5" /> Tax
                 </Link>
               </Button>
               <Button asChild variant="outline" size="sm" className="justify-start">
-                <Link to="/pay/reimburse/submit">
+                <Link to={"/pay/reimburse/submit" as never}>
                   <PiggyBank className="mr-1.5 h-3.5 w-3.5" /> Claim
                 </Link>
               </Button>
               <Button asChild variant="outline" size="sm" className="justify-start">
-                <Link to="/pay/loans/requests">
+                <Link to={"/pay/loans/requests" as never}>
                   <Landmark className="mr-1.5 h-3.5 w-3.5" /> Loan
                 </Link>
               </Button>
               <Button asChild variant="outline" size="sm" className="justify-start">
-                <Link to="/pay/timesheets/weekly">
+                <Link to={"/pay/timesheets/weekly" as never}>
                   <Clock className="mr-1.5 h-3.5 w-3.5" /> Timesheet
                 </Link>
               </Button>
               <Button asChild variant="outline" size="sm" className="justify-start">
-                <Link to="/pay/overtime/requests">
+                <Link to={"/pay/overtime/requests" as never}>
                   <Timer className="mr-1.5 h-3.5 w-3.5" /> Overtime
                 </Link>
               </Button>
@@ -660,7 +660,7 @@ function PayrollDashboardPage() {
             title="Recent activity"
             action={
               <Button asChild variant="ghost" size="sm" className="text-xs">
-                <Link to="/pay/runs/audit">Audit trail</Link>
+                <Link to={"/pay/runs/audit" as never}>Audit trail</Link>
               </Button>
             }
           >
@@ -696,7 +696,7 @@ function PayrollDashboardPage() {
                 </p>
               </div>
               <Button asChild size="sm" variant="ghost" className="w-full text-primary">
-                <Link to="/pay/ai">
+                <Link to={"/pay/ai" as never}>
                   Open AI assistant <ArrowRight className="ml-1 h-3 w-3" />
                 </Link>
               </Button>
@@ -736,7 +736,7 @@ function PayrollDashboardPage() {
                   Next filing: <strong>ESI · Aug 15</strong>
                 </p>
                 <Button asChild variant="link" size="sm" className="h-auto p-0 text-xs">
-                  <Link to="/pay/compliance/calendar">See calendar</Link>
+                  <Link to={"/pay/compliance/calendar" as never}>See calendar</Link>
                 </Button>
               </div>
             </div>

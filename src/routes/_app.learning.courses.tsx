@@ -54,7 +54,7 @@ function CoursesPage() {
         title="Learning"
         description="Grow your skills with company-curated courses and required training."
         breadcrumbs={[{ label: "Workplace" }, { label: "Learning" }, { label: "Courses" }]}
-        actions={<Button asChild variant="outline" size="sm"><Link to="/learning/certifications"><Award className="mr-1.5 h-3.5 w-3.5" /> Certifications</Link></Button>}
+        actions={<Button asChild variant="outline" size="sm"><Link to={"/learning/certifications" as never}><Award className="mr-1.5 h-3.5 w-3.5" /> Certifications</Link></Button>}
       />
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">

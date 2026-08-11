@@ -63,12 +63,12 @@ export function UserMenu() {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to="/settings/preferences">
+          <Link to={"/settings/preferences" as never}>
             <Settings className="mr-2 h-4 w-4" /> Preferences
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link to="/helpdesk/knowledge">
+          <Link to={"/helpdesk/knowledge" as never}>
             <HelpCircle className="mr-2 h-4 w-4" /> Help & Support
           </Link>
         </DropdownMenuItem>
