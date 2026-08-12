@@ -197,6 +197,8 @@ export const essService = {
   uploadDocument,
   deleteDocument,
   getAttendance,
+  getTodayAttendance,
+  getAttendanceSummary,
   clockIn,
   clockOut,
   getTimesheets,
