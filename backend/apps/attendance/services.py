@@ -22,19 +22,10 @@ class AttendanceConflict(APIException):
 def clock_in(employee: Employee, location: str = "") -> AttendancePunch:
     """Create/complete today's punch. Rejects a second clock-in."""
     today = timezone.localdate()
-    punch, _ = (
-        AttendancePunch.objects.select_for_update()
-        .get_or_create(
-            employee=employee,
-            date=today,
-            defaults={"status": AttendancePunch.Status.PRESENT, "location": location},
-        )
-        if False
-        else AttendancePunch.objects.get_or_create(
-            employee=employee,
-            date=today,
-            defaults={"status": AttendancePunch.Status.PRESENT, "location": location},
-        )
+    punch, _ = AttendancePunch.objects.get_or_create(
+        employee=employee,
+        date=today,
+        defaults={"status": AttendancePunch.Status.PRESENT, "location": location},
     )
     if punch.clock_in:
         raise AttendanceConflict("You have already clocked in today.")
