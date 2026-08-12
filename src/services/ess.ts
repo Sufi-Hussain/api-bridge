@@ -76,6 +76,32 @@ async function getAttendance(days = 30): Promise<AttendancePunch[]> {
   return unwrapList<AttendancePunch>(raw, (r) => camelizeKeys<AttendancePunch>(r));
 }
 
+async function getTodayAttendance(): Promise<AttendancePunch | null> {
+  const raw = await apiGet<any>("/api/attendance/punches/today/");
+  if (!raw || Object.keys(raw).length === 0) return null;
+  return camelizeKeys<AttendancePunch>(raw);
+}
+
+export interface AttendanceSummary {
+  days: number;
+  present: number;
+  wfh: number;
+  absent: number;
+  leave: number;
+  halfDay: number;
+  lateArrivals: number;
+  earlyDepartures: number;
+  totalHours: string;
+  avgHours: string;
+  overtimeHours: string;
+  attendanceRate: number;
+}
+
+async function getAttendanceSummary(days = 30): Promise<AttendanceSummary> {
+  const raw = await apiGet<any>("/api/attendance/punches/summary/", { params: { days } });
+  return camelizeKeys<AttendanceSummary>(raw);
+}
+
 async function clockIn(payload: Partial<AttendancePunch> = {}): Promise<AttendancePunch> {
   const raw = await apiPost<any>("/api/attendance/punches/clock-in/", snakeizeKeys(payload));
   return camelizeKeys<AttendancePunch>(raw);
