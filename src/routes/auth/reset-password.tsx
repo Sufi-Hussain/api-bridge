@@ -25,7 +25,7 @@ function ResetPasswordPage() {
     setBusy(true);
     try {
       await authExtras.resetPassword(token, pw);
-      nav({ to: "/auth/login" });
+      nav({ to: "/auth/login", search: { redirect: "/" } });
     } catch (err: any) {
       setError(err?.message ?? "Reset failed — link may be expired");
     } finally {

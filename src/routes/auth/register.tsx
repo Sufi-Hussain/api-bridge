@@ -52,7 +52,7 @@ function RegisterPage() {
         lastName: form.lastName,
         organizationId: form.organizationId || undefined,
       });
-      nav({ to: "/auth/verify-email", search: { email: form.email } });
+      nav({ to: "/auth/verify-email", search: { email: form.email, token: "" } });
     } catch (err: any) {
       setError(err?.message ?? "Registration failed");
     } finally {
@@ -99,7 +99,7 @@ function RegisterPage() {
         </button>
       </form>
       <p className="mt-4 text-sm">
-        Already have an account? <Link to="/auth/login">Sign in</Link>
+        Already have an account? <Link to="/auth/login" search={{ redirect: "/" }}>Sign in</Link>
       </p>
     </div>
   );
