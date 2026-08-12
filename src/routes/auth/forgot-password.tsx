@@ -49,7 +49,7 @@ function ForgotPasswordPage() {
         </form>
       )}
       <p className="mt-4 text-sm">
-        <Link to="/auth/login">Back to sign in</Link>
+        <Link to="/auth/login" search={{ redirect: "/" }}>Back to sign in</Link>
       </p>
     </div>
   );

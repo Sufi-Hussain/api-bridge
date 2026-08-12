@@ -31,7 +31,6 @@ const USE_MOCKS = false;
 async function getProfile(): Promise<EmployeeProfile> {
   if (USE_MOCKS) return mock.getProfile();
   const raw = await apiGet<any>("/api/ess/profile");
-  console.log(raw)
   // The backend response is a flat DRF representation; camelize and merge
   // over the mock skeleton so any nested UI-only fields (skills endorsements,
   // family arrays, etc.) that the backend doesn't return still have a value.
@@ -74,6 +73,32 @@ async function getAttendance(days = 30): Promise<AttendancePunch[]> {
   if (USE_MOCKS) return mock.getAttendance(days);
   const raw = await apiGet<any>("/api/attendance/punches/", { params: { page_size: days } });
   return unwrapList<AttendancePunch>(raw, (r) => camelizeKeys<AttendancePunch>(r));
+}
+
+async function getTodayAttendance(): Promise<AttendancePunch | null> {
+  const raw = await apiGet<any>("/api/attendance/punches/today/");
+  if (!raw || Object.keys(raw).length === 0) return null;
+  return camelizeKeys<AttendancePunch>(raw);
+}
+
+export interface AttendanceSummary {
+  days: number;
+  present: number;
+  wfh: number;
+  absent: number;
+  leave: number;
+  halfDay: number;
+  lateArrivals: number;
+  earlyDepartures: number;
+  totalHours: string;
+  avgHours: string;
+  overtimeHours: string;
+  attendanceRate: number;
+}
+
+async function getAttendanceSummary(days = 30): Promise<AttendanceSummary> {
+  const raw = await apiGet<any>("/api/attendance/punches/summary/", { params: { days } });
+  return camelizeKeys<AttendanceSummary>(raw);
 }
 
 async function clockIn(payload: Partial<AttendancePunch> = {}): Promise<AttendancePunch> {
@@ -171,6 +196,8 @@ export const essService = {
   uploadDocument,
   deleteDocument,
   getAttendance,
+  getTodayAttendance,
+  getAttendanceSummary,
   clockIn,
   clockOut,
   getTimesheets,

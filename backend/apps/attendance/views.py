@@ -11,6 +11,8 @@ from .selectors import my_punches, my_timesheets
 from .serializers import AttendancePunchSerializer, TimesheetEntrySerializer
 from .services import clock_in as _clock_in
 from .services import clock_out as _clock_out
+from .services import summary as _summary
+from .services import today_punch as _today_punch
 
 
 class AttendancePunchViewSet(viewsets.ReadOnlyModelViewSet):
@@ -31,7 +33,21 @@ class AttendancePunchViewSet(viewsets.ReadOnlyModelViewSet):
     def clock_out(self, request):
         emp = get_employee_for_user(request.user)
         punch = _clock_out(emp)
+        return Response(AttendancePunchSerializer(punch).data)
+
+    @action(detail=False, methods=["get"], url_path="today")
+    def today(self, request):
+        punch = _today_punch(get_employee_for_user(request.user))
         return Response(AttendancePunchSerializer(punch).data if punch else {})
+
+    @action(detail=False, methods=["get"], url_path="summary")
+    def summary(self, request):
+        days = request.query_params.get("days", 30)
+        try:
+            days = int(days)
+        except (TypeError, ValueError):
+            days = 30
+        return Response(_summary(get_employee_for_user(request.user), days))
 
 
 class TimesheetEntryViewSet(viewsets.ModelViewSet):

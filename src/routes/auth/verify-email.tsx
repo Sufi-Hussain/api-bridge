@@ -54,7 +54,7 @@ function VerifyEmailPage() {
         {state === "idle" && email && (
           <button className="underline" onClick={resend}>Resend email</button>
         )}
-        <Link to="/auth/login">Go to sign in</Link>
+        <Link to="/auth/login" search={{ redirect: "/" }}>Go to sign in</Link>
       </div>
     </div>
   );
