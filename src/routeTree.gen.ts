@@ -24,16 +24,21 @@ import { Route as AuthUnauthorizedRouteImport } from './routes/auth/unauthorized
 import { Route as AuthVerifyEmailRouteImport } from './routes/auth/verify-email'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppAssetsDevicesRouteImport } from './routes/_app.assets.devices'
+import { Route as AppAssetsRequestsRouteImport } from './routes/_app.assets.requests'
 import { Route as AppAttendanceHistoryRouteImport } from './routes/_app.attendance.history'
 import { Route as AppAttendanceTimesheetsRouteImport } from './routes/_app.attendance.timesheets'
 import { Route as AppAttendanceTodayRouteImport } from './routes/_app.attendance.today'
+import { Route as AppBenefitsIndexRouteImport } from './routes/_app.benefits.index'
 import { Route as AppBenefitsExpensesRouteImport } from './routes/_app.benefits.expenses'
+import { Route as AppBenefitsInsuranceRouteImport } from './routes/_app.benefits.insurance'
 import { Route as AppCareerGoalsRouteImport } from './routes/_app.career.goals'
 import { Route as AppHelpdeskTicketsRouteImport } from './routes/_app.helpdesk.tickets'
 import { Route as AppHrIndexRouteImport } from './routes/_app.hr.index'
 import { Route as AppHrApprovalsRouteImport } from './routes/_app.hr.approvals'
 import { Route as AppHrEmployeesRouteImport } from './routes/_app.hr.employees'
+import { Route as AppLearningCertificationsRouteImport } from './routes/_app.learning.certifications'
 import { Route as AppLearningCoursesRouteImport } from './routes/_app.learning.courses'
+import { Route as AppLearningProgressRouteImport } from './routes/_app.learning.progress'
 import { Route as AppLeaveIndexRouteImport } from './routes/_app.leave.index'
 import { Route as AppLeaveApplyRouteImport } from './routes/_app.leave.apply'
 import { Route as AppLeaveHistoryRouteImport } from './routes/_app.leave.history'
@@ -156,6 +161,11 @@ const AppAssetsDevicesRoute = AppAssetsDevicesRouteImport.update({
   path: '/assets/devices',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAssetsRequestsRoute = AppAssetsRequestsRouteImport.update({
+  id: '/assets/requests',
+  path: '/assets/requests',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAttendanceHistoryRoute = AppAttendanceHistoryRouteImport.update({
   id: '/attendance/history',
   path: '/attendance/history',
@@ -171,9 +181,19 @@ const AppAttendanceTodayRoute = AppAttendanceTodayRouteImport.update({
   path: '/attendance/today',
   getParentRoute: () => AppRoute,
 } as any)
+const AppBenefitsIndexRoute = AppBenefitsIndexRouteImport.update({
+  id: '/benefits/',
+  path: '/benefits/',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppBenefitsExpensesRoute = AppBenefitsExpensesRouteImport.update({
   id: '/benefits/expenses',
   path: '/benefits/expenses',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBenefitsInsuranceRoute = AppBenefitsInsuranceRouteImport.update({
+  id: '/benefits/insurance',
+  path: '/benefits/insurance',
   getParentRoute: () => AppRoute,
 } as any)
 const AppCareerGoalsRoute = AppCareerGoalsRouteImport.update({
@@ -201,9 +221,20 @@ const AppHrEmployeesRoute = AppHrEmployeesRouteImport.update({
   path: '/hr/employees',
   getParentRoute: () => AppRoute,
 } as any)
+const AppLearningCertificationsRoute =
+  AppLearningCertificationsRouteImport.update({
+    id: '/learning/certifications',
+    path: '/learning/certifications',
+    getParentRoute: () => AppRoute,
+  } as any)
 const AppLearningCoursesRoute = AppLearningCoursesRouteImport.update({
   id: '/learning/courses',
   path: '/learning/courses',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppLearningProgressRoute = AppLearningProgressRouteImport.update({
+  id: '/learning/progress',
+  path: '/learning/progress',
   getParentRoute: () => AppRoute,
 } as any)
 const AppLeaveIndexRoute = AppLeaveIndexRouteImport.update({
@@ -470,15 +501,19 @@ export interface FileRoutesByFullPath {
   '/auth/unauthorized': typeof AuthUnauthorizedRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/assets/devices': typeof AppAssetsDevicesRoute
+  '/assets/requests': typeof AppAssetsRequestsRoute
   '/attendance/history': typeof AppAttendanceHistoryRoute
   '/attendance/timesheets': typeof AppAttendanceTimesheetsRoute
   '/attendance/today': typeof AppAttendanceTodayRoute
   '/benefits/expenses': typeof AppBenefitsExpensesRoute
+  '/benefits/insurance': typeof AppBenefitsInsuranceRoute
   '/career/goals': typeof AppCareerGoalsRoute
   '/helpdesk/tickets': typeof AppHelpdeskTicketsRoute
   '/hr/approvals': typeof AppHrApprovalsRoute
   '/hr/employees': typeof AppHrEmployeesRouteWithChildren
+  '/learning/certifications': typeof AppLearningCertificationsRoute
   '/learning/courses': typeof AppLearningCoursesRoute
+  '/learning/progress': typeof AppLearningProgressRoute
   '/leave/apply': typeof AppLeaveApplyRoute
   '/leave/history': typeof AppLeaveHistoryRoute
   '/leave/holidays': typeof AppLeaveHolidaysRoute
@@ -490,6 +525,7 @@ export interface FileRoutesByFullPath {
   '/profile/personal': typeof AppProfilePersonalRoute
   '/settings/privacy': typeof AppSettingsPrivacyRoute
   '/admin/': typeof AppAdminIndexRoute
+  '/benefits/': typeof AppBenefitsIndexRoute
   '/hr/': typeof AppHrIndexRoute
   '/leave/': typeof AppLeaveIndexRoute
   '/payroll/': typeof AppPayrollIndexRoute
@@ -543,15 +579,19 @@ export interface FileRoutesByTo {
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/': typeof AppIndexRoute
   '/assets/devices': typeof AppAssetsDevicesRoute
+  '/assets/requests': typeof AppAssetsRequestsRoute
   '/attendance/history': typeof AppAttendanceHistoryRoute
   '/attendance/timesheets': typeof AppAttendanceTimesheetsRoute
   '/attendance/today': typeof AppAttendanceTodayRoute
   '/benefits/expenses': typeof AppBenefitsExpensesRoute
+  '/benefits/insurance': typeof AppBenefitsInsuranceRoute
   '/career/goals': typeof AppCareerGoalsRoute
   '/helpdesk/tickets': typeof AppHelpdeskTicketsRoute
   '/hr/approvals': typeof AppHrApprovalsRoute
   '/hr/employees': typeof AppHrEmployeesRouteWithChildren
+  '/learning/certifications': typeof AppLearningCertificationsRoute
   '/learning/courses': typeof AppLearningCoursesRoute
+  '/learning/progress': typeof AppLearningProgressRoute
   '/leave/apply': typeof AppLeaveApplyRoute
   '/leave/history': typeof AppLeaveHistoryRoute
   '/leave/holidays': typeof AppLeaveHolidaysRoute
@@ -563,6 +603,7 @@ export interface FileRoutesByTo {
   '/profile/personal': typeof AppProfilePersonalRoute
   '/settings/privacy': typeof AppSettingsPrivacyRoute
   '/admin': typeof AppAdminIndexRoute
+  '/benefits': typeof AppBenefitsIndexRoute
   '/hr': typeof AppHrIndexRoute
   '/leave': typeof AppLeaveIndexRoute
   '/payroll': typeof AppPayrollIndexRoute
@@ -618,15 +659,19 @@ export interface FileRoutesById {
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/_app/': typeof AppIndexRoute
   '/_app/assets/devices': typeof AppAssetsDevicesRoute
+  '/_app/assets/requests': typeof AppAssetsRequestsRoute
   '/_app/attendance/history': typeof AppAttendanceHistoryRoute
   '/_app/attendance/timesheets': typeof AppAttendanceTimesheetsRoute
   '/_app/attendance/today': typeof AppAttendanceTodayRoute
   '/_app/benefits/expenses': typeof AppBenefitsExpensesRoute
+  '/_app/benefits/insurance': typeof AppBenefitsInsuranceRoute
   '/_app/career/goals': typeof AppCareerGoalsRoute
   '/_app/helpdesk/tickets': typeof AppHelpdeskTicketsRoute
   '/_app/hr/approvals': typeof AppHrApprovalsRoute
   '/_app/hr/employees': typeof AppHrEmployeesRouteWithChildren
+  '/_app/learning/certifications': typeof AppLearningCertificationsRoute
   '/_app/learning/courses': typeof AppLearningCoursesRoute
+  '/_app/learning/progress': typeof AppLearningProgressRoute
   '/_app/leave/apply': typeof AppLeaveApplyRoute
   '/_app/leave/history': typeof AppLeaveHistoryRoute
   '/_app/leave/holidays': typeof AppLeaveHolidaysRoute
@@ -638,6 +683,7 @@ export interface FileRoutesById {
   '/_app/profile/personal': typeof AppProfilePersonalRoute
   '/_app/settings/privacy': typeof AppSettingsPrivacyRoute
   '/_app/admin/': typeof AppAdminIndexRoute
+  '/_app/benefits/': typeof AppBenefitsIndexRoute
   '/_app/hr/': typeof AppHrIndexRoute
   '/_app/leave/': typeof AppLeaveIndexRoute
   '/_app/payroll/': typeof AppPayrollIndexRoute
@@ -693,15 +739,19 @@ export interface FileRouteTypes {
     | '/auth/unauthorized'
     | '/auth/verify-email'
     | '/assets/devices'
+    | '/assets/requests'
     | '/attendance/history'
     | '/attendance/timesheets'
     | '/attendance/today'
     | '/benefits/expenses'
+    | '/benefits/insurance'
     | '/career/goals'
     | '/helpdesk/tickets'
     | '/hr/approvals'
     | '/hr/employees'
+    | '/learning/certifications'
     | '/learning/courses'
+    | '/learning/progress'
     | '/leave/apply'
     | '/leave/history'
     | '/leave/holidays'
@@ -713,6 +763,7 @@ export interface FileRouteTypes {
     | '/profile/personal'
     | '/settings/privacy'
     | '/admin/'
+    | '/benefits/'
     | '/hr/'
     | '/leave/'
     | '/payroll/'
@@ -766,15 +817,19 @@ export interface FileRouteTypes {
     | '/auth/verify-email'
     | '/'
     | '/assets/devices'
+    | '/assets/requests'
     | '/attendance/history'
     | '/attendance/timesheets'
     | '/attendance/today'
     | '/benefits/expenses'
+    | '/benefits/insurance'
     | '/career/goals'
     | '/helpdesk/tickets'
     | '/hr/approvals'
     | '/hr/employees'
+    | '/learning/certifications'
     | '/learning/courses'
+    | '/learning/progress'
     | '/leave/apply'
     | '/leave/history'
     | '/leave/holidays'
@@ -786,6 +841,7 @@ export interface FileRouteTypes {
     | '/profile/personal'
     | '/settings/privacy'
     | '/admin'
+    | '/benefits'
     | '/hr'
     | '/leave'
     | '/payroll'
@@ -840,15 +896,19 @@ export interface FileRouteTypes {
     | '/auth/verify-email'
     | '/_app/'
     | '/_app/assets/devices'
+    | '/_app/assets/requests'
     | '/_app/attendance/history'
     | '/_app/attendance/timesheets'
     | '/_app/attendance/today'
     | '/_app/benefits/expenses'
+    | '/_app/benefits/insurance'
     | '/_app/career/goals'
     | '/_app/helpdesk/tickets'
     | '/_app/hr/approvals'
     | '/_app/hr/employees'
+    | '/_app/learning/certifications'
     | '/_app/learning/courses'
+    | '/_app/learning/progress'
     | '/_app/leave/apply'
     | '/_app/leave/history'
     | '/_app/leave/holidays'
@@ -860,6 +920,7 @@ export interface FileRouteTypes {
     | '/_app/profile/personal'
     | '/_app/settings/privacy'
     | '/_app/admin/'
+    | '/_app/benefits/'
     | '/_app/hr/'
     | '/_app/leave/'
     | '/_app/payroll/'
@@ -1019,6 +1080,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAssetsDevicesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/assets/requests': {
+      id: '/_app/assets/requests'
+      path: '/assets/requests'
+      fullPath: '/assets/requests'
+      preLoaderRoute: typeof AppAssetsRequestsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/attendance/history': {
       id: '/_app/attendance/history'
       path: '/attendance/history'
@@ -1040,11 +1108,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAttendanceTodayRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/benefits/': {
+      id: '/_app/benefits/'
+      path: '/benefits'
+      fullPath: '/benefits/'
+      preLoaderRoute: typeof AppBenefitsIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/benefits/expenses': {
       id: '/_app/benefits/expenses'
       path: '/benefits/expenses'
       fullPath: '/benefits/expenses'
       preLoaderRoute: typeof AppBenefitsExpensesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/benefits/insurance': {
+      id: '/_app/benefits/insurance'
+      path: '/benefits/insurance'
+      fullPath: '/benefits/insurance'
+      preLoaderRoute: typeof AppBenefitsInsuranceRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/career/goals': {
@@ -1082,11 +1164,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppHrEmployeesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/learning/certifications': {
+      id: '/_app/learning/certifications'
+      path: '/learning/certifications'
+      fullPath: '/learning/certifications'
+      preLoaderRoute: typeof AppLearningCertificationsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/learning/courses': {
       id: '/_app/learning/courses'
       path: '/learning/courses'
       fullPath: '/learning/courses'
       preLoaderRoute: typeof AppLearningCoursesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/learning/progress': {
+      id: '/_app/learning/progress'
+      path: '/learning/progress'
+      fullPath: '/learning/progress'
+      preLoaderRoute: typeof AppLearningProgressRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/leave/': {
@@ -1439,15 +1535,19 @@ interface AppRouteChildren {
   AppNotificationsRoute: typeof AppNotificationsRoute
   AppIndexRoute: typeof AppIndexRoute
   AppAssetsDevicesRoute: typeof AppAssetsDevicesRoute
+  AppAssetsRequestsRoute: typeof AppAssetsRequestsRoute
   AppAttendanceHistoryRoute: typeof AppAttendanceHistoryRoute
   AppAttendanceTimesheetsRoute: typeof AppAttendanceTimesheetsRoute
   AppAttendanceTodayRoute: typeof AppAttendanceTodayRoute
   AppBenefitsExpensesRoute: typeof AppBenefitsExpensesRoute
+  AppBenefitsInsuranceRoute: typeof AppBenefitsInsuranceRoute
   AppCareerGoalsRoute: typeof AppCareerGoalsRoute
   AppHelpdeskTicketsRoute: typeof AppHelpdeskTicketsRoute
   AppHrApprovalsRoute: typeof AppHrApprovalsRoute
   AppHrEmployeesRoute: typeof AppHrEmployeesRouteWithChildren
+  AppLearningCertificationsRoute: typeof AppLearningCertificationsRoute
   AppLearningCoursesRoute: typeof AppLearningCoursesRoute
+  AppLearningProgressRoute: typeof AppLearningProgressRoute
   AppLeaveApplyRoute: typeof AppLeaveApplyRoute
   AppLeaveHistoryRoute: typeof AppLeaveHistoryRoute
   AppLeaveHolidaysRoute: typeof AppLeaveHolidaysRoute
@@ -1459,6 +1559,7 @@ interface AppRouteChildren {
   AppProfilePersonalRoute: typeof AppProfilePersonalRoute
   AppSettingsPrivacyRoute: typeof AppSettingsPrivacyRoute
   AppAdminIndexRoute: typeof AppAdminIndexRoute
+  AppBenefitsIndexRoute: typeof AppBenefitsIndexRoute
   AppHrIndexRoute: typeof AppHrIndexRoute
   AppLeaveIndexRoute: typeof AppLeaveIndexRoute
   AppPayrollIndexRoute: typeof AppPayrollIndexRoute
@@ -1504,15 +1605,19 @@ const AppRouteChildren: AppRouteChildren = {
   AppNotificationsRoute: AppNotificationsRoute,
   AppIndexRoute: AppIndexRoute,
   AppAssetsDevicesRoute: AppAssetsDevicesRoute,
+  AppAssetsRequestsRoute: AppAssetsRequestsRoute,
   AppAttendanceHistoryRoute: AppAttendanceHistoryRoute,
   AppAttendanceTimesheetsRoute: AppAttendanceTimesheetsRoute,
   AppAttendanceTodayRoute: AppAttendanceTodayRoute,
   AppBenefitsExpensesRoute: AppBenefitsExpensesRoute,
+  AppBenefitsInsuranceRoute: AppBenefitsInsuranceRoute,
   AppCareerGoalsRoute: AppCareerGoalsRoute,
   AppHelpdeskTicketsRoute: AppHelpdeskTicketsRoute,
   AppHrApprovalsRoute: AppHrApprovalsRoute,
   AppHrEmployeesRoute: AppHrEmployeesRouteWithChildren,
+  AppLearningCertificationsRoute: AppLearningCertificationsRoute,
   AppLearningCoursesRoute: AppLearningCoursesRoute,
+  AppLearningProgressRoute: AppLearningProgressRoute,
   AppLeaveApplyRoute: AppLeaveApplyRoute,
   AppLeaveHistoryRoute: AppLeaveHistoryRoute,
   AppLeaveHolidaysRoute: AppLeaveHolidaysRoute,
@@ -1524,6 +1629,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppProfilePersonalRoute: AppProfilePersonalRoute,
   AppSettingsPrivacyRoute: AppSettingsPrivacyRoute,
   AppAdminIndexRoute: AppAdminIndexRoute,
+  AppBenefitsIndexRoute: AppBenefitsIndexRoute,
   AppHrIndexRoute: AppHrIndexRoute,
   AppLeaveIndexRoute: AppLeaveIndexRoute,
   AppPayrollIndexRoute: AppPayrollIndexRoute,
