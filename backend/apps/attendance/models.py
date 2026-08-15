@@ -43,5 +43,8 @@ class TimesheetEntry(UUIDTimestampedModel):
     project = models.CharField(max_length=128)
     task = models.CharField(max_length=128)
     hours = models.DecimalField(max_digits=5, decimal_places=2)
+    regular_hours = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    overtime_hours = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     billable = models.BooleanField(default=False)
+    notes = models.TextField(blank=True)
     status = models.CharField(max_length=16, choices=Status.choices, default=Status.DRAFT)

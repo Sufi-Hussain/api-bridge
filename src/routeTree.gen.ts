@@ -25,6 +25,7 @@ import { Route as AuthVerifyEmailRouteImport } from './routes/auth/verify-email'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
 import { Route as AppAssetsDevicesRouteImport } from './routes/_app.assets.devices'
 import { Route as AppAttendanceHistoryRouteImport } from './routes/_app.attendance.history'
+import { Route as AppAttendanceTimesheetsRouteImport } from './routes/_app.attendance.timesheets'
 import { Route as AppAttendanceTodayRouteImport } from './routes/_app.attendance.today'
 import { Route as AppBenefitsExpensesRouteImport } from './routes/_app.benefits.expenses'
 import { Route as AppCareerGoalsRouteImport } from './routes/_app.career.goals'
@@ -158,6 +159,11 @@ const AppAssetsDevicesRoute = AppAssetsDevicesRouteImport.update({
 const AppAttendanceHistoryRoute = AppAttendanceHistoryRouteImport.update({
   id: '/attendance/history',
   path: '/attendance/history',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAttendanceTimesheetsRoute = AppAttendanceTimesheetsRouteImport.update({
+  id: '/attendance/timesheets',
+  path: '/attendance/timesheets',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAttendanceTodayRoute = AppAttendanceTodayRouteImport.update({
@@ -465,6 +471,7 @@ export interface FileRoutesByFullPath {
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/assets/devices': typeof AppAssetsDevicesRoute
   '/attendance/history': typeof AppAttendanceHistoryRoute
+  '/attendance/timesheets': typeof AppAttendanceTimesheetsRoute
   '/attendance/today': typeof AppAttendanceTodayRoute
   '/benefits/expenses': typeof AppBenefitsExpensesRoute
   '/career/goals': typeof AppCareerGoalsRoute
@@ -537,6 +544,7 @@ export interface FileRoutesByTo {
   '/': typeof AppIndexRoute
   '/assets/devices': typeof AppAssetsDevicesRoute
   '/attendance/history': typeof AppAttendanceHistoryRoute
+  '/attendance/timesheets': typeof AppAttendanceTimesheetsRoute
   '/attendance/today': typeof AppAttendanceTodayRoute
   '/benefits/expenses': typeof AppBenefitsExpensesRoute
   '/career/goals': typeof AppCareerGoalsRoute
@@ -611,6 +619,7 @@ export interface FileRoutesById {
   '/_app/': typeof AppIndexRoute
   '/_app/assets/devices': typeof AppAssetsDevicesRoute
   '/_app/attendance/history': typeof AppAttendanceHistoryRoute
+  '/_app/attendance/timesheets': typeof AppAttendanceTimesheetsRoute
   '/_app/attendance/today': typeof AppAttendanceTodayRoute
   '/_app/benefits/expenses': typeof AppBenefitsExpensesRoute
   '/_app/career/goals': typeof AppCareerGoalsRoute
@@ -685,6 +694,7 @@ export interface FileRouteTypes {
     | '/auth/verify-email'
     | '/assets/devices'
     | '/attendance/history'
+    | '/attendance/timesheets'
     | '/attendance/today'
     | '/benefits/expenses'
     | '/career/goals'
@@ -757,6 +767,7 @@ export interface FileRouteTypes {
     | '/'
     | '/assets/devices'
     | '/attendance/history'
+    | '/attendance/timesheets'
     | '/attendance/today'
     | '/benefits/expenses'
     | '/career/goals'
@@ -830,6 +841,7 @@ export interface FileRouteTypes {
     | '/_app/'
     | '/_app/assets/devices'
     | '/_app/attendance/history'
+    | '/_app/attendance/timesheets'
     | '/_app/attendance/today'
     | '/_app/benefits/expenses'
     | '/_app/career/goals'
@@ -1012,6 +1024,13 @@ declare module '@tanstack/react-router' {
       path: '/attendance/history'
       fullPath: '/attendance/history'
       preLoaderRoute: typeof AppAttendanceHistoryRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/attendance/timesheets': {
+      id: '/_app/attendance/timesheets'
+      path: '/attendance/timesheets'
+      fullPath: '/attendance/timesheets'
+      preLoaderRoute: typeof AppAttendanceTimesheetsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/attendance/today': {
@@ -1421,6 +1440,7 @@ interface AppRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
   AppAssetsDevicesRoute: typeof AppAssetsDevicesRoute
   AppAttendanceHistoryRoute: typeof AppAttendanceHistoryRoute
+  AppAttendanceTimesheetsRoute: typeof AppAttendanceTimesheetsRoute
   AppAttendanceTodayRoute: typeof AppAttendanceTodayRoute
   AppBenefitsExpensesRoute: typeof AppBenefitsExpensesRoute
   AppCareerGoalsRoute: typeof AppCareerGoalsRoute
@@ -1485,6 +1505,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppIndexRoute: AppIndexRoute,
   AppAssetsDevicesRoute: AppAssetsDevicesRoute,
   AppAttendanceHistoryRoute: AppAttendanceHistoryRoute,
+  AppAttendanceTimesheetsRoute: AppAttendanceTimesheetsRoute,
   AppAttendanceTodayRoute: AppAttendanceTodayRoute,
   AppBenefitsExpensesRoute: AppBenefitsExpensesRoute,
   AppCareerGoalsRoute: AppCareerGoalsRoute,

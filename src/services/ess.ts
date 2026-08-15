@@ -116,6 +116,14 @@ async function getTimesheets(): Promise<TimesheetEntry[]> {
   const raw = await apiGet<any>("/api/attendance/timesheets/");
   return unwrapList<TimesheetEntry>(raw, (r) => camelizeKeys<TimesheetEntry>(r));
 }
+
+async function submitTimesheets(start: string, end: string): Promise<{ submitted: number }> {
+  return apiPost(`/api/attendance/timesheets/submit/`, { start, end });
+}
+
+async function getTimesheetSummary(start: string, end: string): Promise<Record<string, string | number>> {
+  return apiGet(`/api/attendance/timesheets/summary/`, { params: { start, end } });
+}
 const timesheetsApi = crud<TimesheetEntry>("/api/attendance/timesheets/");
 
 async function getLeaveRequests(): Promise<LeaveRequest[]> {
@@ -250,6 +258,8 @@ export const essService = {
   clockIn,
   clockOut,
   getTimesheets,
+  getTimesheetSummary,
+  submitTimesheets,
   addTimesheet: timesheetsApi.create,
   updateTimesheet: timesheetsApi.update,
   deleteTimesheet: timesheetsApi.remove,

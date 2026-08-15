@@ -484,6 +484,8 @@ class Command(BaseCommand):
                         project=rng.choice(PROJECTS),
                         task=rng.choice(["Implementation", "Code review", "Planning", "Support"]),
                         hours=Decimal(str(round(rng.uniform(4, 8), 1))),
+                        regular_hours=Decimal(str(round(min(hours, Decimal("8")), 2))),
+                        overtime_hours=Decimal(str(round(max(hours - Decimal("8"), Decimal("0")), 2))),
                         billable=rng.random() < 0.7,
                         status=rng.choice(["draft", "submitted", "approved"]),
                     ))
