@@ -230,14 +230,18 @@ const list = async <T>(url: string): Promise<T[]> =>
   unwrapList<T>(await apiGet<any>(url), (r) => camelizeKeys<T>(r));
 
 const getLeaveBalances = () => list<any>("/api/leave/requests/balances/");
-const getBenefits = () => list<any>("/api/benefits/enrollments/");
+const getBenefits = () => list<any>("/api/benefits/benefits/");
+const getMyBenefits = () => list<any>("/api/benefits/enrollments/");
 const getExpenses = () => list<any>("/api/benefits/expenses/");
 const getTravel = () => list<any>("/api/benefits/travel/");
 const getLoans = () => list<any>("/api/benefits/loans/");
 const getAssets = () => list<any>("/api/assets/assets/");
 const getAssetRequests = () => list<any>("/api/assets/asset-requests/");
+const createAssetRequest = (body: Record<string, unknown>) => apiPost<any>("/api/assets/asset-requests/", snakeizeKeys(body)).then((r) => camelizeKeys<any>(r));
 const getCourses = () => list<any>("/api/learning/courses/");
 const getCertifications = () => list<any>("/api/learning/certifications/");
+const createEnrollment = (courseId: string) => apiPost<any>("/api/learning/enrollments/", { course_id: courseId }).then((r) => camelizeKeys<any>(r));
+const updateEnrollment = (id: string, body: Record<string, unknown>) => apiPatch<any>(`/api/learning/enrollments/${id}/`, snakeizeKeys(body)).then((r) => camelizeKeys<any>(r));
 const getGoals = () => list<any>("/api/performance/goals/");
 const getReviews = () => list<any>("/api/performance/reviews/");
 const getDirectory = () => list<any>("/api/ess/directory/");
@@ -286,13 +290,17 @@ export const essService = {
 
   // Backend-backed (benefits / expenses / assets / learning / performance)
   getLeaveBalances,
-  getBenefits,
+  getBenefits: getMyBenefits,
+  getAvailableBenefits: getBenefits,
   getExpenses,
   getTravel,
   getLoans,
   getAssets,
   getAssetRequests,
+  createAssetRequest,
   getCourses,
+  createEnrollment,
+  updateEnrollment,
   getCertifications,
   getGoals,
   getReviews,
