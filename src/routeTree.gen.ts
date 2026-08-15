@@ -39,7 +39,10 @@ import { Route as AppLeaveHistoryRouteImport } from './routes/_app.leave.history
 import { Route as AppLeaveHolidaysRouteImport } from './routes/_app.leave.holidays'
 import { Route as AppOrgDirectoryRouteImport } from './routes/_app.org.directory'
 import { Route as AppPayrollIndexRouteImport } from './routes/_app.payroll.index'
+import { Route as AppPayrollBankDetailsRouteImport } from './routes/_app/payroll/bank-details'
 import { Route as AppPayrollPayslipsRouteImport } from './routes/_app.payroll.payslips'
+import { Route as AppPayrollSalaryRouteImport } from './routes/_app/payroll/salary'
+import { Route as AppPayrollTaxDocumentsRouteImport } from './routes/_app/payroll/tax-documents'
 import { Route as AppProfilePersonalRouteImport } from './routes/_app.profile.personal'
 import { Route as AppSettingsIndexRouteImport } from './routes/_app.settings.index'
 import { Route as AppSettingsPrivacyRouteImport } from './routes/_app.settings.privacy'
@@ -227,9 +230,24 @@ const AppPayrollIndexRoute = AppPayrollIndexRouteImport.update({
   path: '/payroll/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppPayrollBankDetailsRoute = AppPayrollBankDetailsRouteImport.update({
+  id: '/payroll/bank-details',
+  path: '/payroll/bank-details',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppPayrollPayslipsRoute = AppPayrollPayslipsRouteImport.update({
   id: '/payroll/payslips',
   path: '/payroll/payslips',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPayrollSalaryRoute = AppPayrollSalaryRouteImport.update({
+  id: '/payroll/salary',
+  path: '/payroll/salary',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPayrollTaxDocumentsRoute = AppPayrollTaxDocumentsRouteImport.update({
+  id: '/payroll/tax-documents',
+  path: '/payroll/tax-documents',
   getParentRoute: () => AppRoute,
 } as any)
 const AppProfilePersonalRoute = AppProfilePersonalRouteImport.update({
@@ -458,7 +476,10 @@ export interface FileRoutesByFullPath {
   '/leave/history': typeof AppLeaveHistoryRoute
   '/leave/holidays': typeof AppLeaveHolidaysRoute
   '/org/directory': typeof AppOrgDirectoryRoute
+  '/payroll/bank-details': typeof AppPayrollBankDetailsRoute
   '/payroll/payslips': typeof AppPayrollPayslipsRoute
+  '/payroll/salary': typeof AppPayrollSalaryRoute
+  '/payroll/tax-documents': typeof AppPayrollTaxDocumentsRoute
   '/profile/personal': typeof AppProfilePersonalRoute
   '/settings/privacy': typeof AppSettingsPrivacyRoute
   '/admin/': typeof AppAdminIndexRoute
@@ -527,7 +548,10 @@ export interface FileRoutesByTo {
   '/leave/history': typeof AppLeaveHistoryRoute
   '/leave/holidays': typeof AppLeaveHolidaysRoute
   '/org/directory': typeof AppOrgDirectoryRoute
+  '/payroll/bank-details': typeof AppPayrollBankDetailsRoute
   '/payroll/payslips': typeof AppPayrollPayslipsRoute
+  '/payroll/salary': typeof AppPayrollSalaryRoute
+  '/payroll/tax-documents': typeof AppPayrollTaxDocumentsRoute
   '/profile/personal': typeof AppProfilePersonalRoute
   '/settings/privacy': typeof AppSettingsPrivacyRoute
   '/admin': typeof AppAdminIndexRoute
@@ -598,7 +622,10 @@ export interface FileRoutesById {
   '/_app/leave/history': typeof AppLeaveHistoryRoute
   '/_app/leave/holidays': typeof AppLeaveHolidaysRoute
   '/_app/org/directory': typeof AppOrgDirectoryRoute
+  '/_app/payroll/bank-details': typeof AppPayrollBankDetailsRoute
   '/_app/payroll/payslips': typeof AppPayrollPayslipsRoute
+  '/_app/payroll/salary': typeof AppPayrollSalaryRoute
+  '/_app/payroll/tax-documents': typeof AppPayrollTaxDocumentsRoute
   '/_app/profile/personal': typeof AppProfilePersonalRoute
   '/_app/settings/privacy': typeof AppSettingsPrivacyRoute
   '/_app/admin/': typeof AppAdminIndexRoute
@@ -669,7 +696,10 @@ export interface FileRouteTypes {
     | '/leave/history'
     | '/leave/holidays'
     | '/org/directory'
+    | '/payroll/bank-details'
     | '/payroll/payslips'
+    | '/payroll/salary'
+    | '/payroll/tax-documents'
     | '/profile/personal'
     | '/settings/privacy'
     | '/admin/'
@@ -738,7 +768,10 @@ export interface FileRouteTypes {
     | '/leave/history'
     | '/leave/holidays'
     | '/org/directory'
+    | '/payroll/bank-details'
     | '/payroll/payslips'
+    | '/payroll/salary'
+    | '/payroll/tax-documents'
     | '/profile/personal'
     | '/settings/privacy'
     | '/admin'
@@ -808,7 +841,10 @@ export interface FileRouteTypes {
     | '/_app/leave/history'
     | '/_app/leave/holidays'
     | '/_app/org/directory'
+    | '/_app/payroll/bank-details'
     | '/_app/payroll/payslips'
+    | '/_app/payroll/salary'
+    | '/_app/payroll/tax-documents'
     | '/_app/profile/personal'
     | '/_app/settings/privacy'
     | '/_app/admin/'
@@ -1076,11 +1112,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPayrollIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/payroll/bank-details': {
+      id: '/_app/payroll/bank-details'
+      path: '/payroll/bank-details'
+      fullPath: '/payroll/bank-details'
+      preLoaderRoute: typeof AppPayrollBankDetailsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/payroll/payslips': {
       id: '/_app/payroll/payslips'
       path: '/payroll/payslips'
       fullPath: '/payroll/payslips'
       preLoaderRoute: typeof AppPayrollPayslipsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/payroll/salary': {
+      id: '/_app/payroll/salary'
+      path: '/payroll/salary'
+      fullPath: '/payroll/salary'
+      preLoaderRoute: typeof AppPayrollSalaryRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/payroll/tax-documents': {
+      id: '/_app/payroll/tax-documents'
+      path: '/payroll/tax-documents'
+      fullPath: '/payroll/tax-documents'
+      preLoaderRoute: typeof AppPayrollTaxDocumentsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/profile/personal': {
@@ -1375,7 +1432,10 @@ interface AppRouteChildren {
   AppLeaveHistoryRoute: typeof AppLeaveHistoryRoute
   AppLeaveHolidaysRoute: typeof AppLeaveHolidaysRoute
   AppOrgDirectoryRoute: typeof AppOrgDirectoryRoute
+  AppPayrollBankDetailsRoute: typeof AppPayrollBankDetailsRoute
   AppPayrollPayslipsRoute: typeof AppPayrollPayslipsRoute
+  AppPayrollSalaryRoute: typeof AppPayrollSalaryRoute
+  AppPayrollTaxDocumentsRoute: typeof AppPayrollTaxDocumentsRoute
   AppProfilePersonalRoute: typeof AppProfilePersonalRoute
   AppSettingsPrivacyRoute: typeof AppSettingsPrivacyRoute
   AppAdminIndexRoute: typeof AppAdminIndexRoute
@@ -1436,7 +1496,10 @@ const AppRouteChildren: AppRouteChildren = {
   AppLeaveHistoryRoute: AppLeaveHistoryRoute,
   AppLeaveHolidaysRoute: AppLeaveHolidaysRoute,
   AppOrgDirectoryRoute: AppOrgDirectoryRoute,
+  AppPayrollBankDetailsRoute: AppPayrollBankDetailsRoute,
   AppPayrollPayslipsRoute: AppPayrollPayslipsRoute,
+  AppPayrollSalaryRoute: AppPayrollSalaryRoute,
+  AppPayrollTaxDocumentsRoute: AppPayrollTaxDocumentsRoute,
   AppProfilePersonalRoute: AppProfilePersonalRoute,
   AppSettingsPrivacyRoute: AppSettingsPrivacyRoute,
   AppAdminIndexRoute: AppAdminIndexRoute,
