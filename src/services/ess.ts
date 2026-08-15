@@ -145,6 +145,46 @@ async function emailPayslip(id: string): Promise<void> {
   await apiPost(`/api/payroll/payslips/${id}/email/`);
 }
 
+export interface SalaryBreakdown {
+  monthlyGross: number;
+  monthlyNet: number;
+  annualGross: number;
+  annualNet: number;
+  tax: number;
+  deductions: number;
+  components: Array<{ label: string; amount: number; kind: "earning" | "deduction" }>;
+}
+
+export interface BankDetails {
+  accountName: string;
+  accountNumber: string;
+  ifsc: string;
+  bank: string;
+  branch: string;
+  type: string;
+}
+
+async function getSalaryBreakdown(): Promise<SalaryBreakdown> {
+  const payslips = await getPayslips();
+  const latest = payslips[0];
+  if (!latest) return { monthlyGross: 0, monthlyNet: 0, annualGross: 0, annualNet: 0, tax: 0, deductions: 0, components: [] };
+  return {
+    monthlyGross: Number(latest.gross ?? 0), monthlyNet: Number(latest.net ?? 0),
+    annualGross: Number(latest.gross ?? 0) * 12, annualNet: Number(latest.net ?? 0) * 12,
+    tax: Number(latest.tax ?? 0), deductions: Number(latest.deductions ?? 0),
+    components: [...latest.earnings.map((item) => ({ ...item, kind: "earning" as const })), ...latest.deductionsBreakdown.map((item) => ({ ...item, kind: "deduction" as const }))],
+  };
+}
+
+async function getBankDetails(): Promise<BankDetails | null> {
+  const profile = await getProfile();
+  return profile.bank ? camelizeKeys<BankDetails>(profile.bank as any) : null;
+}
+
+async function getTaxDocuments(): Promise<Payslip[]> {
+  return getPayslips();
+}
+
 async function getNotifications(): Promise<NotificationItem[]> {
   if (USE_MOCKS) {
     // ess.mock does not expose notifications directly on the essService;
@@ -221,6 +261,9 @@ export const essService = {
   getPayslips,
   downloadPayslip,
   emailPayslip,
+  getSalaryBreakdown,
+  getBankDetails,
+  getTaxDocuments,
   getNotifications,
   markNotificationRead,
 

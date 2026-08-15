@@ -186,8 +186,8 @@ export const NAVIGATION: NavSection[] = [
           { label: "Dashboard", path: "/payroll", icon: LayoutDashboard },
           { label: "Salary Summary", path: "/payroll/salary", icon: BadgeDollarSign },
           { label: "Payslips", path: "/payroll/payslips", icon: Receipt },
-          { label: "Tax Documents", path: "/payroll/tax", icon: FileText },
-          { label: "Bank Details", path: "/payroll/bank", icon: Landmark },
+          { label: "Tax Documents", path: "/payroll/tax-documents", icon: FileText },
+          { label: "Bank Details", path: "/payroll/bank-details", icon: Landmark },
         ],
       },
       {
