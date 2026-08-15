@@ -10,7 +10,7 @@ from rest_framework.exceptions import APIException
 
 from apps.ess.models import Employee
 
-from .models import AttendancePunch
+from .models import AttendancePunch, TimesheetEntry
 
 
 class AttendanceConflict(APIException):
@@ -55,6 +55,26 @@ def clock_out(employee: Employee) -> AttendancePunch:
     punch.worked_hours = Decimal(str(round(hours, 2)))
     punch.save(update_fields=["clock_out", "worked_hours", "updated_at"])
     return punch
+
+
+@transaction.atomic
+def calculate_timesheet(entry: TimesheetEntry) -> TimesheetEntry:
+    entry.regular_hours = min(entry.hours, Decimal("8"))
+    entry.overtime_hours = max(entry.hours - Decimal("8"), Decimal("0"))
+    entry.save(update_fields=["regular_hours", "overtime_hours", "updated_at"])
+    return entry
+
+
+def submit_timesheets(employee: Employee, start: date, end: date) -> int:
+    entries = TimesheetEntry.objects.filter(employee=employee, date__range=(start, end), status=TimesheetEntry.Status.DRAFT)
+    count = entries.update(status=TimesheetEntry.Status.SUBMITTED)
+    return count
+
+
+def timesheet_summary(employee: Employee, start: date, end: date) -> dict:
+    qs = TimesheetEntry.objects.filter(employee=employee, date__range=(start, end))
+    totals = qs.aggregate(hours=Sum("hours"), regular=Sum("regular_hours"), overtime=Sum("overtime_hours"))
+    return {"start": start, "end": end, "entries": qs.count(), "hours": str(totals["hours"] or Decimal("0")), "regularHours": str(totals["regular"] or Decimal("0")), "overtimeHours": str(totals["overtime"] or Decimal("0"))}
 
 
 def today_punch(employee: Employee) -> AttendancePunch | None:
