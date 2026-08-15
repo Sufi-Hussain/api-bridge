@@ -112,6 +112,11 @@ export async function apiGet<T = unknown>(url: string, config?: AxiosRequestConf
   const { data } = await api.get<T>(url, config);
   return data;
 }
+export async function apiBlob(url: string, config?: AxiosRequestConfig): Promise<Blob> {
+  const { data } = await api.get<Blob>(url, { ...config, responseType: "blob" });
+  return data;
+}
+
 export async function apiPost<T = unknown>(url: string, body?: unknown, config?: AxiosRequestConfig): Promise<T> {
   const { data } = await api.post<T>(url, body, config);
   return data;

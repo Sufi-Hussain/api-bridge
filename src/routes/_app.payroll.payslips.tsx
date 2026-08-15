@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Download, FileText, Receipt } from "lucide-react";
+import { toast } from "sonner";
 import { PageHeader } from "@/components/common/page-header";
 import { SectionCard } from "@/components/common/section-card";
 import { StatCard } from "@/components/common/stat-card";
@@ -24,7 +25,56 @@ function currency(n: number) { return `₹${n.toLocaleString("en-IN")}`; }
 function PayslipsPage() {
   const [rows, setRows] = useState<Payslip[]>([]);
   const [selected, setSelected] = useState<Payslip | null>(null);
-  useEffect(() => { essService.getPayslips().then((r) => { setRows(r); setSelected(r[1] ?? r[0] ?? null); }); }, []);
+  const [loading, setLoading] = useState(true);
+  const [working, setWorking] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const load = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await essService.getPayslips();
+      setRows(result);
+      setSelected((current) => result.find((row) => row.id === current?.id) ?? result[0] ?? null);
+    } catch {
+      setError("We couldn’t load your payslips.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => { void load(); }, []);
+
+  const download = async () => {
+    if (!selected) return;
+    setWorking(true);
+    try {
+      const blob = await essService.downloadPayslip(selected.id);
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `payslip-${selected.month}.pdf`;
+      anchor.click();
+      URL.revokeObjectURL(url);
+    } catch {
+      toast.error("Couldn’t download this payslip.");
+    } finally {
+      setWorking(false);
+    }
+  };
+
+  const email = async () => {
+    if (!selected) return;
+    setWorking(true);
+    try {
+      await essService.emailPayslip(selected.id);
+      toast.success("Payslip sent to your registered work email.");
+    } catch {
+      toast.error("Couldn’t email this payslip.");
+    } finally {
+      setWorking(false);
+    }
+  };
 
   const ytdGross = rows.reduce((s, r) => s + Number(r.gross ?? 0), 0);
   const ytdNet = rows.reduce((s, r) => s + Number(r.net ?? 0), 0);
@@ -36,7 +86,7 @@ function PayslipsPage() {
         title="Payslips"
         description="Monthly compensation statements with detailed earnings, deductions and tax breakdowns."
         breadcrumbs={[{ label: "Finance" }, { label: "Payroll" }, { label: "Payslips" }]}
-        actions={<Button size="sm" disabled={!selected}><Download className="mr-1.5 h-3.5 w-3.5" /> Download PDF</Button>}
+        actions={<Button size="sm" disabled={!selected || working} onClick={download}><Download className="mr-1.5 h-3.5 w-3.5" /> {working ? "Working…" : "Download PDF"}</Button>}
       />
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -45,8 +95,19 @@ function PayslipsPage() {
         <StatCard label="YTD tax" value={currency(ytdTax)} hint="TDS + statutory" />
       </div>
 
+      {error ? (
+        <SectionCard title="Payslips unavailable">
+          <div className="flex items-center justify-between gap-3 text-sm text-muted-foreground">
+            <span>{error}</span>
+            <Button variant="outline" size="sm" onClick={() => void load()}>Retry</Button>
+          </div>
+        </SectionCard>
+      ) : null}
+
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <SectionCard title="History">
+          {loading ? <p className="text-sm text-muted-foreground">Loading payslips…</p> : null}
+          {!loading && !rows.length ? <p className="text-sm text-muted-foreground">No payslips are available yet.</p> : null}
           <ul className="space-y-1.5">
             {rows.map((p) => (
               <li key={p.id}>
@@ -114,7 +175,7 @@ function PayslipsPage() {
 
               <div className="flex items-center justify-between border-t border-border/60 pt-3 text-xs text-muted-foreground">
                 <span>{selected.period}{selected.paidOn ? ` · Paid on ${selected.paidOn}` : " · Processing"}</span>
-                <Button variant="outline" size="sm"><FileText className="mr-1.5 h-3.5 w-3.5" /> Email to me</Button>
+                <Button variant="outline" size="sm" onClick={email} disabled={working}><FileText className="mr-1.5 h-3.5 w-3.5" /> Email to me</Button>
               </div>
             </div>
           )}

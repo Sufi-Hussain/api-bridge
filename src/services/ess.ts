@@ -6,6 +6,7 @@
 import {
   apiGet,
   apiPost,
+  apiBlob,
   apiPatch,
   apiDelete,
   apiUpload,
@@ -136,6 +137,14 @@ async function getPayslips(): Promise<Payslip[]> {
   return unwrapList<Payslip>(raw, (r) => camelizeKeys<Payslip>(r));
 }
 
+async function downloadPayslip(id: string): Promise<Blob> {
+  return apiBlob(`/api/payroll/payslips/${id}/pdf/`);
+}
+
+async function emailPayslip(id: string): Promise<void> {
+  await apiPost(`/api/payroll/payslips/${id}/email/`);
+}
+
 async function getNotifications(): Promise<NotificationItem[]> {
   if (USE_MOCKS) {
     // ess.mock does not expose notifications directly on the essService;
@@ -210,6 +219,8 @@ export const essService = {
   cancelLeaveRequest: leaveApi.remove,
   getHolidays,
   getPayslips,
+  downloadPayslip,
+  emailPayslip,
   getNotifications,
   markNotificationRead,
 
