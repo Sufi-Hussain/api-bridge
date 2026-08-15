@@ -40,7 +40,7 @@ function HistoryPage() {
       cell: ({ row }) => <span className="font-medium">{new Date(row.original.date).toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short" })}</span> },
     { accessorKey: "clockIn", header: "Clock In", cell: ({ row }) => row.original.clockIn ?? "—" },
     { accessorKey: "clockOut", header: "Clock Out", cell: ({ row }) => row.original.clockOut ?? "—" },
-    { accessorKey: "workedHours", header: "Worked", cell: ({ row }) => row.original.workedHours ? `${row.original.workedHours.toFixed(1)}h` : "—" },
+    {accessorKey: "workedHours", header: "Worked", cell: ({ row }) => { const hours = Number(row.original.workedHours ?? 0); return hours > 0 ? `${hours.toFixed(1)}h` : "—";},},
     { accessorKey: "breakMinutes", header: "Break", cell: ({ row }) => row.original.breakMinutes ? `${row.original.breakMinutes}m` : "—" },
     { accessorKey: "location", header: "Location", cell: ({ row }) => <span className="inline-flex items-center gap-1 text-xs"><MapPin className="h-3 w-3" /> {row.original.location}</span> },
     { accessorKey: "status", header: "Status",

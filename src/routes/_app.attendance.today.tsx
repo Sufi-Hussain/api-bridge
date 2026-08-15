@@ -128,7 +128,8 @@ function TodayPage() {
                   <p className="text-sm font-semibold">{new Date(p.date).getDate()}</p>
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium">{p.workedHours > 0 ? `${p.workedHours.toFixed(1)}h` : "—"}</p>
+                  <p className="text-sm font-medium">{Number(p.workedHours ?? 0).toFixed(2)}h</p>
+                  {/* <p className="text-sm font-medium">{p.workedHours > 0 ? `${p.workedHours.toFixed(1)}h` : "—"}</p> */}
                   <p className="text-[11px] text-muted-foreground">{p.clockIn && p.clockOut ? `${p.clockIn} – ${p.clockOut}` : "No punches"}</p>
                 </div>
                 <StatusBadge tone={p.status === "present" || p.status === "wfh" ? "success" : p.status === "leave" ? "warning" : "muted"}>

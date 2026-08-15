@@ -26,9 +26,9 @@ function PayslipsPage() {
   const [selected, setSelected] = useState<Payslip | null>(null);
   useEffect(() => { essService.getPayslips().then((r) => { setRows(r); setSelected(r[1] ?? r[0] ?? null); }); }, []);
 
-  const ytdGross = rows.reduce((s, r) => s + r.gross, 0);
-  const ytdNet = rows.reduce((s, r) => s + r.net, 0);
-  const ytdTax = rows.reduce((s, r) => s + r.tax, 0);
+  const ytdGross = rows.reduce((s, r) => s + Number(r.gross ?? 0), 0);
+  const ytdNet = rows.reduce((s, r) => s + Number(r.net ?? 0), 0);
+  const ytdTax = rows.reduce((s, r) => s + Number(r.tax ?? 0), 0);
 
   return (
     <div className="space-y-6">
@@ -75,7 +75,7 @@ function PayslipsPage() {
                 </div>
                 <div className="rounded-lg border border-border/60 bg-muted/30 p-3">
                   <p className="text-[11px] uppercase text-muted-foreground">Deductions</p>
-                  <p className="mt-1 text-lg font-semibold text-destructive">−{currency(selected.deductions + selected.tax)}</p>
+                  <p className="mt-1 text-lg font-semibold text-destructive">−{currency(Number(selected.deductions ?? 0) + Number(selected.tax ?? 0))}</p>
                 </div>
                 <div className="rounded-lg border border-primary/30 bg-primary/5 p-3">
                   <p className="text-[11px] uppercase text-primary">Net pay</p>
