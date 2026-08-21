@@ -30,6 +30,7 @@ from django.core.files.base import ContentFile
 
 from accounts.models import Organization, OrganizationMember, Role, UserRole, User
 from apps.attendance.models import AttendancePunch, TimesheetEntry
+from apps.tasks.models import Task
 from apps.ess.models import (
     Address,
     BankAccount,
@@ -136,6 +137,7 @@ class Command(BaseCommand):
             self._seed_managers(people, rng)
             for emp in people:
                 self._seed_timeline(emp, rng, leave_types)
+            self._seed_tasks(org, people)
             self._seed_assets(org, people, rng)
             self._seed_benefits(org, people, rng)
             self._seed_learning(org, people, rng)
@@ -451,6 +453,15 @@ class Command(BaseCommand):
                 emp.employment.manager = candidate
                 emp.employment.save(update_fields=["manager"])
 
+    def _seed_tasks(self, org, people):
+        if not people or Task.objects.filter(organization=org).exists():
+            return
+        creator = people[0].user
+        Task.objects.bulk_create([
+            Task(organization=org, creator=creator, assignee=people[0].user, title="Review weekly priorities", description="Confirm priorities and blockers for the current sprint.", priority="high", status="in_progress", due_date=date.today() + timedelta(days=3)),
+            Task(organization=org, creator=creator, assignee=people[min(1, len(people) - 1)].user, title="Complete timesheet", description="Submit this week’s hours for approval.", priority="medium", status="todo", due_date=date.today() + timedelta(days=2)),
+        ])
+
     def _seed_timeline(self, emp, rng, leave_types):
         # Attendance: last 20 working days.
         if not emp.punches.exists():
@@ -479,11 +490,12 @@ class Command(BaseCommand):
             day = date.today()
             while len(entries) < 5:
                 if day.weekday() < 5:
+                    hours = Decimal(str(round(rng.uniform(4, 8), 1)))
                     entries.append(TimesheetEntry(
                         employee=emp, date=day,
                         project=rng.choice(PROJECTS),
                         task=rng.choice(["Implementation", "Code review", "Planning", "Support"]),
-                        hours=Decimal(str(round(rng.uniform(4, 8), 1))),
+                        hours=hours,
                         regular_hours=Decimal(str(round(min(hours, Decimal("8")), 2))),
                         overtime_hours=Decimal(str(round(max(hours - Decimal("8"), Decimal("0")), 2))),
                         billable=rng.random() < 0.7,

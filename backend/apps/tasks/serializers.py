@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from apps.common.viewsets import current_organization
 from .models import Task, TaskComment, TaskActivity
 
 class TaskCommentSerializer(serializers.ModelSerializer):
@@ -24,7 +25,7 @@ class TaskSerializer(serializers.ModelSerializer):
     def validate_assignee(self, value):
         if value is None:
             return value
-        organization = self.context["request"].organization
+        organization = current_organization(self.context["request"])
         if getattr(value, "organization_id", None) != organization.id:
             raise serializers.ValidationError("Assignee must belong to the current organization.")
         return value

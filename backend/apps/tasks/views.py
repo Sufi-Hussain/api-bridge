@@ -2,6 +2,7 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.exceptions import PermissionDenied
 from apps.common.viewsets import current_organization
 from .models import Task
 from .serializers import TaskSerializer, TaskCommentSerializer, TaskActivitySerializer
@@ -23,7 +24,16 @@ class TaskViewSet(viewsets.ModelViewSet):
         serializer.instance = task
 
     def perform_update(self, serializer):
-        serializer.instance = TaskService.update(task=self.get_object(), actor=self.request.user, data=serializer.validated_data)
+        task = self.get_object()
+        if task.creator_id != self.request.user.id and task.assignee_id != self.request.user.id:
+            raise PermissionDenied("Only the task creator or assignee can update this task.")
+        serializer.instance = TaskService.update(task=task, actor=self.request.user, data=serializer.validated_data)
+
+    def perform_destroy(self, instance):
+        if instance.creator_id != self.request.user.id:
+            raise PermissionDenied("Only the task creator can delete this task.")
+        TaskService.activity(instance, self.request.user, "deleted")
+        instance.delete()
 
     @action(detail=True, methods=["post"])
     def comments(self, request, pk=None):

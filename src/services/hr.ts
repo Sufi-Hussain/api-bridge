@@ -27,7 +27,7 @@ import {
   activityService,
 } from "./_mocks/hr.mock";
 
-const USE_MOCKS = import.meta.env.VITE_USE_MOCKS === "true";
+const USE_MOCKS = false;
 
 // ---- Employees -------------------------------------------------------------
 export const employeeService = {
