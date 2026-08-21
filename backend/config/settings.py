@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     "apps.compensation",
     "apps.ai",
     "apps.notifications",
+    "apps.tasks",
 
     "accounts",
     "audit",

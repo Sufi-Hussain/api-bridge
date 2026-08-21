@@ -19,6 +19,7 @@ api_patterns = [
     path("compensation/", include("apps.compensation.urls")),
 
     path("notifications/", include("apps.notifications.urls")),
+    path("tasks/", include("apps.tasks.urls")),
     path("ai/", include("apps.ai.urls")),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
