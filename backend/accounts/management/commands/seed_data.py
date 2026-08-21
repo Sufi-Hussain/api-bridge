@@ -479,13 +479,14 @@ class Command(BaseCommand):
             day = date.today()
             while len(entries) < 5:
                 if day.weekday() < 5:
+                    hours = Decimal(str(round(rng.uniform(4, 8), 1)))
                     entries.append(TimesheetEntry(
                         employee=emp, date=day,
                         project=rng.choice(PROJECTS),
                         task=rng.choice(["Implementation", "Code review", "Planning", "Support"]),
-                        hours=Decimal(str(round(rng.uniform(4, 8), 1))),
-                        regular_hours=Decimal(str(round(min(hours, Decimal("8")), 2))),
-                        overtime_hours=Decimal(str(round(max(hours - Decimal("8"), Decimal("0")), 2))),
+                        hours=hours,
+                        regular_hours=min(hours, Decimal("8")),
+                        overtime_hours=max(hours - Decimal("8"), Decimal("0")),
                         billable=rng.random() < 0.7,
                         status=rng.choice(["draft", "submitted", "approved"]),
                     ))

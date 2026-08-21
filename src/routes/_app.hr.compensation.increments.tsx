@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/common/page-header";
 import { SectionCard } from "@/components/common/section-card";
 import { MetricsGrid } from "@/components/hr/metrics-grid";
 import { Progress } from "@/components/ui/progress";
-import { compensationService } from "@/services/hr";
+import { compensationApiService as compensationService } from "@/services/hr";
 
 export const Route = createFileRoute("/_app/hr/compensation/increments")({
   head: () => ({

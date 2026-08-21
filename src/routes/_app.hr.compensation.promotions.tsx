@@ -8,7 +8,7 @@ import { StatusBadge } from "@/components/common/status-badge";
 import { DataTable } from "@/components/common/data-table";
 import { MetricsGrid } from "@/components/hr/metrics-grid";
 import { Button } from "@/components/ui/button";
-import { compensationService, type Promotion } from "@/services/hr";
+import { compensationApiService as compensationService, type Promotion } from "@/services/hr";
 import type { StatusTone } from "@/types";
 
 export const Route = createFileRoute("/_app/hr/compensation/promotions")({

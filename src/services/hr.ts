@@ -71,6 +71,20 @@ export const departmentService = {
   },
 };
 
+// ---- Compensation ----------------------------------------------------------
+export const compensationApiService = {
+  async bands() { const raw = await apiGet<any>("/api/compensation/bands/"); return unwrapList<any>(raw, (r) => camelizeKeys<any>(r)); },
+  async promotions() { const raw = await apiGet<any>("/api/compensation/promotions/"); return unwrapList<any>(raw, (r) => camelizeKeys<any>(r)); },
+  async revisions() { const raw = await apiGet<any>("/api/compensation/revisions/"); return unwrapList<any>(raw, (r) => camelizeKeys<any>(r)); },
+  async incrementSummary() {
+    const revisions = await this.revisions();
+    const approved = revisions.filter((r: any) => r.status === "approved");
+    const allocatedUsd = approved.reduce((sum: number, r: any) => sum + Number(r.newSalary ?? 0) - Number(r.previousSalary ?? 0), 0);
+    const avgHikePct = approved.length ? approved.reduce((sum: number, r: any) => sum + Number(r.hikePct ?? 0), 0) / approved.length : 0;
+    return { cycle: "Current compensation cycle", budgetUsd: allocatedUsd, allocatedUsd, avgHikePct, topPerformerPct: avgHikePct, byDept: [], trend: [] };
+  },
+};
+
 // ---- Everything else: pass-through to mock (no backend yet) ----------------
 export {
   teamService,
