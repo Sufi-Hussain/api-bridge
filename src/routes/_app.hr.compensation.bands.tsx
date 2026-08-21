@@ -4,7 +4,7 @@ import { BadgeDollarSign, Users, Layers } from "lucide-react";
 import { PageHeader } from "@/components/common/page-header";
 import { SectionCard } from "@/components/common/section-card";
 import { MetricsGrid } from "@/components/hr/metrics-grid";
-import { compensationService, type SalaryBand } from "@/services/hr";
+import { compensationApiService as compensationService, type SalaryBand } from "@/services/hr";
 
 export const Route = createFileRoute("/_app/hr/compensation/bands")({
   head: () => ({

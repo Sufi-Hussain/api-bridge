@@ -16,6 +16,7 @@ api_patterns = [
     path("assets/", include("apps.assets.urls")),
     path("learning/", include("apps.learning.urls")),
     path("performance/", include("apps.performance.urls")),
+    path("compensation/", include("apps.compensation.urls")),
 
     path("notifications/", include("apps.notifications.urls")),
     path("ai/", include("apps.ai.urls")),

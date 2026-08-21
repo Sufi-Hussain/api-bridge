@@ -38,7 +38,7 @@ function TimesheetsPage() {
       {error ? <div className="flex items-center justify-between text-sm text-muted-foreground"><span>{error}</span><Button variant="outline" size="sm" onClick={() => void load()}>Retry</Button></div> : null}
       {loading ? <p className="text-sm text-muted-foreground">Loading timesheets…</p> : null}
       {!loading && !current.length ? <div className="flex items-center gap-3 text-sm text-muted-foreground"><Plus className="h-4 w-4" />No entries for this week yet.</div> : null}
-      <div className="divide-y divide-border">{current.map((row) => <div key={row.id} className="flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between"><div><p className="font-medium">{row.project}</p><p className="text-sm text-muted-foreground">{row.task} · {row.date}</p></div><div className="flex items-center gap-4"><span className="text-sm font-medium">{Number(row.hours).toFixed(2)}h</span><StatusBadge tone={row.status === "approved" ? "success" : row.status === "rejected" ? "danger" : "info"}>{row.status}</StatusBadge></div></div>)}</div>
+      <div className="divide-y divide-border">{current.map((row) => <div key={row.id} className="flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between"><div><p className="font-medium">{row.project}</p><p className="text-sm text-muted-foreground">{row.task} · {row.date}</p></div><div className="flex items-center gap-4"><span className="text-sm font-medium">{Number(row.hours).toFixed(2)}h</span><StatusBadge tone={row.status === "approved" ? "success" : row.status === "rejected" ? "destructive" : "info"}>{row.status}</StatusBadge></div></div>)}</div>
     </SectionCard>
   </div>;
 }
