@@ -24,7 +24,7 @@ def _env_list(key: str, default: str = "") -> list[str]:
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "insecure-dev-key")
 DEBUG = _env_bool("DJANGO_DEBUG", True)
-ALLOWED_HOSTS = _env_list("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,*")
+ALLOWED_HOSTS = _env_list("DJANGO_ALLOWED_HOSTS", "api.nexuscare.in,localhost,127.0.0.1,*")
 
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:8080")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "no-reply@hirechamps.com")
@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     "apps.notifications",
     "apps.tasks",
 
+    "apps.timesheets",
     "accounts",
     "audit",
 ]
@@ -208,7 +209,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:8080",
     "http://192.168.137.1:8080",  # Your frontend origin
-    "http://127.0.0.1:8080"
+    "http://127.0.0.1:8080",
+    "https://api-bridge.hirechamps.workers.dev",
+    "https://app.nexuscare.in"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
