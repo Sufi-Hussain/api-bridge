@@ -6,5 +6,5 @@ export { essService } from "./ess";
 export { employeeService, departmentService, teamService, locationService, recruitmentService, lifecycleService, performanceService, compensationService, workforceService, leaveAdminService, attendanceAdminService, documentService, complianceService, relationsService, engagementService, learningService, analyticsService, approvalService, activityService } from "./hr";
 export { hrService } from "./hr-basic";
 export { payrollService } from "./payroll";
-export { mockService } from "./dashboard";
+export { dashboardService } from "./dashboard";
 export * from "./admin";
