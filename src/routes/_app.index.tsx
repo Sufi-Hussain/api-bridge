@@ -37,7 +37,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useAuthStore } from "@/stores/auth.store";
-import { mockService, type Announcement, type LeaveBalance, type Payslip, type TaskItem, type Holiday } from "@/services/dashboard";
+import { dashboardService, type Announcement, type LeaveBalance, type Payslip, type TaskItem, type Holiday } from "@/services/dashboard";
 import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/_app/")({
@@ -87,11 +87,11 @@ function DashboardPage() {
   const [holidays, setHolidays] = useState<Holiday[]>([]);
 
   useEffect(() => {
-    mockService.getLeaveBalances().then(setBalances);
-    mockService.getPayslips().then(setPayslips);
-    mockService.getTasks().then(setTasks);
-    mockService.getAnnouncements().then(setAnnouncements);
-    mockService.getHolidays().then(setHolidays);
+    dashboardService.getLeaveBalances().then(setBalances);
+    dashboardService.getPayslips().then(setPayslips);
+    dashboardService.getTasks().then(setTasks);
+    dashboardService.getAnnouncements().then(setAnnouncements);
+    dashboardService.getHolidays().then(setHolidays);
   }, []);
 
   const totalLeave = balances.reduce((s, b) => s + b.total, 0);

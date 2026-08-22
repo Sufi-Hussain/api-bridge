@@ -27,20 +27,15 @@ import {
   activityService,
 } from "./_mocks/hr.mock";
 
-const USE_MOCKS = import.meta.env.VITE_USE_MOCKS === "true";
-
 // ---- Employees -------------------------------------------------------------
 export const employeeService = {
-  ...employeeMock,
   async list(params: Record<string, unknown> = {}): Promise<Employee[]> {
-    if (USE_MOCKS) return employeeMock.list();
     // Frontend filters like { search, department, status } map straight to
     // DRF query params. camelCase → snake_case for consistency.
     const raw = await apiGet<any>("/api/hr/employees/", { params: snakeizeKeys(params) });
     return unwrapList<Employee>(raw, (r) => camelizeKeys<Employee>(r));
   },
   async get(id: string): Promise<Employee | undefined> {
-    if (USE_MOCKS) return employeeMock.get(id);
     const raw = await apiGet<any>(`/api/hr/employees/${id}/`);
     return camelizeKeys<Employee>(raw);
   },
@@ -50,7 +45,6 @@ export const employeeService = {
 export const departmentService = {
   ...departmentMock,
   async list(): Promise<Department[]> {
-    if (USE_MOCKS) return departmentMock.list();
     const raw = await apiGet<any>("/api/hr/departments/");
     return unwrapList<Department>(raw, (r) => camelizeKeys<Department>(r));
   },

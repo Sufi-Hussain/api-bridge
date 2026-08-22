@@ -5,7 +5,7 @@ import type { User } from "@/types";
 import { apiGet, camelizeKeys, unwrapList } from "@/lib/api";
 import { authService } from "@/lib/api/auth";
 
-export const mockService = {
+export const dashboardService = {
   async getLeaveBalances() {
     const raw = await apiGet<any>("/api/leave/balances/");
     return unwrapList<any>(raw, (r) => camelizeKeys<any>(r));
