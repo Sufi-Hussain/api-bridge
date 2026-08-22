@@ -1,11 +1,17 @@
-// Employee dashboard service (the original `mockService`).
-// Wires the six methods that have real endpoints; the rest stay on mock.
-
+// Authenticated employee dashboard API service.
 import type { User } from "@/types";
+
+export interface AttendanceDay { date: string; status: "present" | "absent" | "leave" | "holiday" | "weekend"; hours: number; }
+export interface LeaveBalance { type: string; total: number; used: number; }
+export interface Payslip { id: string; month: string; gross: number; net: number; status: "paid" | "processing"; }
+export interface Announcement { id: string; title: string; body: string; author: string; date: string; tag: "company" | "team" | "policy"; }
+export interface TaskItem { id: string; title: string; dueDate: string; priority: "low" | "medium" | "high"; status: "todo" | "in_progress" | "done"; }
+export interface Holiday { date: string; name: string; type: "public" | "restricted"; }
+export interface NotificationItem { id: string; title: string; description: string; time: string; read: boolean; category: "leave" | "payroll" | "system" | "team"; }
 import { apiGet, camelizeKeys, unwrapList } from "@/lib/api";
 import { authService } from "@/lib/api/auth";
 
-export const mockService = {
+export const dashboardService = {
   async getLeaveBalances() {
     const raw = await apiGet<any>("/api/leave/balances/");
     return unwrapList<any>(raw, (r) => camelizeKeys<any>(r));
@@ -53,5 +59,3 @@ export const mockService = {
   },
 };
 
-// Re-export types
-export * from "./_mocks/dashboard.mock";
