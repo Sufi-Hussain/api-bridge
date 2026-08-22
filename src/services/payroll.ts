@@ -2,13 +2,17 @@
 // All other analytics/summary methods delegate to the mock.
 
 import { apiGet, camelizeKeys, unwrapList } from "@/lib/api";
-import type { Payslip } from "./_mocks/payroll.mock";
+import { payrollService as mock } from "./_mocks/payroll.mock";
+
+const USE_MOCKS = import.meta.env.VITE_USE_MOCKS === "true";
 
 export const payrollService = {
-  async getPayslips(): Promise<Payslip[]> {
+  ...mock,
+  async getPayslips() {
+    if (USE_MOCKS) return (mock as any).getPayslips?.() ?? [];
     const raw = await apiGet<any>("/api/payroll/payslips/");
-    return unwrapList<Payslip>(raw, (r) => camelizeKeys<Payslip>(r));
+    return unwrapList<any>(raw, (r) => camelizeKeys<any>(r));
   },
 };
 
-export type { Payslip } from "./_mocks/payroll.mock";
+export * from "./_mocks/payroll.mock";

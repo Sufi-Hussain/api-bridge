@@ -3,17 +3,23 @@
 // that depend on `hrService` keep functioning.
 
 import { apiGet, camelizeKeys, unwrapList } from "@/lib/api";
-import type { HrDashboardData } from "./_mocks/hr-basic.mock";
+import { hrService as mock } from "./_mocks/hr-basic.mock";
+
+const USE_MOCKS = import.meta.env.VITE_USE_MOCKS === "true";
 
 export const hrService = {
+  ...mock,
+  // Employees + Departments do have backend endpoints — override those.
   async getEmployees() {
+    if (USE_MOCKS) return mock.getEmployees();
     const raw = await apiGet<any>("/api/hr/employees/");
     return unwrapList<any>(raw, (r) => camelizeKeys<any>(r));
   },
   async getDepartments() {
+    if (USE_MOCKS) return mock.getDepartments();
     const raw = await apiGet<any>("/api/hr/departments/");
     return unwrapList<any>(raw, (r) => camelizeKeys<any>(r));
   },
 };
 
-export type { HrDashboardData } from "./_mocks/hr-basic.mock";
+export * from "./_mocks/hr-basic.mock";
