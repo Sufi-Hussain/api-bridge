@@ -21,18 +21,19 @@ function TimesheetsPage() {
   const [working, setWorking] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [weekOffset, setWeekOffset] = useState(0);
+  const [sheetId, setSheetId] = useState<string | null>(null);
   const range = useMemo(() => {
     const end = new Date(); end.setDate(end.getDate() - end.getDay() + 6 + weekOffset * 7);
     const start = new Date(end); start.setDate(end.getDate() - 6);
     return { start: start.toISOString().slice(0, 10), end: end.toISOString().slice(0, 10) };
   }, [weekOffset]);
-  const load = async () => { setLoading(true); setError(null); try { setRows(await timesheetsService.list({ start: range.start, end: range.end })); } catch { setError("We couldn’t load your timesheets."); } finally { setLoading(false); } };
+  const load = async () => { setLoading(true); setError(null); try { const sheet = await timesheetsService.current(range.start); setSheetId(String(sheet.id)); setRows((sheet.lines ?? []).map((line: any) => ({ id: line.id, date: line.date, project: line.projectName || line.workType, task: line.taskName || line.notes || "", projectId: line.projectId, taskId: line.taskId, hours: line.hours, status: sheet.status, overtimeHours: 0 }))); } catch { setError("We couldn’t load your timesheets."); } finally { setLoading(false); } };
   useEffect(() => { void load(); }, [range.start, range.end]);
   const current = rows.filter((row) => row.date >= range.start && row.date <= range.end);
   const total = current.reduce((sum, row) => sum + Number(row.hours || 0), 0);
   const overtime = current.reduce((sum, row) => sum + Number((row as TimesheetEntry & { overtimeHours?: number }).overtimeHours || 0), 0);
-  const submit = async () => { setWorking(true); try { await timesheetsService.submit(range.start, range.end); toast.success("Timesheet submitted for approval."); await load(); } catch { toast.error("Couldn’t submit this timesheet."); } finally { setWorking(false); } };
-  const saveHours = async (row: TimesheetEntry, value: string) => { setWorking(true); try { await timesheetsService.update(String(row.id), { hours: Number(value) }); await load(); toast.success("Hours saved."); } catch { toast.error("Couldn’t save hours."); } finally { setWorking(false); } };
+  const submit = async () => { setWorking(true); try { await timesheetsService.submit(String(sheetId)); toast.success("Timesheet submitted for approval."); await load(); } catch { toast.error("Couldn’t submit this timesheet."); } finally { setWorking(false); } };
+  const saveHours = async (row: TimesheetEntry, value: string) => { setWorking(true); try { await timesheetsService.saveLines(String(sheetId), [{ id: row.id, date: row.date, hours: Number(value), workType: "project", projectId: (row as any).projectId, taskId: (row as any).taskId }]); await load(); toast.success("Hours saved."); } catch { toast.error("Couldn’t save hours."); } finally { setWorking(false); } };
   return <div className="space-y-6">
     <PageHeader title="Timesheets" description="Review your hours and submit the current week for approval." breadcrumbs={[{ label: "Time & Attendance" }, { label: "Timesheets" }]} actions={<><Button variant="outline" size="sm" onClick={() => setWeekOffset((value) => value - 1)}>Previous week</Button><Button variant="outline" size="sm" onClick={() => setWeekOffset((value) => value + 1)}>Next week</Button><Button size="sm" onClick={submit} disabled={working || !current.length}><Send className="mr-1.5 h-3.5 w-3.5" />Submit week</Button></>} />
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4"><StatCard icon={Clock3} label="Total hours" value={`${total.toFixed(2)}h`} /><StatCard label="Regular hours" value={`${Math.max(total - overtime, 0).toFixed(2)}h`} /><StatCard label="Overtime" value={`${overtime.toFixed(2)}h`} /><StatCard label="Entries" value={current.length} /></div>

@@ -9,6 +9,7 @@ from .views import (
     FamilyViewSet,
     ProfileView,
     SkillViewSet,
+    DashboardView,
 )
 
 router = DefaultRouter()
@@ -20,6 +21,7 @@ router.register("directory", DirectoryViewSet, basename="directory")
 router.register("skills", SkillViewSet, basename="skill")
 
 urlpatterns = [
+    path("dashboard", DashboardView.as_view(), name="ess-dashboard"),
     path("profile", ProfileView.as_view(), name="ess-profile"),
     path("", include(router.urls)),
 ]
