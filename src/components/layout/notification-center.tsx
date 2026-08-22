@@ -7,14 +7,14 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { mockService, type NotificationItem } from "@/services/dashboard";
+import { dashboardService, type NotificationItem } from "@/services/dashboard";
 import { StatusBadge } from "@/components/common/status-badge";
 import { EmptyState } from "@/components/common/empty-state";
 
 export function NotificationCenter() {
   const [items, setItems] = useState<NotificationItem[]>([]);
   useEffect(() => {
-    mockService.getNotifications().then(setItems);
+    dashboardService.getNotifications().then(setItems);
   }, []);
   const unread = items.filter((i) => !i.read).length;
 
