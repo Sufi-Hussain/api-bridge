@@ -14,7 +14,6 @@ import { Route as AppIndexRouteImport } from './routes/_app.index'
 import { Route as AppSplatRouteImport } from './routes/_app.$'
 import { Route as AppDocumentsRouteImport } from './routes/_app.documents'
 import { Route as AppNotificationsRouteImport } from './routes/_app.notifications'
-import { Route as AppTasksRouteImport } from './routes/_app.tasks'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthLogoutRouteImport } from './routes/auth/logout'
@@ -87,8 +86,6 @@ import { Route as AppHrRelationsGrievancesRouteImport } from './routes/_app.hr.r
 import { Route as AppHrWorkforceIndexRouteImport } from './routes/_app.hr.workforce.index'
 import { Route as AppHrWorkforceAttritionRouteImport } from './routes/_app.hr.workforce.attrition'
 import { Route as AppHrWorkforceSuccessionRouteImport } from './routes/_app.hr.workforce.succession'
-import { Route as AppPayTimesheetsApprovalsRouteImport } from './routes/_app.pay.timesheets.approvals'
-import { Route as AppPayTimesheetsReportsRouteImport } from './routes/_app.pay.timesheets.reports'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
@@ -112,11 +109,6 @@ const AppDocumentsRoute = AppDocumentsRouteImport.update({
 const AppNotificationsRoute = AppNotificationsRouteImport.update({
   id: '/notifications',
   path: '/notifications',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppTasksRoute = AppTasksRouteImport.update({
-  id: '/tasks',
-  path: '/tasks',
   getParentRoute: () => AppRoute,
 } as any)
 const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
@@ -494,24 +486,12 @@ const AppHrWorkforceSuccessionRoute =
     path: '/hr/workforce/succession',
     getParentRoute: () => AppRoute,
   } as any)
-const AppPayTimesheetsApprovalsRoute =
-  AppPayTimesheetsApprovalsRouteImport.update({
-    id: '/pay/timesheets/approvals',
-    path: '/pay/timesheets/approvals',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppPayTimesheetsReportsRoute = AppPayTimesheetsReportsRouteImport.update({
-  id: '/pay/timesheets/reports',
-  path: '/pay/timesheets/reports',
-  getParentRoute: () => AppRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AppIndexRoute
   '/$': typeof AppSplatRoute
   '/documents': typeof AppDocumentsRoute
   '/notifications': typeof AppNotificationsRoute
-  '/tasks': typeof AppTasksRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/logout': typeof AuthLogoutRoute
@@ -579,8 +559,6 @@ export interface FileRoutesByFullPath {
   '/hr/relations/grievances': typeof AppHrRelationsGrievancesRoute
   '/hr/workforce/attrition': typeof AppHrWorkforceAttritionRoute
   '/hr/workforce/succession': typeof AppHrWorkforceSuccessionRoute
-  '/pay/timesheets/approvals': typeof AppPayTimesheetsApprovalsRoute
-  '/pay/timesheets/reports': typeof AppPayTimesheetsReportsRoute
   '/hr/attendance-admin/': typeof AppHrAttendanceAdminIndexRoute
   '/hr/compliance/': typeof AppHrComplianceIndexRoute
   '/hr/lnd/': typeof AppHrLndIndexRoute
@@ -591,7 +569,6 @@ export interface FileRoutesByTo {
   '/$': typeof AppSplatRoute
   '/documents': typeof AppDocumentsRoute
   '/notifications': typeof AppNotificationsRoute
-  '/tasks': typeof AppTasksRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/logout': typeof AuthLogoutRoute
@@ -660,8 +637,6 @@ export interface FileRoutesByTo {
   '/hr/relations/grievances': typeof AppHrRelationsGrievancesRoute
   '/hr/workforce/attrition': typeof AppHrWorkforceAttritionRoute
   '/hr/workforce/succession': typeof AppHrWorkforceSuccessionRoute
-  '/pay/timesheets/approvals': typeof AppPayTimesheetsApprovalsRoute
-  '/pay/timesheets/reports': typeof AppPayTimesheetsReportsRoute
   '/hr/attendance-admin': typeof AppHrAttendanceAdminIndexRoute
   '/hr/compliance': typeof AppHrComplianceIndexRoute
   '/hr/lnd': typeof AppHrLndIndexRoute
@@ -674,7 +649,6 @@ export interface FileRoutesById {
   '/_app/$': typeof AppSplatRoute
   '/_app/documents': typeof AppDocumentsRoute
   '/_app/notifications': typeof AppNotificationsRoute
-  '/_app/tasks': typeof AppTasksRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/logout': typeof AuthLogoutRoute
@@ -743,8 +717,6 @@ export interface FileRoutesById {
   '/_app/hr/relations/grievances': typeof AppHrRelationsGrievancesRoute
   '/_app/hr/workforce/attrition': typeof AppHrWorkforceAttritionRoute
   '/_app/hr/workforce/succession': typeof AppHrWorkforceSuccessionRoute
-  '/_app/pay/timesheets/approvals': typeof AppPayTimesheetsApprovalsRoute
-  '/_app/pay/timesheets/reports': typeof AppPayTimesheetsReportsRoute
   '/_app/hr/attendance-admin/': typeof AppHrAttendanceAdminIndexRoute
   '/_app/hr/compliance/': typeof AppHrComplianceIndexRoute
   '/_app/hr/lnd/': typeof AppHrLndIndexRoute
@@ -758,7 +730,6 @@ export interface FileRouteTypes {
     | '/$'
     | '/documents'
     | '/notifications'
-    | '/tasks'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/logout'
@@ -826,8 +797,6 @@ export interface FileRouteTypes {
     | '/hr/relations/grievances'
     | '/hr/workforce/attrition'
     | '/hr/workforce/succession'
-    | '/pay/timesheets/approvals'
-    | '/pay/timesheets/reports'
     | '/hr/attendance-admin/'
     | '/hr/compliance/'
     | '/hr/lnd/'
@@ -838,7 +807,6 @@ export interface FileRouteTypes {
     | '/$'
     | '/documents'
     | '/notifications'
-    | '/tasks'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/logout'
@@ -907,8 +875,6 @@ export interface FileRouteTypes {
     | '/hr/relations/grievances'
     | '/hr/workforce/attrition'
     | '/hr/workforce/succession'
-    | '/pay/timesheets/approvals'
-    | '/pay/timesheets/reports'
     | '/hr/attendance-admin'
     | '/hr/compliance'
     | '/hr/lnd'
@@ -920,7 +886,6 @@ export interface FileRouteTypes {
     | '/_app/$'
     | '/_app/documents'
     | '/_app/notifications'
-    | '/_app/tasks'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/logout'
@@ -989,8 +954,6 @@ export interface FileRouteTypes {
     | '/_app/hr/relations/grievances'
     | '/_app/hr/workforce/attrition'
     | '/_app/hr/workforce/succession'
-    | '/_app/pay/timesheets/approvals'
-    | '/_app/pay/timesheets/reports'
     | '/_app/hr/attendance-admin/'
     | '/_app/hr/compliance/'
     | '/_app/hr/lnd/'
@@ -1045,13 +1008,6 @@ declare module '@tanstack/react-router' {
       path: '/notifications'
       fullPath: '/notifications'
       preLoaderRoute: typeof AppNotificationsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/tasks': {
-      id: '/_app/tasks'
-      path: '/tasks'
-      fullPath: '/tasks'
-      preLoaderRoute: typeof AppTasksRouteImport
       parentRoute: typeof AppRoute
     }
     '/auth/forgot-password': {
@@ -1558,20 +1514,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppHrWorkforceSuccessionRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/pay/timesheets/approvals': {
-      id: '/_app/pay/timesheets/approvals'
-      path: '/pay/timesheets/approvals'
-      fullPath: '/pay/timesheets/approvals'
-      preLoaderRoute: typeof AppPayTimesheetsApprovalsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/pay/timesheets/reports': {
-      id: '/_app/pay/timesheets/reports'
-      path: '/pay/timesheets/reports'
-      fullPath: '/pay/timesheets/reports'
-      preLoaderRoute: typeof AppPayTimesheetsReportsRouteImport
-      parentRoute: typeof AppRoute
-    }
   }
 }
 
@@ -1591,7 +1533,6 @@ interface AppRouteChildren {
   AppSplatRoute: typeof AppSplatRoute
   AppDocumentsRoute: typeof AppDocumentsRoute
   AppNotificationsRoute: typeof AppNotificationsRoute
-  AppTasksRoute: typeof AppTasksRoute
   AppIndexRoute: typeof AppIndexRoute
   AppAssetsDevicesRoute: typeof AppAssetsDevicesRoute
   AppAssetsRequestsRoute: typeof AppAssetsRequestsRoute
@@ -1651,8 +1592,6 @@ interface AppRouteChildren {
   AppHrRelationsGrievancesRoute: typeof AppHrRelationsGrievancesRoute
   AppHrWorkforceAttritionRoute: typeof AppHrWorkforceAttritionRoute
   AppHrWorkforceSuccessionRoute: typeof AppHrWorkforceSuccessionRoute
-  AppPayTimesheetsApprovalsRoute: typeof AppPayTimesheetsApprovalsRoute
-  AppPayTimesheetsReportsRoute: typeof AppPayTimesheetsReportsRoute
   AppHrAttendanceAdminIndexRoute: typeof AppHrAttendanceAdminIndexRoute
   AppHrComplianceIndexRoute: typeof AppHrComplianceIndexRoute
   AppHrLndIndexRoute: typeof AppHrLndIndexRoute
@@ -1664,7 +1603,6 @@ const AppRouteChildren: AppRouteChildren = {
   AppSplatRoute: AppSplatRoute,
   AppDocumentsRoute: AppDocumentsRoute,
   AppNotificationsRoute: AppNotificationsRoute,
-  AppTasksRoute: AppTasksRoute,
   AppIndexRoute: AppIndexRoute,
   AppAssetsDevicesRoute: AppAssetsDevicesRoute,
   AppAssetsRequestsRoute: AppAssetsRequestsRoute,
@@ -1724,8 +1662,6 @@ const AppRouteChildren: AppRouteChildren = {
   AppHrRelationsGrievancesRoute: AppHrRelationsGrievancesRoute,
   AppHrWorkforceAttritionRoute: AppHrWorkforceAttritionRoute,
   AppHrWorkforceSuccessionRoute: AppHrWorkforceSuccessionRoute,
-  AppPayTimesheetsApprovalsRoute: AppPayTimesheetsApprovalsRoute,
-  AppPayTimesheetsReportsRoute: AppPayTimesheetsReportsRoute,
   AppHrAttendanceAdminIndexRoute: AppHrAttendanceAdminIndexRoute,
   AppHrComplianceIndexRoute: AppHrComplianceIndexRoute,
   AppHrLndIndexRoute: AppHrLndIndexRoute,

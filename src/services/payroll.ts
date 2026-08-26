@@ -4,7 +4,7 @@
 import { apiGet, camelizeKeys, unwrapList } from "@/lib/api";
 import { payrollService as mock } from "./_mocks/payroll.mock";
 
-const USE_MOCKS = false;
+const USE_MOCKS = import.meta.env.VITE_USE_MOCKS === "true";
 
 export const payrollService = {
   ...mock,
