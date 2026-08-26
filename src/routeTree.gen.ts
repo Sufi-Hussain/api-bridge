@@ -58,6 +58,7 @@ import { Route as AppHrOnboardingIndexRouteImport } from './routes/_app.hr.onboa
 import { Route as AppHrLndIndexRouteImport } from './routes/_app.hr.lnd.index'
 import { Route as AppHrComplianceIndexRouteImport } from './routes/_app.hr.compliance.index'
 import { Route as AppHrAttendanceAdminIndexRouteImport } from './routes/_app.hr.attendance-admin.index'
+import { Route as AppPayTimesheetsApprovalsRouteImport } from './routes/_app.pay.timesheets.approvals'
 import { Route as AppHrWorkforceSuccessionRouteImport } from './routes/_app.hr.workforce.succession'
 import { Route as AppHrWorkforceAttritionRouteImport } from './routes/_app.hr.workforce.attrition'
 import { Route as AppHrRelationsGrievancesRouteImport } from './routes/_app.hr.relations.grievances'
@@ -334,6 +335,12 @@ const AppHrAttendanceAdminIndexRoute =
     path: '/hr/attendance-admin/',
     getParentRoute: () => AppRoute,
   } as any)
+const AppPayTimesheetsApprovalsRoute =
+  AppPayTimesheetsApprovalsRouteImport.update({
+    id: '/pay/timesheets/approvals',
+    path: '/pay/timesheets/approvals',
+    getParentRoute: () => AppRoute,
+  } as any)
 const AppHrWorkforceSuccessionRoute =
   AppHrWorkforceSuccessionRouteImport.update({
     id: '/hr/workforce/succession',
@@ -566,6 +573,7 @@ export interface FileRoutesByFullPath {
   '/hr/relations/grievances': typeof AppHrRelationsGrievancesRoute
   '/hr/workforce/attrition': typeof AppHrWorkforceAttritionRoute
   '/hr/workforce/succession': typeof AppHrWorkforceSuccessionRoute
+  '/pay/timesheets/approvals': typeof AppPayTimesheetsApprovalsRoute
   '/hr/attendance-admin/': typeof AppHrAttendanceAdminIndexRoute
   '/hr/compliance/': typeof AppHrComplianceIndexRoute
   '/hr/lnd/': typeof AppHrLndIndexRoute
@@ -645,6 +653,7 @@ export interface FileRoutesByTo {
   '/hr/relations/grievances': typeof AppHrRelationsGrievancesRoute
   '/hr/workforce/attrition': typeof AppHrWorkforceAttritionRoute
   '/hr/workforce/succession': typeof AppHrWorkforceSuccessionRoute
+  '/pay/timesheets/approvals': typeof AppPayTimesheetsApprovalsRoute
   '/hr/attendance-admin': typeof AppHrAttendanceAdminIndexRoute
   '/hr/compliance': typeof AppHrComplianceIndexRoute
   '/hr/lnd': typeof AppHrLndIndexRoute
@@ -726,6 +735,7 @@ export interface FileRoutesById {
   '/_app/hr/relations/grievances': typeof AppHrRelationsGrievancesRoute
   '/_app/hr/workforce/attrition': typeof AppHrWorkforceAttritionRoute
   '/_app/hr/workforce/succession': typeof AppHrWorkforceSuccessionRoute
+  '/_app/pay/timesheets/approvals': typeof AppPayTimesheetsApprovalsRoute
   '/_app/hr/attendance-admin/': typeof AppHrAttendanceAdminIndexRoute
   '/_app/hr/compliance/': typeof AppHrComplianceIndexRoute
   '/_app/hr/lnd/': typeof AppHrLndIndexRoute
@@ -807,6 +817,7 @@ export interface FileRouteTypes {
     | '/hr/relations/grievances'
     | '/hr/workforce/attrition'
     | '/hr/workforce/succession'
+    | '/pay/timesheets/approvals'
     | '/hr/attendance-admin/'
     | '/hr/compliance/'
     | '/hr/lnd/'
@@ -886,6 +897,7 @@ export interface FileRouteTypes {
     | '/hr/relations/grievances'
     | '/hr/workforce/attrition'
     | '/hr/workforce/succession'
+    | '/pay/timesheets/approvals'
     | '/hr/attendance-admin'
     | '/hr/compliance'
     | '/hr/lnd'
@@ -966,6 +978,7 @@ export interface FileRouteTypes {
     | '/_app/hr/relations/grievances'
     | '/_app/hr/workforce/attrition'
     | '/_app/hr/workforce/succession'
+    | '/_app/pay/timesheets/approvals'
     | '/_app/hr/attendance-admin/'
     | '/_app/hr/compliance/'
     | '/_app/hr/lnd/'
@@ -1330,6 +1343,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppHrAttendanceAdminIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/pay/timesheets/approvals': {
+      id: '/_app/pay/timesheets/approvals'
+      path: '/pay/timesheets/approvals'
+      fullPath: '/pay/timesheets/approvals'
+      preLoaderRoute: typeof AppPayTimesheetsApprovalsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/hr/workforce/succession': {
       id: '/_app/hr/workforce/succession'
       path: '/hr/workforce/succession'
@@ -1612,6 +1632,7 @@ interface AppRouteChildren {
   AppHrRelationsGrievancesRoute: typeof AppHrRelationsGrievancesRoute
   AppHrWorkforceAttritionRoute: typeof AppHrWorkforceAttritionRoute
   AppHrWorkforceSuccessionRoute: typeof AppHrWorkforceSuccessionRoute
+  AppPayTimesheetsApprovalsRoute: typeof AppPayTimesheetsApprovalsRoute
   AppHrAttendanceAdminIndexRoute: typeof AppHrAttendanceAdminIndexRoute
   AppHrComplianceIndexRoute: typeof AppHrComplianceIndexRoute
   AppHrLndIndexRoute: typeof AppHrLndIndexRoute
@@ -1683,6 +1704,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppHrRelationsGrievancesRoute: AppHrRelationsGrievancesRoute,
   AppHrWorkforceAttritionRoute: AppHrWorkforceAttritionRoute,
   AppHrWorkforceSuccessionRoute: AppHrWorkforceSuccessionRoute,
+  AppPayTimesheetsApprovalsRoute: AppPayTimesheetsApprovalsRoute,
   AppHrAttendanceAdminIndexRoute: AppHrAttendanceAdminIndexRoute,
   AppHrComplianceIndexRoute: AppHrComplianceIndexRoute,
   AppHrLndIndexRoute: AppHrLndIndexRoute,
