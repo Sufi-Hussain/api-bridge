@@ -19,6 +19,7 @@ import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 import { Route as AuthLogoutRouteImport } from './routes/auth/logout'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
+import { Route as AppTasksRouteImport } from './routes/_app.tasks'
 import { Route as AppNotificationsRouteImport } from './routes/_app.notifications'
 import { Route as AppDocumentsRouteImport } from './routes/_app.documents'
 import { Route as AppSplatRouteImport } from './routes/_app.$'
@@ -135,6 +136,11 @@ const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
   id: '/auth/forgot-password',
   path: '/auth/forgot-password',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppTasksRoute = AppTasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppNotificationsRoute = AppNotificationsRouteImport.update({
   id: '/notifications',
@@ -492,6 +498,7 @@ export interface FileRoutesByFullPath {
   '/$': typeof AppSplatRoute
   '/documents': typeof AppDocumentsRoute
   '/notifications': typeof AppNotificationsRoute
+  '/tasks': typeof AppTasksRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/logout': typeof AuthLogoutRoute
@@ -569,6 +576,7 @@ export interface FileRoutesByTo {
   '/$': typeof AppSplatRoute
   '/documents': typeof AppDocumentsRoute
   '/notifications': typeof AppNotificationsRoute
+  '/tasks': typeof AppTasksRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/logout': typeof AuthLogoutRoute
@@ -649,6 +657,7 @@ export interface FileRoutesById {
   '/_app/$': typeof AppSplatRoute
   '/_app/documents': typeof AppDocumentsRoute
   '/_app/notifications': typeof AppNotificationsRoute
+  '/_app/tasks': typeof AppTasksRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/logout': typeof AuthLogoutRoute
@@ -730,6 +739,7 @@ export interface FileRouteTypes {
     | '/$'
     | '/documents'
     | '/notifications'
+    | '/tasks'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/logout'
@@ -807,6 +817,7 @@ export interface FileRouteTypes {
     | '/$'
     | '/documents'
     | '/notifications'
+    | '/tasks'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/logout'
@@ -886,6 +897,7 @@ export interface FileRouteTypes {
     | '/_app/$'
     | '/_app/documents'
     | '/_app/notifications'
+    | '/_app/tasks'
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/logout'
@@ -1044,6 +1056,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/forgot-password'
       preLoaderRoute: typeof AuthForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_app/tasks': {
+      id: '/_app/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof AppTasksRouteImport
+      parentRoute: typeof AppRoute
     }
     '/_app/notifications': {
       id: '/_app/notifications'
@@ -1533,6 +1552,7 @@ interface AppRouteChildren {
   AppSplatRoute: typeof AppSplatRoute
   AppDocumentsRoute: typeof AppDocumentsRoute
   AppNotificationsRoute: typeof AppNotificationsRoute
+  AppTasksRoute: typeof AppTasksRoute
   AppIndexRoute: typeof AppIndexRoute
   AppAssetsDevicesRoute: typeof AppAssetsDevicesRoute
   AppAssetsRequestsRoute: typeof AppAssetsRequestsRoute
@@ -1603,6 +1623,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppSplatRoute: AppSplatRoute,
   AppDocumentsRoute: AppDocumentsRoute,
   AppNotificationsRoute: AppNotificationsRoute,
+  AppTasksRoute: AppTasksRoute,
   AppIndexRoute: AppIndexRoute,
   AppAssetsDevicesRoute: AppAssetsDevicesRoute,
   AppAssetsRequestsRoute: AppAssetsRequestsRoute,
