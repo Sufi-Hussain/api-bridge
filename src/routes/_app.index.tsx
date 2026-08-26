@@ -52,25 +52,6 @@ export const Route = createFileRoute("/_app/")({
   component: DashboardPage,
 });
 
-const ATTENDANCE_TREND = [
-  { day: "Mon", hours: 8.2 },
-  { day: "Tue", hours: 8.6 },
-  { day: "Wed", hours: 7.9 },
-  { day: "Thu", hours: 8.4 },
-  { day: "Fri", hours: 8.1 },
-  { day: "Sat", hours: 0 },
-  { day: "Sun", hours: 0 },
-];
-
-const PAYROLL_TREND = [
-  { m: "Jun", net: 7620 },
-  { m: "Jul", net: 7710 },
-  { m: "Aug", net: 7810 },
-  { m: "Sep", net: 7910 },
-  { m: "Oct", net: 7980 },
-  { m: "Nov", net: 8050 },
-];
-
 function greeting() {
   const h = new Date().getHours();
   if (h < 12) return "Good morning";
@@ -85,8 +66,18 @@ function DashboardPage() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [holidays, setHolidays] = useState<Holiday[]>([]);
+  const [attendanceTrend, setAttendanceTrend] = useState<any[]>([]);
+  const [payrollTrend, setPayrollTrend] = useState<any[]>([]);
+  const [weeklyHours, setWeeklyHours] = useState({ worked: 0, target: 40, previous: 0 });
+  const [goals, setGoals] = useState({ onTrack: 0, total: 0 });
+  const [profileStatus, setProfileStatus] = useState({ percentage: 0, missing: [] as string[] });
 
   useEffect(() => {
+    dashboardService.getAttendanceTrend().then(setAttendanceTrend);
+    dashboardService.getPayrollTrend().then(setPayrollTrend);
+    dashboardService.getWeeklyHoursSummary().then(setWeeklyHours);
+    dashboardService.getGoals().then(setGoals);
+    dashboardService.getProfileStatus().then(setProfileStatus);
     dashboardService.getLeaveBalances().then(setBalances);
     dashboardService.getPayslips().then(setPayslips);
     dashboardService.getTasks().then(setTasks);
@@ -98,7 +89,7 @@ function DashboardPage() {
   const usedLeave = balances.reduce((s, b) => s + b.used, 0);
   const latestPayslip = payslips[0];
   const openTasks = tasks.filter((t) => t.status !== "done").length;
-  const profileCompletion = 82;
+  const profileCompletion = profileStatus.percentage;
 
   return (
     <div className="space-y-6">
@@ -121,8 +112,7 @@ function DashboardPage() {
               {greeting()}, {user.name.split(" ")[0]}
             </h1>
             <p className="mt-1.5 max-w-xl text-sm text-muted-foreground">
-              Here's your day at a glance. {openTasks} open task{openTasks === 1 ? "" : "s"}, your next holiday is
-              in 12 days, and your November payslip is being processed.
+              Here's your day at a glance. {openTasks} open task{openTasks === 1 ? "" : "s"}, with live attendance, payroll, leave, and profile data.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Button asChild size="sm">
@@ -164,8 +154,8 @@ function DashboardPage() {
                 Next payday
               </p>
               <div className="mt-2 flex items-end gap-2">
-                <span className="text-2xl font-semibold">Nov 30</span>
-                <span className="pb-1 text-xs text-muted-foreground">in 6 days</span>
+                <span className="text-2xl font-semibold">Unavailable</span>
+                <span className="pb-1 text-xs text-muted-foreground">not configured</span>
               </div>
               <p className="mt-2 text-xs text-muted-foreground">Est. net ${latestPayslip?.net.toLocaleString() ?? "—"}</p>
             </div>
@@ -178,8 +168,8 @@ function DashboardPage() {
         <StatCard
           icon={Clock}
           label="Hours this week"
-          value="33.2h"
-          hint="Target 40h"
+          value={`${Number(weeklyHours.worked).toFixed(1)}h`}
+          hint={`Target ${weeklyHours.target}h`}
           trend={{ value: "+2.1h vs last week", direction: "up" }}
         />
         <StatCard
@@ -199,8 +189,8 @@ function DashboardPage() {
         <StatCard
           icon={Target}
           label="Goals on track"
-          value="4 / 6"
-          hint="Q4 review"
+          value={`${goals.onTrack} / ${goals.total}`}
+          hint="Current performance cycle"
           trend={{ value: "Ahead of schedule", direction: "up" }}
         />
       </div>
@@ -221,7 +211,7 @@ function DashboardPage() {
           >
             <div className="h-56">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={ATTENDANCE_TREND} margin={{ top: 10, right: 8, left: -20, bottom: 0 }}>
+                <BarChart data={attendanceTrend.map((item) => ({ ...item, day: new Date(item.date).toLocaleDateString(undefined, { weekday: "short" }) }))} margin={{ top: 10, right: 8, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" opacity={0.25} vertical={false} />
                   <XAxis dataKey="day" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
                   <YAxis tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
@@ -321,7 +311,7 @@ function DashboardPage() {
           >
             <div className="h-48">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={PAYROLL_TREND} margin={{ top: 10, right: 8, left: -20, bottom: 0 }}>
+                <LineChart data={payrollTrend.map((item) => ({ ...item, m: item.month }))} margin={{ top: 10, right: 8, left: -20, bottom: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" opacity={0.25} vertical={false} />
                   <XAxis dataKey="m" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
                   <YAxis tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />

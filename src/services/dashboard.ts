@@ -11,7 +11,18 @@ export interface NotificationItem { id: string; title: string; description: stri
 import { apiGet, camelizeKeys, unwrapList } from "@/lib/api";
 import { authService } from "@/lib/api/auth";
 
+let dashboardCache: Promise<any> | null = null;
+const getDashboard = () => (dashboardCache ??= apiGet<any>("/api/ess/dashboard"));
+
 export const dashboardService = {
+  async getAttendanceTrend() { return (await getDashboard()).attendanceTrend; },
+  async getPayrollTrend() { return (await getDashboard()).payrollTrend; },
+  async getNextPayday() { return (await getDashboard()).nextPayday; },
+  async getWeeklyHoursSummary() { return (await getDashboard()).weeklyHours; },
+  async getGoals() { return (await getDashboard()).goals; },
+  async getInsights() { return (await getDashboard()).insights; },
+  async getTeam() { return (await getDashboard()).team; },
+  async getProfileStatus() { return (await getDashboard()).profileStatus; },
   async getLeaveBalances() {
     const raw = await apiGet<any>("/api/leave/balances/");
     return unwrapList<any>(raw, (r) => camelizeKeys<any>(r));

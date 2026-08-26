@@ -123,7 +123,7 @@ function TimesheetsPage() {
 
   const total = week.days.reduce((sum, date) => sum + dayTotal(date), 0);
   const billable = lines.reduce((sum, line) => sum + (line.workType === "leave" || line.workType === "holiday" ? 0 : Number(line.hours || 0)), 0);
-  const editable = sheet?.isEditable ?? (sheet?.status === "draft" || sheet?.status === "returned");
+  const editable = sheet?.isEditable ?? sheet?.status === "draft" || sheet?.status === "returned";
   const dirty = Object.keys(draft).length > 0;
 
   const addRow = () => {
