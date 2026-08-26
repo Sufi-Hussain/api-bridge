@@ -48,6 +48,7 @@ from apps.assets.models import Asset, AssetRequest, SoftwareLicense
 from apps.benefits.models import Benefit, BenefitEnrollment, ExpenseClaim, ExpenseReceipt, Loan, TravelRequest
 from apps.learning.models import Certification, Course, Enrollment, SkillMatrixEntry, TrainingProgram
 from apps.performance.models import Competency, Goal, KeyResult, PerformanceCycle, Review, SuccessionPlan
+from apps.tasks.models import Task
 from core.seeds.roles import seed_system_roles
 
 DEMO_PASSWORD = "Ss1234567890"
@@ -491,9 +492,16 @@ class Command(BaseCommand):
                         status=rng.choice(["draft", "submitted", "approved"]),
                     ))
                 day -= timedelta(days=1)
-            TimesheetEntry.objects.bulk_create(entries)
+                TimesheetEntry.objects.bulk_create(entries)
 
-        # Leave requests.
+            # Tasks: realistic cross-functional work for the employee dashboard.
+            if not Task.objects.filter(organization=org, assignee=user).exists():
+                Task.objects.bulk_create([
+                    Task(organization=org, creator=user, assignee=user, title=f"Ship {rng.choice(PROJECTS)} milestone", description="Coordinate delivery, review progress, and close the milestone.", priority=rng.choice([Task.Priority.MEDIUM, Task.Priority.HIGH]), status=rng.choice([Task.Status.TODO, Task.Status.IN_PROGRESS]), due_date=date.today() + timedelta(days=rng.randint(3, 30))),
+                    Task(organization=org, creator=user, assignee=user, title="Complete quarterly documentation", description="Keep the team runbook and project notes current.", priority=Task.Priority.LOW, status=Task.Status.TODO, due_date=date.today() + timedelta(days=14)),
+                ])
+
+            # Leave requests.
         if not emp.leave_requests.exists():
             for _ in range(rng.randint(1, 3)):
                 start = date.today() - timedelta(days=rng.randint(-45, 200))

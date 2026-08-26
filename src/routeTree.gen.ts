@@ -11,84 +11,84 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AppIndexRouteImport } from './routes/_app.index'
-import { Route as AuthVerifyEmailRouteImport } from './routes/auth/verify-email'
-import { Route as AuthUnauthorizedRouteImport } from './routes/auth/unauthorized'
-import { Route as AuthSessionExpiredRouteImport } from './routes/auth/session-expired'
-import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-password'
-import { Route as AuthRegisterRouteImport } from './routes/auth/register'
-import { Route as AuthLogoutRouteImport } from './routes/auth/logout'
-import { Route as AuthLoginRouteImport } from './routes/auth/login'
-import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
-import { Route as AppTasksRouteImport } from './routes/_app.tasks'
-import { Route as AppNotificationsRouteImport } from './routes/_app.notifications'
-import { Route as AppDocumentsRouteImport } from './routes/_app.documents'
 import { Route as AppSplatRouteImport } from './routes/_app.$'
-import { Route as AppSettingsIndexRouteImport } from './routes/_app.settings.index'
-import { Route as AppPayrollIndexRouteImport } from './routes/_app.payroll.index'
-import { Route as AppLeaveIndexRouteImport } from './routes/_app.leave.index'
-import { Route as AppHrIndexRouteImport } from './routes/_app.hr.index'
-import { Route as AppBenefitsIndexRouteImport } from './routes/_app.benefits.index'
+import { Route as AppDocumentsRouteImport } from './routes/_app.documents'
+import { Route as AppNotificationsRouteImport } from './routes/_app.notifications'
+import { Route as AppTasksRouteImport } from './routes/_app.tasks'
+import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
+import { Route as AuthLoginRouteImport } from './routes/auth/login'
+import { Route as AuthLogoutRouteImport } from './routes/auth/logout'
+import { Route as AuthRegisterRouteImport } from './routes/auth/register'
+import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-password'
+import { Route as AuthSessionExpiredRouteImport } from './routes/auth/session-expired'
+import { Route as AuthUnauthorizedRouteImport } from './routes/auth/unauthorized'
+import { Route as AuthVerifyEmailRouteImport } from './routes/auth/verify-email'
 import { Route as AppAdminIndexRouteImport } from './routes/_app.admin.index'
-import { Route as AppSettingsPrivacyRouteImport } from './routes/_app.settings.privacy'
-import { Route as AppProfilePersonalRouteImport } from './routes/_app.profile.personal'
-import { Route as AppPayrollTaxDocumentsRouteImport } from './routes/_app/payroll/tax-documents'
-import { Route as AppPayrollSalaryRouteImport } from './routes/_app/payroll/salary'
-import { Route as AppPayrollPayslipsRouteImport } from './routes/_app.payroll.payslips'
-import { Route as AppPayrollBankDetailsRouteImport } from './routes/_app/payroll/bank-details'
-import { Route as AppOrgDirectoryRouteImport } from './routes/_app.org.directory'
-import { Route as AppLeaveHolidaysRouteImport } from './routes/_app.leave.holidays'
-import { Route as AppLeaveHistoryRouteImport } from './routes/_app.leave.history'
-import { Route as AppLeaveApplyRouteImport } from './routes/_app.leave.apply'
-import { Route as AppLearningProgressRouteImport } from './routes/_app.learning.progress'
-import { Route as AppLearningCoursesRouteImport } from './routes/_app.learning.courses'
-import { Route as AppLearningCertificationsRouteImport } from './routes/_app.learning.certifications'
-import { Route as AppHrEmployeesRouteImport } from './routes/_app.hr.employees'
-import { Route as AppHrApprovalsRouteImport } from './routes/_app.hr.approvals'
-import { Route as AppHelpdeskTicketsRouteImport } from './routes/_app.helpdesk.tickets'
-import { Route as AppCareerGoalsRouteImport } from './routes/_app.career.goals'
-import { Route as AppBenefitsInsuranceRouteImport } from './routes/_app.benefits.insurance'
-import { Route as AppBenefitsExpensesRouteImport } from './routes/_app.benefits.expenses'
-import { Route as AppAttendanceTodayRouteImport } from './routes/_app.attendance.today'
-import { Route as AppAttendanceTimesheetsRouteImport } from './routes/_app.attendance.timesheets'
-import { Route as AppAttendanceHistoryRouteImport } from './routes/_app.attendance.history'
-import { Route as AppAssetsRequestsRouteImport } from './routes/_app.assets.requests'
 import { Route as AppAssetsDevicesRouteImport } from './routes/_app.assets.devices'
-import { Route as AppHrWorkforceIndexRouteImport } from './routes/_app.hr.workforce.index'
-import { Route as AppHrOnboardingIndexRouteImport } from './routes/_app.hr.onboarding.index'
-import { Route as AppHrLndIndexRouteImport } from './routes/_app.hr.lnd.index'
-import { Route as AppHrComplianceIndexRouteImport } from './routes/_app.hr.compliance.index'
-import { Route as AppHrAttendanceAdminIndexRouteImport } from './routes/_app.hr.attendance-admin.index'
-import { Route as AppPayTimesheetsReportsRouteImport } from './routes/_app.pay.timesheets.reports'
-import { Route as AppPayTimesheetsApprovalsRouteImport } from './routes/_app.pay.timesheets.approvals'
-import { Route as AppHrWorkforceSuccessionRouteImport } from './routes/_app.hr.workforce.succession'
-import { Route as AppHrWorkforceAttritionRouteImport } from './routes/_app.hr.workforce.attrition'
-import { Route as AppHrRelationsGrievancesRouteImport } from './routes/_app.hr.relations.grievances'
-import { Route as AppHrRecruitmentRequisitionsRouteImport } from './routes/_app.hr.recruitment.requisitions'
-import { Route as AppHrRecruitmentPipelineRouteImport } from './routes/_app.hr.recruitment.pipeline'
-import { Route as AppHrRecruitmentOffersRouteImport } from './routes/_app.hr.recruitment.offers'
-import { Route as AppHrRecruitmentInterviewsRouteImport } from './routes/_app.hr.recruitment.interviews'
-import { Route as AppHrRecruitmentAnalyticsRouteImport } from './routes/_app.hr.recruitment.analytics'
-import { Route as AppHrPerformanceGoalsRouteImport } from './routes/_app.hr.performance.goals'
-import { Route as AppHrPerformanceEmployeeReviewsRouteImport } from './routes/_app.hr.performance.employee-reviews'
-import { Route as AppHrPerformanceCyclesRouteImport } from './routes/_app.hr.performance.cycles'
-import { Route as AppHrPerformanceCompetenciesRouteImport } from './routes/_app.hr.performance.competencies'
-import { Route as AppHrPerformanceAnalyticsRouteImport } from './routes/_app.hr.performance.analytics'
-import { Route as AppHrOrgDepartmentsRouteImport } from './routes/_app.hr.org.departments'
-import { Route as AppHrOnboardingTasksRouteImport } from './routes/_app.hr.onboarding.tasks'
-import { Route as AppHrOffboardingResignationsRouteImport } from './routes/_app.hr.offboarding.resignations'
-import { Route as AppHrLndSkillsRouteImport } from './routes/_app.hr.lnd.skills'
-import { Route as AppHrLndProgramsRouteImport } from './routes/_app.hr.lnd.programs'
-import { Route as AppHrLeaveAdminPoliciesRouteImport } from './routes/_app.hr.leave-admin.policies'
-import { Route as AppHrEngagementPulseRouteImport } from './routes/_app.hr.engagement.pulse'
-import { Route as AppHrEngagementAnnouncementsRouteImport } from './routes/_app.hr.engagement.announcements'
-import { Route as AppHrEmployeesProfileRouteImport } from './routes/_app.hr.employees.profile'
-import { Route as AppHrDocumentsPoliciesRouteImport } from './routes/_app.hr.documents.policies'
-import { Route as AppHrComplianceAuditRouteImport } from './routes/_app.hr.compliance.audit'
-import { Route as AppHrCompensationPromotionsRouteImport } from './routes/_app.hr.compensation.promotions'
-import { Route as AppHrCompensationIncrementsRouteImport } from './routes/_app.hr.compensation.increments'
-import { Route as AppHrCompensationBandsRouteImport } from './routes/_app.hr.compensation.bands'
-import { Route as AppHrAnalyticsHeadcountRouteImport } from './routes/_app.hr.analytics.headcount'
+import { Route as AppAssetsRequestsRouteImport } from './routes/_app.assets.requests'
+import { Route as AppAttendanceHistoryRouteImport } from './routes/_app.attendance.history'
+import { Route as AppAttendanceTimesheetsRouteImport } from './routes/_app.attendance.timesheets'
+import { Route as AppAttendanceTodayRouteImport } from './routes/_app.attendance.today'
+import { Route as AppBenefitsIndexRouteImport } from './routes/_app.benefits.index'
+import { Route as AppBenefitsExpensesRouteImport } from './routes/_app.benefits.expenses'
+import { Route as AppBenefitsInsuranceRouteImport } from './routes/_app.benefits.insurance'
+import { Route as AppCareerGoalsRouteImport } from './routes/_app.career.goals'
+import { Route as AppHelpdeskTicketsRouteImport } from './routes/_app.helpdesk.tickets'
+import { Route as AppHrIndexRouteImport } from './routes/_app.hr.index'
+import { Route as AppHrApprovalsRouteImport } from './routes/_app.hr.approvals'
+import { Route as AppHrEmployeesRouteImport } from './routes/_app.hr.employees'
+import { Route as AppLearningCertificationsRouteImport } from './routes/_app.learning.certifications'
+import { Route as AppLearningCoursesRouteImport } from './routes/_app.learning.courses'
+import { Route as AppLearningProgressRouteImport } from './routes/_app.learning.progress'
+import { Route as AppLeaveIndexRouteImport } from './routes/_app.leave.index'
+import { Route as AppLeaveApplyRouteImport } from './routes/_app.leave.apply'
+import { Route as AppLeaveHistoryRouteImport } from './routes/_app.leave.history'
+import { Route as AppLeaveHolidaysRouteImport } from './routes/_app.leave.holidays'
+import { Route as AppOrgDirectoryRouteImport } from './routes/_app.org.directory'
+import { Route as AppPayrollIndexRouteImport } from './routes/_app.payroll.index'
+import { Route as AppPayrollBankDetailsRouteImport } from './routes/_app/payroll/bank-details'
+import { Route as AppPayrollPayslipsRouteImport } from './routes/_app.payroll.payslips'
+import { Route as AppPayrollSalaryRouteImport } from './routes/_app/payroll/salary'
+import { Route as AppPayrollTaxDocumentsRouteImport } from './routes/_app/payroll/tax-documents'
+import { Route as AppProfilePersonalRouteImport } from './routes/_app.profile.personal'
+import { Route as AppSettingsIndexRouteImport } from './routes/_app.settings.index'
+import { Route as AppSettingsPrivacyRouteImport } from './routes/_app.settings.privacy'
 import { Route as AppHrAnalyticsDiversityRouteImport } from './routes/_app.hr.analytics.diversity'
+import { Route as AppHrAnalyticsHeadcountRouteImport } from './routes/_app.hr.analytics.headcount'
+import { Route as AppHrAttendanceAdminIndexRouteImport } from './routes/_app.hr.attendance-admin.index'
+import { Route as AppHrCompensationBandsRouteImport } from './routes/_app.hr.compensation.bands'
+import { Route as AppHrCompensationIncrementsRouteImport } from './routes/_app.hr.compensation.increments'
+import { Route as AppHrCompensationPromotionsRouteImport } from './routes/_app.hr.compensation.promotions'
+import { Route as AppHrComplianceIndexRouteImport } from './routes/_app.hr.compliance.index'
+import { Route as AppHrComplianceAuditRouteImport } from './routes/_app.hr.compliance.audit'
+import { Route as AppHrDocumentsPoliciesRouteImport } from './routes/_app.hr.documents.policies'
+import { Route as AppHrEmployeesProfileRouteImport } from './routes/_app.hr.employees.profile'
+import { Route as AppHrEngagementAnnouncementsRouteImport } from './routes/_app.hr.engagement.announcements'
+import { Route as AppHrEngagementPulseRouteImport } from './routes/_app.hr.engagement.pulse'
+import { Route as AppHrLeaveAdminPoliciesRouteImport } from './routes/_app.hr.leave-admin.policies'
+import { Route as AppHrLndIndexRouteImport } from './routes/_app.hr.lnd.index'
+import { Route as AppHrLndProgramsRouteImport } from './routes/_app.hr.lnd.programs'
+import { Route as AppHrLndSkillsRouteImport } from './routes/_app.hr.lnd.skills'
+import { Route as AppHrOffboardingResignationsRouteImport } from './routes/_app.hr.offboarding.resignations'
+import { Route as AppHrOnboardingIndexRouteImport } from './routes/_app.hr.onboarding.index'
+import { Route as AppHrOnboardingTasksRouteImport } from './routes/_app.hr.onboarding.tasks'
+import { Route as AppHrOrgDepartmentsRouteImport } from './routes/_app.hr.org.departments'
+import { Route as AppHrPerformanceAnalyticsRouteImport } from './routes/_app.hr.performance.analytics'
+import { Route as AppHrPerformanceCompetenciesRouteImport } from './routes/_app.hr.performance.competencies'
+import { Route as AppHrPerformanceCyclesRouteImport } from './routes/_app.hr.performance.cycles'
+import { Route as AppHrPerformanceEmployeeReviewsRouteImport } from './routes/_app.hr.performance.employee-reviews'
+import { Route as AppHrPerformanceGoalsRouteImport } from './routes/_app.hr.performance.goals'
+import { Route as AppHrRecruitmentAnalyticsRouteImport } from './routes/_app.hr.recruitment.analytics'
+import { Route as AppHrRecruitmentInterviewsRouteImport } from './routes/_app.hr.recruitment.interviews'
+import { Route as AppHrRecruitmentOffersRouteImport } from './routes/_app.hr.recruitment.offers'
+import { Route as AppHrRecruitmentPipelineRouteImport } from './routes/_app.hr.recruitment.pipeline'
+import { Route as AppHrRecruitmentRequisitionsRouteImport } from './routes/_app.hr.recruitment.requisitions'
+import { Route as AppHrRelationsGrievancesRouteImport } from './routes/_app.hr.relations.grievances'
+import { Route as AppHrWorkforceIndexRouteImport } from './routes/_app.hr.workforce.index'
+import { Route as AppHrWorkforceAttritionRouteImport } from './routes/_app.hr.workforce.attrition'
+import { Route as AppHrWorkforceSuccessionRouteImport } from './routes/_app.hr.workforce.succession'
+import { Route as AppPayTimesheetsApprovalsRouteImport } from './routes/_app.pay.timesheets.approvals'
+import { Route as AppPayTimesheetsReportsRouteImport } from './routes/_app.pay.timesheets.reports'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
@@ -99,54 +99,9 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
-const AuthVerifyEmailRoute = AuthVerifyEmailRouteImport.update({
-  id: '/auth/verify-email',
-  path: '/auth/verify-email',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthUnauthorizedRoute = AuthUnauthorizedRouteImport.update({
-  id: '/auth/unauthorized',
-  path: '/auth/unauthorized',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthSessionExpiredRoute = AuthSessionExpiredRouteImport.update({
-  id: '/auth/session-expired',
-  path: '/auth/session-expired',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthResetPasswordRoute = AuthResetPasswordRouteImport.update({
-  id: '/auth/reset-password',
-  path: '/auth/reset-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRegisterRoute = AuthRegisterRouteImport.update({
-  id: '/auth/register',
-  path: '/auth/register',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthLogoutRoute = AuthLogoutRouteImport.update({
-  id: '/auth/logout',
-  path: '/auth/logout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthLoginRoute = AuthLoginRouteImport.update({
-  id: '/auth/login',
-  path: '/auth/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
-  id: '/auth/forgot-password',
-  path: '/auth/forgot-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppTasksRoute = AppTasksRouteImport.update({
-  id: '/tasks',
-  path: '/tasks',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppNotificationsRoute = AppNotificationsRouteImport.update({
-  id: '/notifications',
-  path: '/notifications',
+const AppSplatRoute = AppSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
   getParentRoute: () => AppRoute,
 } as any)
 const AppDocumentsRoute = AppDocumentsRouteImport.update({
@@ -154,29 +109,84 @@ const AppDocumentsRoute = AppDocumentsRouteImport.update({
   path: '/documents',
   getParentRoute: () => AppRoute,
 } as any)
-const AppSplatRoute = AppSplatRouteImport.update({
-  id: '/$',
-  path: '/$',
+const AppNotificationsRoute = AppNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
   getParentRoute: () => AppRoute,
 } as any)
-const AppSettingsIndexRoute = AppSettingsIndexRouteImport.update({
-  id: '/settings/',
-  path: '/settings/',
+const AppTasksRoute = AppTasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
   getParentRoute: () => AppRoute,
 } as any)
-const AppPayrollIndexRoute = AppPayrollIndexRouteImport.update({
-  id: '/payroll/',
-  path: '/payroll/',
+const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
+  id: '/auth/forgot-password',
+  path: '/auth/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLogoutRoute = AuthLogoutRouteImport.update({
+  id: '/auth/logout',
+  path: '/auth/logout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRegisterRoute = AuthRegisterRouteImport.update({
+  id: '/auth/register',
+  path: '/auth/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthResetPasswordRoute = AuthResetPasswordRouteImport.update({
+  id: '/auth/reset-password',
+  path: '/auth/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthSessionExpiredRoute = AuthSessionExpiredRouteImport.update({
+  id: '/auth/session-expired',
+  path: '/auth/session-expired',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthUnauthorizedRoute = AuthUnauthorizedRouteImport.update({
+  id: '/auth/unauthorized',
+  path: '/auth/unauthorized',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthVerifyEmailRoute = AuthVerifyEmailRouteImport.update({
+  id: '/auth/verify-email',
+  path: '/auth/verify-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppLeaveIndexRoute = AppLeaveIndexRouteImport.update({
-  id: '/leave/',
-  path: '/leave/',
+const AppAssetsDevicesRoute = AppAssetsDevicesRouteImport.update({
+  id: '/assets/devices',
+  path: '/assets/devices',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrIndexRoute = AppHrIndexRouteImport.update({
-  id: '/hr/',
-  path: '/hr/',
+const AppAssetsRequestsRoute = AppAssetsRequestsRouteImport.update({
+  id: '/assets/requests',
+  path: '/assets/requests',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAttendanceHistoryRoute = AppAttendanceHistoryRouteImport.update({
+  id: '/attendance/history',
+  path: '/attendance/history',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAttendanceTimesheetsRoute = AppAttendanceTimesheetsRouteImport.update({
+  id: '/attendance/timesheets',
+  path: '/attendance/timesheets',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAttendanceTodayRoute = AppAttendanceTodayRouteImport.update({
+  id: '/attendance/today',
+  path: '/attendance/today',
   getParentRoute: () => AppRoute,
 } as any)
 const AppBenefitsIndexRoute = AppBenefitsIndexRouteImport.update({
@@ -184,69 +194,39 @@ const AppBenefitsIndexRoute = AppBenefitsIndexRouteImport.update({
   path: '/benefits/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAdminIndexRoute = AppAdminIndexRouteImport.update({
-  id: '/admin/',
-  path: '/admin/',
+const AppBenefitsExpensesRoute = AppBenefitsExpensesRouteImport.update({
+  id: '/benefits/expenses',
+  path: '/benefits/expenses',
   getParentRoute: () => AppRoute,
 } as any)
-const AppSettingsPrivacyRoute = AppSettingsPrivacyRouteImport.update({
-  id: '/settings/privacy',
-  path: '/settings/privacy',
+const AppBenefitsInsuranceRoute = AppBenefitsInsuranceRouteImport.update({
+  id: '/benefits/insurance',
+  path: '/benefits/insurance',
   getParentRoute: () => AppRoute,
 } as any)
-const AppProfilePersonalRoute = AppProfilePersonalRouteImport.update({
-  id: '/profile/personal',
-  path: '/profile/personal',
+const AppCareerGoalsRoute = AppCareerGoalsRouteImport.update({
+  id: '/career/goals',
+  path: '/career/goals',
   getParentRoute: () => AppRoute,
 } as any)
-const AppPayrollTaxDocumentsRoute = AppPayrollTaxDocumentsRouteImport.update({
-  id: '/payroll/tax-documents',
-  path: '/payroll/tax-documents',
+const AppHelpdeskTicketsRoute = AppHelpdeskTicketsRouteImport.update({
+  id: '/helpdesk/tickets',
+  path: '/helpdesk/tickets',
   getParentRoute: () => AppRoute,
 } as any)
-const AppPayrollSalaryRoute = AppPayrollSalaryRouteImport.update({
-  id: '/payroll/salary',
-  path: '/payroll/salary',
+const AppHrIndexRoute = AppHrIndexRouteImport.update({
+  id: '/hr/',
+  path: '/hr/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppPayrollPayslipsRoute = AppPayrollPayslipsRouteImport.update({
-  id: '/payroll/payslips',
-  path: '/payroll/payslips',
+const AppHrApprovalsRoute = AppHrApprovalsRouteImport.update({
+  id: '/hr/approvals',
+  path: '/hr/approvals',
   getParentRoute: () => AppRoute,
 } as any)
-const AppPayrollBankDetailsRoute = AppPayrollBankDetailsRouteImport.update({
-  id: '/payroll/bank-details',
-  path: '/payroll/bank-details',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppOrgDirectoryRoute = AppOrgDirectoryRouteImport.update({
-  id: '/org/directory',
-  path: '/org/directory',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppLeaveHolidaysRoute = AppLeaveHolidaysRouteImport.update({
-  id: '/leave/holidays',
-  path: '/leave/holidays',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppLeaveHistoryRoute = AppLeaveHistoryRouteImport.update({
-  id: '/leave/history',
-  path: '/leave/history',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppLeaveApplyRoute = AppLeaveApplyRouteImport.update({
-  id: '/leave/apply',
-  path: '/leave/apply',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppLearningProgressRoute = AppLearningProgressRouteImport.update({
-  id: '/learning/progress',
-  path: '/learning/progress',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppLearningCoursesRoute = AppLearningCoursesRouteImport.update({
-  id: '/learning/courses',
-  path: '/learning/courses',
+const AppHrEmployeesRoute = AppHrEmployeesRouteImport.update({
+  id: '/hr/employees',
+  path: '/hr/employees',
   getParentRoute: () => AppRoute,
 } as any)
 const AppLearningCertificationsRoute =
@@ -255,79 +235,89 @@ const AppLearningCertificationsRoute =
     path: '/learning/certifications',
     getParentRoute: () => AppRoute,
   } as any)
-const AppHrEmployeesRoute = AppHrEmployeesRouteImport.update({
-  id: '/hr/employees',
-  path: '/hr/employees',
+const AppLearningCoursesRoute = AppLearningCoursesRouteImport.update({
+  id: '/learning/courses',
+  path: '/learning/courses',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrApprovalsRoute = AppHrApprovalsRouteImport.update({
-  id: '/hr/approvals',
-  path: '/hr/approvals',
+const AppLearningProgressRoute = AppLearningProgressRouteImport.update({
+  id: '/learning/progress',
+  path: '/learning/progress',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHelpdeskTicketsRoute = AppHelpdeskTicketsRouteImport.update({
-  id: '/helpdesk/tickets',
-  path: '/helpdesk/tickets',
+const AppLeaveIndexRoute = AppLeaveIndexRouteImport.update({
+  id: '/leave/',
+  path: '/leave/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppCareerGoalsRoute = AppCareerGoalsRouteImport.update({
-  id: '/career/goals',
-  path: '/career/goals',
+const AppLeaveApplyRoute = AppLeaveApplyRouteImport.update({
+  id: '/leave/apply',
+  path: '/leave/apply',
   getParentRoute: () => AppRoute,
 } as any)
-const AppBenefitsInsuranceRoute = AppBenefitsInsuranceRouteImport.update({
-  id: '/benefits/insurance',
-  path: '/benefits/insurance',
+const AppLeaveHistoryRoute = AppLeaveHistoryRouteImport.update({
+  id: '/leave/history',
+  path: '/leave/history',
   getParentRoute: () => AppRoute,
 } as any)
-const AppBenefitsExpensesRoute = AppBenefitsExpensesRouteImport.update({
-  id: '/benefits/expenses',
-  path: '/benefits/expenses',
+const AppLeaveHolidaysRoute = AppLeaveHolidaysRouteImport.update({
+  id: '/leave/holidays',
+  path: '/leave/holidays',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAttendanceTodayRoute = AppAttendanceTodayRouteImport.update({
-  id: '/attendance/today',
-  path: '/attendance/today',
+const AppOrgDirectoryRoute = AppOrgDirectoryRouteImport.update({
+  id: '/org/directory',
+  path: '/org/directory',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAttendanceTimesheetsRoute = AppAttendanceTimesheetsRouteImport.update({
-  id: '/attendance/timesheets',
-  path: '/attendance/timesheets',
+const AppPayrollIndexRoute = AppPayrollIndexRouteImport.update({
+  id: '/payroll/',
+  path: '/payroll/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAttendanceHistoryRoute = AppAttendanceHistoryRouteImport.update({
-  id: '/attendance/history',
-  path: '/attendance/history',
+const AppPayrollBankDetailsRoute = AppPayrollBankDetailsRouteImport.update({
+  id: '/payroll/bank-details',
+  path: '/payroll/bank-details',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAssetsRequestsRoute = AppAssetsRequestsRouteImport.update({
-  id: '/assets/requests',
-  path: '/assets/requests',
+const AppPayrollPayslipsRoute = AppPayrollPayslipsRouteImport.update({
+  id: '/payroll/payslips',
+  path: '/payroll/payslips',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAssetsDevicesRoute = AppAssetsDevicesRouteImport.update({
-  id: '/assets/devices',
-  path: '/assets/devices',
+const AppPayrollSalaryRoute = AppPayrollSalaryRouteImport.update({
+  id: '/payroll/salary',
+  path: '/payroll/salary',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrWorkforceIndexRoute = AppHrWorkforceIndexRouteImport.update({
-  id: '/hr/workforce/',
-  path: '/hr/workforce/',
+const AppPayrollTaxDocumentsRoute = AppPayrollTaxDocumentsRouteImport.update({
+  id: '/payroll/tax-documents',
+  path: '/payroll/tax-documents',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrOnboardingIndexRoute = AppHrOnboardingIndexRouteImport.update({
-  id: '/hr/onboarding/',
-  path: '/hr/onboarding/',
+const AppProfilePersonalRoute = AppProfilePersonalRouteImport.update({
+  id: '/profile/personal',
+  path: '/profile/personal',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrLndIndexRoute = AppHrLndIndexRouteImport.update({
-  id: '/hr/lnd/',
-  path: '/hr/lnd/',
+const AppSettingsIndexRoute = AppSettingsIndexRouteImport.update({
+  id: '/settings/',
+  path: '/settings/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrComplianceIndexRoute = AppHrComplianceIndexRouteImport.update({
-  id: '/hr/compliance/',
-  path: '/hr/compliance/',
+const AppSettingsPrivacyRoute = AppSettingsPrivacyRouteImport.update({
+  id: '/settings/privacy',
+  path: '/settings/privacy',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHrAnalyticsDiversityRoute = AppHrAnalyticsDiversityRouteImport.update({
+  id: '/hr/analytics/diversity',
+  path: '/hr/analytics/diversity',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHrAnalyticsHeadcountRoute = AppHrAnalyticsHeadcountRouteImport.update({
+  id: '/hr/analytics/headcount',
+  path: '/hr/analytics/headcount',
   getParentRoute: () => AppRoute,
 } as any)
 const AppHrAttendanceAdminIndexRoute =
@@ -336,99 +326,72 @@ const AppHrAttendanceAdminIndexRoute =
     path: '/hr/attendance-admin/',
     getParentRoute: () => AppRoute,
   } as any)
-const AppPayTimesheetsReportsRoute = AppPayTimesheetsReportsRouteImport.update({
-  id: '/pay/timesheets/reports',
-  path: '/pay/timesheets/reports',
+const AppHrCompensationBandsRoute = AppHrCompensationBandsRouteImport.update({
+  id: '/hr/compensation/bands',
+  path: '/hr/compensation/bands',
   getParentRoute: () => AppRoute,
 } as any)
-const AppPayTimesheetsApprovalsRoute =
-  AppPayTimesheetsApprovalsRouteImport.update({
-    id: '/pay/timesheets/approvals',
-    path: '/pay/timesheets/approvals',
+const AppHrCompensationIncrementsRoute =
+  AppHrCompensationIncrementsRouteImport.update({
+    id: '/hr/compensation/increments',
+    path: '/hr/compensation/increments',
     getParentRoute: () => AppRoute,
   } as any)
-const AppHrWorkforceSuccessionRoute =
-  AppHrWorkforceSuccessionRouteImport.update({
-    id: '/hr/workforce/succession',
-    path: '/hr/workforce/succession',
+const AppHrCompensationPromotionsRoute =
+  AppHrCompensationPromotionsRouteImport.update({
+    id: '/hr/compensation/promotions',
+    path: '/hr/compensation/promotions',
     getParentRoute: () => AppRoute,
   } as any)
-const AppHrWorkforceAttritionRoute = AppHrWorkforceAttritionRouteImport.update({
-  id: '/hr/workforce/attrition',
-  path: '/hr/workforce/attrition',
+const AppHrComplianceIndexRoute = AppHrComplianceIndexRouteImport.update({
+  id: '/hr/compliance/',
+  path: '/hr/compliance/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrRelationsGrievancesRoute =
-  AppHrRelationsGrievancesRouteImport.update({
-    id: '/hr/relations/grievances',
-    path: '/hr/relations/grievances',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppHrRecruitmentRequisitionsRoute =
-  AppHrRecruitmentRequisitionsRouteImport.update({
-    id: '/hr/recruitment/requisitions',
-    path: '/hr/recruitment/requisitions',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppHrRecruitmentPipelineRoute =
-  AppHrRecruitmentPipelineRouteImport.update({
-    id: '/hr/recruitment/pipeline',
-    path: '/hr/recruitment/pipeline',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppHrRecruitmentOffersRoute = AppHrRecruitmentOffersRouteImport.update({
-  id: '/hr/recruitment/offers',
-  path: '/hr/recruitment/offers',
+const AppHrComplianceAuditRoute = AppHrComplianceAuditRouteImport.update({
+  id: '/hr/compliance/audit',
+  path: '/hr/compliance/audit',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrRecruitmentInterviewsRoute =
-  AppHrRecruitmentInterviewsRouteImport.update({
-    id: '/hr/recruitment/interviews',
-    path: '/hr/recruitment/interviews',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppHrRecruitmentAnalyticsRoute =
-  AppHrRecruitmentAnalyticsRouteImport.update({
-    id: '/hr/recruitment/analytics',
-    path: '/hr/recruitment/analytics',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppHrPerformanceGoalsRoute = AppHrPerformanceGoalsRouteImport.update({
-  id: '/hr/performance/goals',
-  path: '/hr/performance/goals',
+const AppHrDocumentsPoliciesRoute = AppHrDocumentsPoliciesRouteImport.update({
+  id: '/hr/documents/policies',
+  path: '/hr/documents/policies',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrPerformanceEmployeeReviewsRoute =
-  AppHrPerformanceEmployeeReviewsRouteImport.update({
-    id: '/hr/performance/employee-reviews',
-    path: '/hr/performance/employee-reviews',
+const AppHrEmployeesProfileRoute = AppHrEmployeesProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppHrEmployeesRoute,
+} as any)
+const AppHrEngagementAnnouncementsRoute =
+  AppHrEngagementAnnouncementsRouteImport.update({
+    id: '/hr/engagement/announcements',
+    path: '/hr/engagement/announcements',
     getParentRoute: () => AppRoute,
   } as any)
-const AppHrPerformanceCyclesRoute = AppHrPerformanceCyclesRouteImport.update({
-  id: '/hr/performance/cycles',
-  path: '/hr/performance/cycles',
+const AppHrEngagementPulseRoute = AppHrEngagementPulseRouteImport.update({
+  id: '/hr/engagement/pulse',
+  path: '/hr/engagement/pulse',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrPerformanceCompetenciesRoute =
-  AppHrPerformanceCompetenciesRouteImport.update({
-    id: '/hr/performance/competencies',
-    path: '/hr/performance/competencies',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppHrPerformanceAnalyticsRoute =
-  AppHrPerformanceAnalyticsRouteImport.update({
-    id: '/hr/performance/analytics',
-    path: '/hr/performance/analytics',
-    getParentRoute: () => AppRoute,
-  } as any)
-const AppHrOrgDepartmentsRoute = AppHrOrgDepartmentsRouteImport.update({
-  id: '/hr/org/departments',
-  path: '/hr/org/departments',
+const AppHrLeaveAdminPoliciesRoute = AppHrLeaveAdminPoliciesRouteImport.update({
+  id: '/hr/leave-admin/policies',
+  path: '/hr/leave-admin/policies',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrOnboardingTasksRoute = AppHrOnboardingTasksRouteImport.update({
-  id: '/hr/onboarding/tasks',
-  path: '/hr/onboarding/tasks',
+const AppHrLndIndexRoute = AppHrLndIndexRouteImport.update({
+  id: '/hr/lnd/',
+  path: '/hr/lnd/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHrLndProgramsRoute = AppHrLndProgramsRouteImport.update({
+  id: '/hr/lnd/programs',
+  path: '/hr/lnd/programs',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHrLndSkillsRoute = AppHrLndSkillsRouteImport.update({
+  id: '/hr/lnd/skills',
+  path: '/hr/lnd/skills',
   getParentRoute: () => AppRoute,
 } as any)
 const AppHrOffboardingResignationsRoute =
@@ -437,72 +400,109 @@ const AppHrOffboardingResignationsRoute =
     path: '/hr/offboarding/resignations',
     getParentRoute: () => AppRoute,
   } as any)
-const AppHrLndSkillsRoute = AppHrLndSkillsRouteImport.update({
-  id: '/hr/lnd/skills',
-  path: '/hr/lnd/skills',
+const AppHrOnboardingIndexRoute = AppHrOnboardingIndexRouteImport.update({
+  id: '/hr/onboarding/',
+  path: '/hr/onboarding/',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrLndProgramsRoute = AppHrLndProgramsRouteImport.update({
-  id: '/hr/lnd/programs',
-  path: '/hr/lnd/programs',
+const AppHrOnboardingTasksRoute = AppHrOnboardingTasksRouteImport.update({
+  id: '/hr/onboarding/tasks',
+  path: '/hr/onboarding/tasks',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrLeaveAdminPoliciesRoute = AppHrLeaveAdminPoliciesRouteImport.update({
-  id: '/hr/leave-admin/policies',
-  path: '/hr/leave-admin/policies',
+const AppHrOrgDepartmentsRoute = AppHrOrgDepartmentsRouteImport.update({
+  id: '/hr/org/departments',
+  path: '/hr/org/departments',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrEngagementPulseRoute = AppHrEngagementPulseRouteImport.update({
-  id: '/hr/engagement/pulse',
-  path: '/hr/engagement/pulse',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppHrEngagementAnnouncementsRoute =
-  AppHrEngagementAnnouncementsRouteImport.update({
-    id: '/hr/engagement/announcements',
-    path: '/hr/engagement/announcements',
+const AppHrPerformanceAnalyticsRoute =
+  AppHrPerformanceAnalyticsRouteImport.update({
+    id: '/hr/performance/analytics',
+    path: '/hr/performance/analytics',
     getParentRoute: () => AppRoute,
   } as any)
-const AppHrEmployeesProfileRoute = AppHrEmployeesProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => AppHrEmployeesRoute,
-} as any)
-const AppHrDocumentsPoliciesRoute = AppHrDocumentsPoliciesRouteImport.update({
-  id: '/hr/documents/policies',
-  path: '/hr/documents/policies',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppHrComplianceAuditRoute = AppHrComplianceAuditRouteImport.update({
-  id: '/hr/compliance/audit',
-  path: '/hr/compliance/audit',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppHrCompensationPromotionsRoute =
-  AppHrCompensationPromotionsRouteImport.update({
-    id: '/hr/compensation/promotions',
-    path: '/hr/compensation/promotions',
+const AppHrPerformanceCompetenciesRoute =
+  AppHrPerformanceCompetenciesRouteImport.update({
+    id: '/hr/performance/competencies',
+    path: '/hr/performance/competencies',
     getParentRoute: () => AppRoute,
   } as any)
-const AppHrCompensationIncrementsRoute =
-  AppHrCompensationIncrementsRouteImport.update({
-    id: '/hr/compensation/increments',
-    path: '/hr/compensation/increments',
+const AppHrPerformanceCyclesRoute = AppHrPerformanceCyclesRouteImport.update({
+  id: '/hr/performance/cycles',
+  path: '/hr/performance/cycles',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHrPerformanceEmployeeReviewsRoute =
+  AppHrPerformanceEmployeeReviewsRouteImport.update({
+    id: '/hr/performance/employee-reviews',
+    path: '/hr/performance/employee-reviews',
     getParentRoute: () => AppRoute,
   } as any)
-const AppHrCompensationBandsRoute = AppHrCompensationBandsRouteImport.update({
-  id: '/hr/compensation/bands',
-  path: '/hr/compensation/bands',
+const AppHrPerformanceGoalsRoute = AppHrPerformanceGoalsRouteImport.update({
+  id: '/hr/performance/goals',
+  path: '/hr/performance/goals',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrAnalyticsHeadcountRoute = AppHrAnalyticsHeadcountRouteImport.update({
-  id: '/hr/analytics/headcount',
-  path: '/hr/analytics/headcount',
+const AppHrRecruitmentAnalyticsRoute =
+  AppHrRecruitmentAnalyticsRouteImport.update({
+    id: '/hr/recruitment/analytics',
+    path: '/hr/recruitment/analytics',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppHrRecruitmentInterviewsRoute =
+  AppHrRecruitmentInterviewsRouteImport.update({
+    id: '/hr/recruitment/interviews',
+    path: '/hr/recruitment/interviews',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppHrRecruitmentOffersRoute = AppHrRecruitmentOffersRouteImport.update({
+  id: '/hr/recruitment/offers',
+  path: '/hr/recruitment/offers',
   getParentRoute: () => AppRoute,
 } as any)
-const AppHrAnalyticsDiversityRoute = AppHrAnalyticsDiversityRouteImport.update({
-  id: '/hr/analytics/diversity',
-  path: '/hr/analytics/diversity',
+const AppHrRecruitmentPipelineRoute =
+  AppHrRecruitmentPipelineRouteImport.update({
+    id: '/hr/recruitment/pipeline',
+    path: '/hr/recruitment/pipeline',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppHrRecruitmentRequisitionsRoute =
+  AppHrRecruitmentRequisitionsRouteImport.update({
+    id: '/hr/recruitment/requisitions',
+    path: '/hr/recruitment/requisitions',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppHrRelationsGrievancesRoute =
+  AppHrRelationsGrievancesRouteImport.update({
+    id: '/hr/relations/grievances',
+    path: '/hr/relations/grievances',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppHrWorkforceIndexRoute = AppHrWorkforceIndexRouteImport.update({
+  id: '/hr/workforce/',
+  path: '/hr/workforce/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHrWorkforceAttritionRoute = AppHrWorkforceAttritionRouteImport.update({
+  id: '/hr/workforce/attrition',
+  path: '/hr/workforce/attrition',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppHrWorkforceSuccessionRoute =
+  AppHrWorkforceSuccessionRouteImport.update({
+    id: '/hr/workforce/succession',
+    path: '/hr/workforce/succession',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppPayTimesheetsApprovalsRoute =
+  AppPayTimesheetsApprovalsRouteImport.update({
+    id: '/pay/timesheets/approvals',
+    path: '/pay/timesheets/approvals',
+    getParentRoute: () => AppRoute,
+  } as any)
+const AppPayTimesheetsReportsRoute = AppPayTimesheetsReportsRouteImport.update({
+  id: '/pay/timesheets/reports',
+  path: '/pay/timesheets/reports',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -1026,74 +1026,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/auth/verify-email': {
-      id: '/auth/verify-email'
-      path: '/auth/verify-email'
-      fullPath: '/auth/verify-email'
-      preLoaderRoute: typeof AuthVerifyEmailRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/unauthorized': {
-      id: '/auth/unauthorized'
-      path: '/auth/unauthorized'
-      fullPath: '/auth/unauthorized'
-      preLoaderRoute: typeof AuthUnauthorizedRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/session-expired': {
-      id: '/auth/session-expired'
-      path: '/auth/session-expired'
-      fullPath: '/auth/session-expired'
-      preLoaderRoute: typeof AuthSessionExpiredRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/reset-password': {
-      id: '/auth/reset-password'
-      path: '/auth/reset-password'
-      fullPath: '/auth/reset-password'
-      preLoaderRoute: typeof AuthResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/register': {
-      id: '/auth/register'
-      path: '/auth/register'
-      fullPath: '/auth/register'
-      preLoaderRoute: typeof AuthRegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/logout': {
-      id: '/auth/logout'
-      path: '/auth/logout'
-      fullPath: '/auth/logout'
-      preLoaderRoute: typeof AuthLogoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/login': {
-      id: '/auth/login'
-      path: '/auth/login'
-      fullPath: '/auth/login'
-      preLoaderRoute: typeof AuthLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth/forgot-password': {
-      id: '/auth/forgot-password'
-      path: '/auth/forgot-password'
-      fullPath: '/auth/forgot-password'
-      preLoaderRoute: typeof AuthForgotPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_app/tasks': {
-      id: '/_app/tasks'
-      path: '/tasks'
-      fullPath: '/tasks'
-      preLoaderRoute: typeof AppTasksRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/notifications': {
-      id: '/_app/notifications'
-      path: '/notifications'
-      fullPath: '/notifications'
-      preLoaderRoute: typeof AppNotificationsRouteImport
+    '/_app/$': {
+      id: '/_app/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof AppSplatRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/documents': {
@@ -1103,214 +1040,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDocumentsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/$': {
-      id: '/_app/$'
-      path: '/$'
-      fullPath: '/$'
-      preLoaderRoute: typeof AppSplatRouteImport
+    '/_app/notifications': {
+      id: '/_app/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof AppNotificationsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/settings/': {
-      id: '/_app/settings/'
-      path: '/settings'
-      fullPath: '/settings/'
-      preLoaderRoute: typeof AppSettingsIndexRouteImport
+    '/_app/tasks': {
+      id: '/_app/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof AppTasksRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/payroll/': {
-      id: '/_app/payroll/'
-      path: '/payroll'
-      fullPath: '/payroll/'
-      preLoaderRoute: typeof AppPayrollIndexRouteImport
-      parentRoute: typeof AppRoute
+    '/auth/forgot-password': {
+      id: '/auth/forgot-password'
+      path: '/auth/forgot-password'
+      fullPath: '/auth/forgot-password'
+      preLoaderRoute: typeof AuthForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/leave/': {
-      id: '/_app/leave/'
-      path: '/leave'
-      fullPath: '/leave/'
-      preLoaderRoute: typeof AppLeaveIndexRouteImport
-      parentRoute: typeof AppRoute
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/hr/': {
-      id: '/_app/hr/'
-      path: '/hr'
-      fullPath: '/hr/'
-      preLoaderRoute: typeof AppHrIndexRouteImport
-      parentRoute: typeof AppRoute
+    '/auth/logout': {
+      id: '/auth/logout'
+      path: '/auth/logout'
+      fullPath: '/auth/logout'
+      preLoaderRoute: typeof AuthLogoutRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/benefits/': {
-      id: '/_app/benefits/'
-      path: '/benefits'
-      fullPath: '/benefits/'
-      preLoaderRoute: typeof AppBenefitsIndexRouteImport
-      parentRoute: typeof AppRoute
+    '/auth/register': {
+      id: '/auth/register'
+      path: '/auth/register'
+      fullPath: '/auth/register'
+      preLoaderRoute: typeof AuthRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/reset-password': {
+      id: '/auth/reset-password'
+      path: '/auth/reset-password'
+      fullPath: '/auth/reset-password'
+      preLoaderRoute: typeof AuthResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/session-expired': {
+      id: '/auth/session-expired'
+      path: '/auth/session-expired'
+      fullPath: '/auth/session-expired'
+      preLoaderRoute: typeof AuthSessionExpiredRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/unauthorized': {
+      id: '/auth/unauthorized'
+      path: '/auth/unauthorized'
+      fullPath: '/auth/unauthorized'
+      preLoaderRoute: typeof AuthUnauthorizedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/verify-email': {
+      id: '/auth/verify-email'
+      path: '/auth/verify-email'
+      fullPath: '/auth/verify-email'
+      preLoaderRoute: typeof AuthVerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_app/admin/': {
       id: '/_app/admin/'
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AppAdminIndexRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/settings/privacy': {
-      id: '/_app/settings/privacy'
-      path: '/settings/privacy'
-      fullPath: '/settings/privacy'
-      preLoaderRoute: typeof AppSettingsPrivacyRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/profile/personal': {
-      id: '/_app/profile/personal'
-      path: '/profile/personal'
-      fullPath: '/profile/personal'
-      preLoaderRoute: typeof AppProfilePersonalRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/payroll/tax-documents': {
-      id: '/_app/payroll/tax-documents'
-      path: '/payroll/tax-documents'
-      fullPath: '/payroll/tax-documents'
-      preLoaderRoute: typeof AppPayrollTaxDocumentsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/payroll/salary': {
-      id: '/_app/payroll/salary'
-      path: '/payroll/salary'
-      fullPath: '/payroll/salary'
-      preLoaderRoute: typeof AppPayrollSalaryRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/payroll/payslips': {
-      id: '/_app/payroll/payslips'
-      path: '/payroll/payslips'
-      fullPath: '/payroll/payslips'
-      preLoaderRoute: typeof AppPayrollPayslipsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/payroll/bank-details': {
-      id: '/_app/payroll/bank-details'
-      path: '/payroll/bank-details'
-      fullPath: '/payroll/bank-details'
-      preLoaderRoute: typeof AppPayrollBankDetailsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/org/directory': {
-      id: '/_app/org/directory'
-      path: '/org/directory'
-      fullPath: '/org/directory'
-      preLoaderRoute: typeof AppOrgDirectoryRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/leave/holidays': {
-      id: '/_app/leave/holidays'
-      path: '/leave/holidays'
-      fullPath: '/leave/holidays'
-      preLoaderRoute: typeof AppLeaveHolidaysRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/leave/history': {
-      id: '/_app/leave/history'
-      path: '/leave/history'
-      fullPath: '/leave/history'
-      preLoaderRoute: typeof AppLeaveHistoryRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/leave/apply': {
-      id: '/_app/leave/apply'
-      path: '/leave/apply'
-      fullPath: '/leave/apply'
-      preLoaderRoute: typeof AppLeaveApplyRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/learning/progress': {
-      id: '/_app/learning/progress'
-      path: '/learning/progress'
-      fullPath: '/learning/progress'
-      preLoaderRoute: typeof AppLearningProgressRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/learning/courses': {
-      id: '/_app/learning/courses'
-      path: '/learning/courses'
-      fullPath: '/learning/courses'
-      preLoaderRoute: typeof AppLearningCoursesRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/learning/certifications': {
-      id: '/_app/learning/certifications'
-      path: '/learning/certifications'
-      fullPath: '/learning/certifications'
-      preLoaderRoute: typeof AppLearningCertificationsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/hr/employees': {
-      id: '/_app/hr/employees'
-      path: '/hr/employees'
-      fullPath: '/hr/employees'
-      preLoaderRoute: typeof AppHrEmployeesRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/hr/approvals': {
-      id: '/_app/hr/approvals'
-      path: '/hr/approvals'
-      fullPath: '/hr/approvals'
-      preLoaderRoute: typeof AppHrApprovalsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/helpdesk/tickets': {
-      id: '/_app/helpdesk/tickets'
-      path: '/helpdesk/tickets'
-      fullPath: '/helpdesk/tickets'
-      preLoaderRoute: typeof AppHelpdeskTicketsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/career/goals': {
-      id: '/_app/career/goals'
-      path: '/career/goals'
-      fullPath: '/career/goals'
-      preLoaderRoute: typeof AppCareerGoalsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/benefits/insurance': {
-      id: '/_app/benefits/insurance'
-      path: '/benefits/insurance'
-      fullPath: '/benefits/insurance'
-      preLoaderRoute: typeof AppBenefitsInsuranceRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/benefits/expenses': {
-      id: '/_app/benefits/expenses'
-      path: '/benefits/expenses'
-      fullPath: '/benefits/expenses'
-      preLoaderRoute: typeof AppBenefitsExpensesRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/attendance/today': {
-      id: '/_app/attendance/today'
-      path: '/attendance/today'
-      fullPath: '/attendance/today'
-      preLoaderRoute: typeof AppAttendanceTodayRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/attendance/timesheets': {
-      id: '/_app/attendance/timesheets'
-      path: '/attendance/timesheets'
-      fullPath: '/attendance/timesheets'
-      preLoaderRoute: typeof AppAttendanceTimesheetsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/attendance/history': {
-      id: '/_app/attendance/history'
-      path: '/attendance/history'
-      fullPath: '/attendance/history'
-      preLoaderRoute: typeof AppAttendanceHistoryRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/assets/requests': {
-      id: '/_app/assets/requests'
-      path: '/assets/requests'
-      fullPath: '/assets/requests'
-      preLoaderRoute: typeof AppAssetsRequestsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/assets/devices': {
@@ -1320,242 +1124,207 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAssetsDevicesRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/workforce/': {
-      id: '/_app/hr/workforce/'
-      path: '/hr/workforce'
-      fullPath: '/hr/workforce/'
-      preLoaderRoute: typeof AppHrWorkforceIndexRouteImport
+    '/_app/assets/requests': {
+      id: '/_app/assets/requests'
+      path: '/assets/requests'
+      fullPath: '/assets/requests'
+      preLoaderRoute: typeof AppAssetsRequestsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/onboarding/': {
-      id: '/_app/hr/onboarding/'
-      path: '/hr/onboarding'
-      fullPath: '/hr/onboarding/'
-      preLoaderRoute: typeof AppHrOnboardingIndexRouteImport
+    '/_app/attendance/history': {
+      id: '/_app/attendance/history'
+      path: '/attendance/history'
+      fullPath: '/attendance/history'
+      preLoaderRoute: typeof AppAttendanceHistoryRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/lnd/': {
-      id: '/_app/hr/lnd/'
-      path: '/hr/lnd'
-      fullPath: '/hr/lnd/'
-      preLoaderRoute: typeof AppHrLndIndexRouteImport
+    '/_app/attendance/timesheets': {
+      id: '/_app/attendance/timesheets'
+      path: '/attendance/timesheets'
+      fullPath: '/attendance/timesheets'
+      preLoaderRoute: typeof AppAttendanceTimesheetsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/compliance/': {
-      id: '/_app/hr/compliance/'
-      path: '/hr/compliance'
-      fullPath: '/hr/compliance/'
-      preLoaderRoute: typeof AppHrComplianceIndexRouteImport
+    '/_app/attendance/today': {
+      id: '/_app/attendance/today'
+      path: '/attendance/today'
+      fullPath: '/attendance/today'
+      preLoaderRoute: typeof AppAttendanceTodayRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/attendance-admin/': {
-      id: '/_app/hr/attendance-admin/'
-      path: '/hr/attendance-admin'
-      fullPath: '/hr/attendance-admin/'
-      preLoaderRoute: typeof AppHrAttendanceAdminIndexRouteImport
+    '/_app/benefits/': {
+      id: '/_app/benefits/'
+      path: '/benefits'
+      fullPath: '/benefits/'
+      preLoaderRoute: typeof AppBenefitsIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/pay/timesheets/reports': {
-      id: '/_app/pay/timesheets/reports'
-      path: '/pay/timesheets/reports'
-      fullPath: '/pay/timesheets/reports'
-      preLoaderRoute: typeof AppPayTimesheetsReportsRouteImport
+    '/_app/benefits/expenses': {
+      id: '/_app/benefits/expenses'
+      path: '/benefits/expenses'
+      fullPath: '/benefits/expenses'
+      preLoaderRoute: typeof AppBenefitsExpensesRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/pay/timesheets/approvals': {
-      id: '/_app/pay/timesheets/approvals'
-      path: '/pay/timesheets/approvals'
-      fullPath: '/pay/timesheets/approvals'
-      preLoaderRoute: typeof AppPayTimesheetsApprovalsRouteImport
+    '/_app/benefits/insurance': {
+      id: '/_app/benefits/insurance'
+      path: '/benefits/insurance'
+      fullPath: '/benefits/insurance'
+      preLoaderRoute: typeof AppBenefitsInsuranceRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/workforce/succession': {
-      id: '/_app/hr/workforce/succession'
-      path: '/hr/workforce/succession'
-      fullPath: '/hr/workforce/succession'
-      preLoaderRoute: typeof AppHrWorkforceSuccessionRouteImport
+    '/_app/career/goals': {
+      id: '/_app/career/goals'
+      path: '/career/goals'
+      fullPath: '/career/goals'
+      preLoaderRoute: typeof AppCareerGoalsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/workforce/attrition': {
-      id: '/_app/hr/workforce/attrition'
-      path: '/hr/workforce/attrition'
-      fullPath: '/hr/workforce/attrition'
-      preLoaderRoute: typeof AppHrWorkforceAttritionRouteImport
+    '/_app/helpdesk/tickets': {
+      id: '/_app/helpdesk/tickets'
+      path: '/helpdesk/tickets'
+      fullPath: '/helpdesk/tickets'
+      preLoaderRoute: typeof AppHelpdeskTicketsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/relations/grievances': {
-      id: '/_app/hr/relations/grievances'
-      path: '/hr/relations/grievances'
-      fullPath: '/hr/relations/grievances'
-      preLoaderRoute: typeof AppHrRelationsGrievancesRouteImport
+    '/_app/hr/': {
+      id: '/_app/hr/'
+      path: '/hr'
+      fullPath: '/hr/'
+      preLoaderRoute: typeof AppHrIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/recruitment/requisitions': {
-      id: '/_app/hr/recruitment/requisitions'
-      path: '/hr/recruitment/requisitions'
-      fullPath: '/hr/recruitment/requisitions'
-      preLoaderRoute: typeof AppHrRecruitmentRequisitionsRouteImport
+    '/_app/hr/approvals': {
+      id: '/_app/hr/approvals'
+      path: '/hr/approvals'
+      fullPath: '/hr/approvals'
+      preLoaderRoute: typeof AppHrApprovalsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/recruitment/pipeline': {
-      id: '/_app/hr/recruitment/pipeline'
-      path: '/hr/recruitment/pipeline'
-      fullPath: '/hr/recruitment/pipeline'
-      preLoaderRoute: typeof AppHrRecruitmentPipelineRouteImport
+    '/_app/hr/employees': {
+      id: '/_app/hr/employees'
+      path: '/hr/employees'
+      fullPath: '/hr/employees'
+      preLoaderRoute: typeof AppHrEmployeesRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/recruitment/offers': {
-      id: '/_app/hr/recruitment/offers'
-      path: '/hr/recruitment/offers'
-      fullPath: '/hr/recruitment/offers'
-      preLoaderRoute: typeof AppHrRecruitmentOffersRouteImport
+    '/_app/learning/certifications': {
+      id: '/_app/learning/certifications'
+      path: '/learning/certifications'
+      fullPath: '/learning/certifications'
+      preLoaderRoute: typeof AppLearningCertificationsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/recruitment/interviews': {
-      id: '/_app/hr/recruitment/interviews'
-      path: '/hr/recruitment/interviews'
-      fullPath: '/hr/recruitment/interviews'
-      preLoaderRoute: typeof AppHrRecruitmentInterviewsRouteImport
+    '/_app/learning/courses': {
+      id: '/_app/learning/courses'
+      path: '/learning/courses'
+      fullPath: '/learning/courses'
+      preLoaderRoute: typeof AppLearningCoursesRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/recruitment/analytics': {
-      id: '/_app/hr/recruitment/analytics'
-      path: '/hr/recruitment/analytics'
-      fullPath: '/hr/recruitment/analytics'
-      preLoaderRoute: typeof AppHrRecruitmentAnalyticsRouteImport
+    '/_app/learning/progress': {
+      id: '/_app/learning/progress'
+      path: '/learning/progress'
+      fullPath: '/learning/progress'
+      preLoaderRoute: typeof AppLearningProgressRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/performance/goals': {
-      id: '/_app/hr/performance/goals'
-      path: '/hr/performance/goals'
-      fullPath: '/hr/performance/goals'
-      preLoaderRoute: typeof AppHrPerformanceGoalsRouteImport
+    '/_app/leave/': {
+      id: '/_app/leave/'
+      path: '/leave'
+      fullPath: '/leave/'
+      preLoaderRoute: typeof AppLeaveIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/performance/employee-reviews': {
-      id: '/_app/hr/performance/employee-reviews'
-      path: '/hr/performance/employee-reviews'
-      fullPath: '/hr/performance/employee-reviews'
-      preLoaderRoute: typeof AppHrPerformanceEmployeeReviewsRouteImport
+    '/_app/leave/apply': {
+      id: '/_app/leave/apply'
+      path: '/leave/apply'
+      fullPath: '/leave/apply'
+      preLoaderRoute: typeof AppLeaveApplyRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/performance/cycles': {
-      id: '/_app/hr/performance/cycles'
-      path: '/hr/performance/cycles'
-      fullPath: '/hr/performance/cycles'
-      preLoaderRoute: typeof AppHrPerformanceCyclesRouteImport
+    '/_app/leave/history': {
+      id: '/_app/leave/history'
+      path: '/leave/history'
+      fullPath: '/leave/history'
+      preLoaderRoute: typeof AppLeaveHistoryRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/performance/competencies': {
-      id: '/_app/hr/performance/competencies'
-      path: '/hr/performance/competencies'
-      fullPath: '/hr/performance/competencies'
-      preLoaderRoute: typeof AppHrPerformanceCompetenciesRouteImport
+    '/_app/leave/holidays': {
+      id: '/_app/leave/holidays'
+      path: '/leave/holidays'
+      fullPath: '/leave/holidays'
+      preLoaderRoute: typeof AppLeaveHolidaysRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/performance/analytics': {
-      id: '/_app/hr/performance/analytics'
-      path: '/hr/performance/analytics'
-      fullPath: '/hr/performance/analytics'
-      preLoaderRoute: typeof AppHrPerformanceAnalyticsRouteImport
+    '/_app/org/directory': {
+      id: '/_app/org/directory'
+      path: '/org/directory'
+      fullPath: '/org/directory'
+      preLoaderRoute: typeof AppOrgDirectoryRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/org/departments': {
-      id: '/_app/hr/org/departments'
-      path: '/hr/org/departments'
-      fullPath: '/hr/org/departments'
-      preLoaderRoute: typeof AppHrOrgDepartmentsRouteImport
+    '/_app/payroll/': {
+      id: '/_app/payroll/'
+      path: '/payroll'
+      fullPath: '/payroll/'
+      preLoaderRoute: typeof AppPayrollIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/onboarding/tasks': {
-      id: '/_app/hr/onboarding/tasks'
-      path: '/hr/onboarding/tasks'
-      fullPath: '/hr/onboarding/tasks'
-      preLoaderRoute: typeof AppHrOnboardingTasksRouteImport
+    '/_app/payroll/bank-details': {
+      id: '/_app/payroll/bank-details'
+      path: '/payroll/bank-details'
+      fullPath: '/payroll/bank-details'
+      preLoaderRoute: typeof AppPayrollBankDetailsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/offboarding/resignations': {
-      id: '/_app/hr/offboarding/resignations'
-      path: '/hr/offboarding/resignations'
-      fullPath: '/hr/offboarding/resignations'
-      preLoaderRoute: typeof AppHrOffboardingResignationsRouteImport
+    '/_app/payroll/payslips': {
+      id: '/_app/payroll/payslips'
+      path: '/payroll/payslips'
+      fullPath: '/payroll/payslips'
+      preLoaderRoute: typeof AppPayrollPayslipsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/lnd/skills': {
-      id: '/_app/hr/lnd/skills'
-      path: '/hr/lnd/skills'
-      fullPath: '/hr/lnd/skills'
-      preLoaderRoute: typeof AppHrLndSkillsRouteImport
+    '/_app/payroll/salary': {
+      id: '/_app/payroll/salary'
+      path: '/payroll/salary'
+      fullPath: '/payroll/salary'
+      preLoaderRoute: typeof AppPayrollSalaryRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/lnd/programs': {
-      id: '/_app/hr/lnd/programs'
-      path: '/hr/lnd/programs'
-      fullPath: '/hr/lnd/programs'
-      preLoaderRoute: typeof AppHrLndProgramsRouteImport
+    '/_app/payroll/tax-documents': {
+      id: '/_app/payroll/tax-documents'
+      path: '/payroll/tax-documents'
+      fullPath: '/payroll/tax-documents'
+      preLoaderRoute: typeof AppPayrollTaxDocumentsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/leave-admin/policies': {
-      id: '/_app/hr/leave-admin/policies'
-      path: '/hr/leave-admin/policies'
-      fullPath: '/hr/leave-admin/policies'
-      preLoaderRoute: typeof AppHrLeaveAdminPoliciesRouteImport
+    '/_app/profile/personal': {
+      id: '/_app/profile/personal'
+      path: '/profile/personal'
+      fullPath: '/profile/personal'
+      preLoaderRoute: typeof AppProfilePersonalRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/engagement/pulse': {
-      id: '/_app/hr/engagement/pulse'
-      path: '/hr/engagement/pulse'
-      fullPath: '/hr/engagement/pulse'
-      preLoaderRoute: typeof AppHrEngagementPulseRouteImport
+    '/_app/settings/': {
+      id: '/_app/settings/'
+      path: '/settings'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof AppSettingsIndexRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/engagement/announcements': {
-      id: '/_app/hr/engagement/announcements'
-      path: '/hr/engagement/announcements'
-      fullPath: '/hr/engagement/announcements'
-      preLoaderRoute: typeof AppHrEngagementAnnouncementsRouteImport
+    '/_app/settings/privacy': {
+      id: '/_app/settings/privacy'
+      path: '/settings/privacy'
+      fullPath: '/settings/privacy'
+      preLoaderRoute: typeof AppSettingsPrivacyRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/employees/profile': {
-      id: '/_app/hr/employees/profile'
-      path: '/profile'
-      fullPath: '/hr/employees/profile'
-      preLoaderRoute: typeof AppHrEmployeesProfileRouteImport
-      parentRoute: typeof AppHrEmployeesRoute
-    }
-    '/_app/hr/documents/policies': {
-      id: '/_app/hr/documents/policies'
-      path: '/hr/documents/policies'
-      fullPath: '/hr/documents/policies'
-      preLoaderRoute: typeof AppHrDocumentsPoliciesRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/hr/compliance/audit': {
-      id: '/_app/hr/compliance/audit'
-      path: '/hr/compliance/audit'
-      fullPath: '/hr/compliance/audit'
-      preLoaderRoute: typeof AppHrComplianceAuditRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/hr/compensation/promotions': {
-      id: '/_app/hr/compensation/promotions'
-      path: '/hr/compensation/promotions'
-      fullPath: '/hr/compensation/promotions'
-      preLoaderRoute: typeof AppHrCompensationPromotionsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/hr/compensation/increments': {
-      id: '/_app/hr/compensation/increments'
-      path: '/hr/compensation/increments'
-      fullPath: '/hr/compensation/increments'
-      preLoaderRoute: typeof AppHrCompensationIncrementsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/hr/compensation/bands': {
-      id: '/_app/hr/compensation/bands'
-      path: '/hr/compensation/bands'
-      fullPath: '/hr/compensation/bands'
-      preLoaderRoute: typeof AppHrCompensationBandsRouteImport
+    '/_app/hr/analytics/diversity': {
+      id: '/_app/hr/analytics/diversity'
+      path: '/hr/analytics/diversity'
+      fullPath: '/hr/analytics/diversity'
+      preLoaderRoute: typeof AppHrAnalyticsDiversityRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/hr/analytics/headcount': {
@@ -1565,11 +1334,242 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppHrAnalyticsHeadcountRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/hr/analytics/diversity': {
-      id: '/_app/hr/analytics/diversity'
-      path: '/hr/analytics/diversity'
-      fullPath: '/hr/analytics/diversity'
-      preLoaderRoute: typeof AppHrAnalyticsDiversityRouteImport
+    '/_app/hr/attendance-admin/': {
+      id: '/_app/hr/attendance-admin/'
+      path: '/hr/attendance-admin'
+      fullPath: '/hr/attendance-admin/'
+      preLoaderRoute: typeof AppHrAttendanceAdminIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/compensation/bands': {
+      id: '/_app/hr/compensation/bands'
+      path: '/hr/compensation/bands'
+      fullPath: '/hr/compensation/bands'
+      preLoaderRoute: typeof AppHrCompensationBandsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/compensation/increments': {
+      id: '/_app/hr/compensation/increments'
+      path: '/hr/compensation/increments'
+      fullPath: '/hr/compensation/increments'
+      preLoaderRoute: typeof AppHrCompensationIncrementsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/compensation/promotions': {
+      id: '/_app/hr/compensation/promotions'
+      path: '/hr/compensation/promotions'
+      fullPath: '/hr/compensation/promotions'
+      preLoaderRoute: typeof AppHrCompensationPromotionsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/compliance/': {
+      id: '/_app/hr/compliance/'
+      path: '/hr/compliance'
+      fullPath: '/hr/compliance/'
+      preLoaderRoute: typeof AppHrComplianceIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/compliance/audit': {
+      id: '/_app/hr/compliance/audit'
+      path: '/hr/compliance/audit'
+      fullPath: '/hr/compliance/audit'
+      preLoaderRoute: typeof AppHrComplianceAuditRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/documents/policies': {
+      id: '/_app/hr/documents/policies'
+      path: '/hr/documents/policies'
+      fullPath: '/hr/documents/policies'
+      preLoaderRoute: typeof AppHrDocumentsPoliciesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/employees/profile': {
+      id: '/_app/hr/employees/profile'
+      path: '/profile'
+      fullPath: '/hr/employees/profile'
+      preLoaderRoute: typeof AppHrEmployeesProfileRouteImport
+      parentRoute: typeof AppHrEmployeesRoute
+    }
+    '/_app/hr/engagement/announcements': {
+      id: '/_app/hr/engagement/announcements'
+      path: '/hr/engagement/announcements'
+      fullPath: '/hr/engagement/announcements'
+      preLoaderRoute: typeof AppHrEngagementAnnouncementsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/engagement/pulse': {
+      id: '/_app/hr/engagement/pulse'
+      path: '/hr/engagement/pulse'
+      fullPath: '/hr/engagement/pulse'
+      preLoaderRoute: typeof AppHrEngagementPulseRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/leave-admin/policies': {
+      id: '/_app/hr/leave-admin/policies'
+      path: '/hr/leave-admin/policies'
+      fullPath: '/hr/leave-admin/policies'
+      preLoaderRoute: typeof AppHrLeaveAdminPoliciesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/lnd/': {
+      id: '/_app/hr/lnd/'
+      path: '/hr/lnd'
+      fullPath: '/hr/lnd/'
+      preLoaderRoute: typeof AppHrLndIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/lnd/programs': {
+      id: '/_app/hr/lnd/programs'
+      path: '/hr/lnd/programs'
+      fullPath: '/hr/lnd/programs'
+      preLoaderRoute: typeof AppHrLndProgramsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/lnd/skills': {
+      id: '/_app/hr/lnd/skills'
+      path: '/hr/lnd/skills'
+      fullPath: '/hr/lnd/skills'
+      preLoaderRoute: typeof AppHrLndSkillsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/offboarding/resignations': {
+      id: '/_app/hr/offboarding/resignations'
+      path: '/hr/offboarding/resignations'
+      fullPath: '/hr/offboarding/resignations'
+      preLoaderRoute: typeof AppHrOffboardingResignationsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/onboarding/': {
+      id: '/_app/hr/onboarding/'
+      path: '/hr/onboarding'
+      fullPath: '/hr/onboarding/'
+      preLoaderRoute: typeof AppHrOnboardingIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/onboarding/tasks': {
+      id: '/_app/hr/onboarding/tasks'
+      path: '/hr/onboarding/tasks'
+      fullPath: '/hr/onboarding/tasks'
+      preLoaderRoute: typeof AppHrOnboardingTasksRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/org/departments': {
+      id: '/_app/hr/org/departments'
+      path: '/hr/org/departments'
+      fullPath: '/hr/org/departments'
+      preLoaderRoute: typeof AppHrOrgDepartmentsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/performance/analytics': {
+      id: '/_app/hr/performance/analytics'
+      path: '/hr/performance/analytics'
+      fullPath: '/hr/performance/analytics'
+      preLoaderRoute: typeof AppHrPerformanceAnalyticsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/performance/competencies': {
+      id: '/_app/hr/performance/competencies'
+      path: '/hr/performance/competencies'
+      fullPath: '/hr/performance/competencies'
+      preLoaderRoute: typeof AppHrPerformanceCompetenciesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/performance/cycles': {
+      id: '/_app/hr/performance/cycles'
+      path: '/hr/performance/cycles'
+      fullPath: '/hr/performance/cycles'
+      preLoaderRoute: typeof AppHrPerformanceCyclesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/performance/employee-reviews': {
+      id: '/_app/hr/performance/employee-reviews'
+      path: '/hr/performance/employee-reviews'
+      fullPath: '/hr/performance/employee-reviews'
+      preLoaderRoute: typeof AppHrPerformanceEmployeeReviewsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/performance/goals': {
+      id: '/_app/hr/performance/goals'
+      path: '/hr/performance/goals'
+      fullPath: '/hr/performance/goals'
+      preLoaderRoute: typeof AppHrPerformanceGoalsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/recruitment/analytics': {
+      id: '/_app/hr/recruitment/analytics'
+      path: '/hr/recruitment/analytics'
+      fullPath: '/hr/recruitment/analytics'
+      preLoaderRoute: typeof AppHrRecruitmentAnalyticsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/recruitment/interviews': {
+      id: '/_app/hr/recruitment/interviews'
+      path: '/hr/recruitment/interviews'
+      fullPath: '/hr/recruitment/interviews'
+      preLoaderRoute: typeof AppHrRecruitmentInterviewsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/recruitment/offers': {
+      id: '/_app/hr/recruitment/offers'
+      path: '/hr/recruitment/offers'
+      fullPath: '/hr/recruitment/offers'
+      preLoaderRoute: typeof AppHrRecruitmentOffersRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/recruitment/pipeline': {
+      id: '/_app/hr/recruitment/pipeline'
+      path: '/hr/recruitment/pipeline'
+      fullPath: '/hr/recruitment/pipeline'
+      preLoaderRoute: typeof AppHrRecruitmentPipelineRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/recruitment/requisitions': {
+      id: '/_app/hr/recruitment/requisitions'
+      path: '/hr/recruitment/requisitions'
+      fullPath: '/hr/recruitment/requisitions'
+      preLoaderRoute: typeof AppHrRecruitmentRequisitionsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/relations/grievances': {
+      id: '/_app/hr/relations/grievances'
+      path: '/hr/relations/grievances'
+      fullPath: '/hr/relations/grievances'
+      preLoaderRoute: typeof AppHrRelationsGrievancesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/workforce/': {
+      id: '/_app/hr/workforce/'
+      path: '/hr/workforce'
+      fullPath: '/hr/workforce/'
+      preLoaderRoute: typeof AppHrWorkforceIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/workforce/attrition': {
+      id: '/_app/hr/workforce/attrition'
+      path: '/hr/workforce/attrition'
+      fullPath: '/hr/workforce/attrition'
+      preLoaderRoute: typeof AppHrWorkforceAttritionRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/hr/workforce/succession': {
+      id: '/_app/hr/workforce/succession'
+      path: '/hr/workforce/succession'
+      fullPath: '/hr/workforce/succession'
+      preLoaderRoute: typeof AppHrWorkforceSuccessionRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/pay/timesheets/approvals': {
+      id: '/_app/pay/timesheets/approvals'
+      path: '/pay/timesheets/approvals'
+      fullPath: '/pay/timesheets/approvals'
+      preLoaderRoute: typeof AppPayTimesheetsApprovalsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/pay/timesheets/reports': {
+      id: '/_app/pay/timesheets/reports'
+      path: '/pay/timesheets/reports'
+      fullPath: '/pay/timesheets/reports'
+      preLoaderRoute: typeof AppPayTimesheetsReportsRouteImport
       parentRoute: typeof AppRoute
     }
   }
