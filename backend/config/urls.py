@@ -20,6 +20,7 @@ api_patterns = [
 
     path("notifications/", include("apps.notifications.urls")),
     path("tasks/", include("apps.tasks.urls")),
+    path("lifecycle/", include("apps.lifecycle.urls")),
     path("timesheets/", include("apps.timesheets.urls")),
 
     # path("compensation/", include("apps.compensation.urls")),

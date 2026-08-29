@@ -8,7 +8,7 @@ import { MetricsGrid } from "@/components/hr/metrics-grid";
 import { PersonAvatar } from "@/components/common/person-avatar";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { lifecycleService, type OnboardingHire } from "@/services/hr";
+import { lifecycleApiService, type OnboardingHire } from "@/services/hr";
 import type { StatusTone } from "@/types";
 
 export const Route = createFileRoute("/_app/hr/onboarding/")({
@@ -28,10 +28,10 @@ const statusTone: Record<OnboardingHire["status"], StatusTone> = {
 
 function OnboardingDashboard() {
   const [hires, setHires] = useState<OnboardingHire[]>([]);
-  const [stats, setStats] = useState<Awaited<ReturnType<typeof lifecycleService.onboardingStats>> | null>(null);
+  const [stats, setStats] = useState<Awaited<ReturnType<typeof lifecycleApiService.onboardingStats>> | null>(null);
   useEffect(() => {
-    lifecycleService.hires().then(setHires);
-    lifecycleService.onboardingStats().then(setStats);
+    lifecycleApiService.hires().then(setHires);
+    lifecycleApiService.onboardingStats().then(setStats);
   }, []);
 
   return (
