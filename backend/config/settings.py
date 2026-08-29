@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     "apps.ai",
     "apps.notifications",
     "apps.tasks",
+    "apps.lifecycle",
 
     "apps.timesheets",
     "accounts",

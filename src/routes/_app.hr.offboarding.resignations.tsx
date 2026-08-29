@@ -8,7 +8,7 @@ import { MetricsGrid } from "@/components/hr/metrics-grid";
 import { PersonAvatar } from "@/components/common/person-avatar";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { lifecycleService, type Resignation } from "@/services/hr";
+import { lifecycleApiService, type Resignation } from "@/services/hr";
 import type { StatusTone } from "@/types";
 
 export const Route = createFileRoute("/_app/hr/offboarding/resignations")({
@@ -29,7 +29,7 @@ const statusTone: Record<Resignation["status"], StatusTone> = {
 
 function ResignationsPage() {
   const [list, setList] = useState<Resignation[]>([]);
-  useEffect(() => { lifecycleService.resignations().then(setList); }, []);
+  useEffect(() => { lifecycleApiService.resignations().then(setList); }, []);
 
   return (
     <div className="space-y-6">

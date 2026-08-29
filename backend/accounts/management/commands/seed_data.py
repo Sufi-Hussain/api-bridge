@@ -48,6 +48,8 @@ from apps.assets.models import Asset, AssetRequest, SoftwareLicense
 from apps.benefits.models import Benefit, BenefitEnrollment, ExpenseClaim, ExpenseReceipt, Loan, TravelRequest
 from apps.learning.models import Certification, Course, Enrollment, SkillMatrixEntry, TrainingProgram
 from apps.performance.models import Competency, Goal, KeyResult, PerformanceCycle, Review, SuccessionPlan
+from apps.lifecycle.models import LifecycleRecord
+from apps.lifecycle.services import create_record
 from core.seeds.roles import seed_system_roles
 
 DEMO_PASSWORD = "Ss1234567890"
@@ -140,6 +142,7 @@ class Command(BaseCommand):
             self._seed_benefits(org, people, rng)
             self._seed_learning(org, people, rng)
             self._seed_performance(org, people, rng)
+            self._seed_lifecycle(org, people, rng)
             created_employees += len(people)
 
         self.stdout.write(self.style.SUCCESS(
@@ -148,6 +151,30 @@ class Command(BaseCommand):
         ))
 
     # ------------------------------------------------------------------ helpers
+
+    def _seed_lifecycle(self, org, people, rng):
+        statuses = [LifecycleRecord.Status.PREBOARDING, LifecycleRecord.Status.ONBOARDING, LifecycleRecord.Status.ACTIVE, LifecycleRecord.Status.OFFBOARDING, LifecycleRecord.Status.SEPARATED]
+        for index, status in enumerate(statuses):
+            if index >= len(people):
+                break
+            employee = people[index]
+            record = create_record(organization=org, employee=employee, actor=employee.user, joining_date=date.today() + timedelta(days=14) if status in {"preboarding", "onboarding"} else date.today(), job_title=employee.employment.job_title, department=employee.employment.department, manager=employee.employment.manager)
+            if record.status != status:
+                record.status = status
+                if status == LifecycleRecord.Status.OFFBOARDING:
+                    record.exit_type = LifecycleRecord.ExitType.RESIGNATION
+                    record.exit_reason = "Career transition"
+                    record.notice_date = date.today() - timedelta(days=14)
+                    record.last_working_day = date.today() + timedelta(days=30)
+                elif status == LifecycleRecord.Status.SEPARATED:
+                    record.exit_type = LifecycleRecord.ExitType.TERMINATION
+                    record.exit_reason = "Role concluded"
+                    record.last_working_day = date.today() - timedelta(days=7)
+                record.save()
+            items = list(record.checklist_items.filter(phase="onboarding" if status in {"preboarding", "onboarding", "active"} else "offboarding"))
+            for item in items[:max(0, min(len(items), index if status != "active" else len(items)))]:
+                item.completed = True
+                item.save(update_fields=["completed", "updated_at"])
 
     def _flush(self):
         orgs = Organization.objects.filter(slug__in=[o["slug"] for o in ORGS])

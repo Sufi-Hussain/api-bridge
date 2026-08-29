@@ -9,7 +9,7 @@ import { StatusBadge } from "@/components/common/status-badge";
 import { MetricsGrid } from "@/components/hr/metrics-grid";
 import { FilterToolbar } from "@/components/hr/filter-toolbar";
 import { Button } from "@/components/ui/button";
-import { lifecycleService, type OnboardingTask } from "@/services/hr";
+import { lifecycleApiService, type OnboardingTask } from "@/services/hr";
 import type { StatusTone } from "@/types";
 
 export const Route = createFileRoute("/_app/hr/onboarding/tasks")({
@@ -32,7 +32,7 @@ function TasksPage() {
   const [status, setStatus] = useState("all");
   const [category, setCategory] = useState("all");
 
-  useEffect(() => { lifecycleService.onboardingTasks().then(setTasks); }, []);
+  useEffect(() => { lifecycleApiService.onboardingTasks().then(setTasks); }, []);
 
   const filtered = useMemo(() => tasks.filter((t) =>
     (status === "all" || t.status === status) && (category === "all" || t.category === category),
