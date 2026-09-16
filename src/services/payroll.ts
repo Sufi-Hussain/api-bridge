@@ -13,6 +13,21 @@ export const payrollService = {
     const raw = await apiGet<any>("/api/payroll/payslips/");
     return unwrapList<any>(raw, (r) => camelizeKeys<any>(r));
   },
+  async getCalendar() {
+    if (USE_MOCKS) return (mock as any).getCalendar?.() ?? [];
+    const raw = await apiGet<any>("/api/payroll/payslips/calendar/");
+    // Map backend → frontend CalendarEvent shape
+    return (raw.results || raw || []).map((r: any) => {
+      const d = new Date(r.dateIso || r.date_iso || r.date);
+      const parts = d.toLocaleDateString(undefined, { month: "short", day: "numeric" }).split(" ");
+      return {
+        id: r.id,
+        label: r.label,
+        date: `${parts[0]} ${parts[1]}`,  // "Jul 30" format matching UI
+        kind: r.kind as "cutoff" | "run" | "payout" | "filing",
+      };
+    });
+  },
 };
 
 export * from "./_mocks/payroll.mock";

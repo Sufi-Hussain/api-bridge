@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Download, Filter, Clock, MapPin } from "lucide-react";
+import { Download, Filter, Clock, MapPin, Loader2 } from "lucide-react";
 import { PageHeader } from "@/components/common/page-header";
 import { StatCard } from "@/components/common/stat-card";
 import { SectionCard } from "@/components/common/section-card";
@@ -21,9 +21,12 @@ export const Route = createFileRoute("/_app/attendance/history")({
   component: HistoryPage,
 });
 
+const HISTORY_DAYS = 60;
+
 function HistoryPage() {
   const [rows, setRows] = useState<AttendancePunch[]>([]);
-  useEffect(() => { essService.getAttendance(60).then(setRows); }, []);
+  const [exporting, setExporting] = useState(false);
+  useEffect(() => { essService.getAttendance(HISTORY_DAYS).then(setRows); }, []);
 
   const stats = useMemo(() => {
     const worked = rows.filter((r) => r.workedHours > 0);
@@ -34,6 +37,19 @@ function HistoryPage() {
       wfh: rows.filter((r) => r.status === "wfh").length,
     };
   }, [rows]);
+
+  async function handleExportCsv() {
+    if (exporting) return;
+    try {
+      setExporting(true);
+      await essService.exportAttendanceCsv({ days: HISTORY_DAYS });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Please try again in a moment.";
+      alert(`Export failed: ${message}`);
+    } finally {
+      setExporting(false);
+    }
+  }
 
   const columns: ColumnDef<AttendancePunch>[] = [
     { accessorKey: "date", header: "Date",
@@ -60,7 +76,14 @@ function HistoryPage() {
         actions={
           <>
             <Button variant="outline" size="sm"><Filter className="mr-1.5 h-3.5 w-3.5" /> Filter</Button>
-            <Button size="sm"><Download className="mr-1.5 h-3.5 w-3.5" /> Export CSV</Button>
+            <Button size="sm" onClick={handleExportCsv} disabled={exporting}>
+              {exporting ? (
+                <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+              ) : (
+                <Download className="mr-1.5 h-3.5 w-3.5" />
+              )}
+              {exporting ? "Exporting…" : "Export CSV"}
+            </Button>
           </>
         }
       />

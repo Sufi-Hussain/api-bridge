@@ -12,6 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.payroll.selectors import get_next_payday
 from apps.attendance.models import AttendancePunch, TimesheetEntry
 from apps.leave.models import Holiday, LeaveRequest
 from apps.payroll.models import Payslip
@@ -57,6 +58,7 @@ class DashboardView(APIView):
         punches = AttendancePunch.objects.filter(employee=employee, date__gte=start, date__lte=today)
         attendance = list(punches.values("date", "status", "worked_hours"))
         payroll = list(Payslip.objects.filter(employee=employee).order_by("month").values("id", "month", "gross", "net", "status"))
+        next_payday = get_next_payday(employee)
         goals = Goal.objects.filter(owner=employee)
         employment = getattr(employee, "employment", None)
         manager = employment.manager if employment else None
@@ -74,7 +76,7 @@ class DashboardView(APIView):
         return Response({
             "attendanceTrend": [{"date": row["date"], "status": row["status"], "hours": row["worked_hours"]} for row in attendance],
             "payrollTrend": payroll,
-            "nextPayday": None,
+            "nextPayday": next_payday,
             "weeklyHours": {"worked": week_hours, "target": Decimal("40"), "previous": previous_hours},
             "goals": {"onTrack": goals.filter(status__in=[Goal.Status.ON_TRACK, Goal.Status.COMPLETED]).count(), "total": goals.count()},
             "insights": ([{"type": "action", "message": f"You have {pending_leave} pending leave request(s)."}] if pending_leave else []) + ([{"type": "action", "message": f"You have {missing_timesheets} draft timesheet entries."}] if missing_timesheets else []) + ([{"type": "profile", "message": f"Complete your profile: {', '.join(missing)}."}] if missing else []),

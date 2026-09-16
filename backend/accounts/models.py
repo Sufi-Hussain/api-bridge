@@ -156,6 +156,26 @@ class OrganizationSettings(models.Model):
     timezone = models.CharField(max_length=64, default="UTC")
     features = models.JSONField(default=dict, blank=True)
 
+    class PayrollSchedule(models.TextChoices):
+        MONTHLY = "monthly", "Monthly"
+        BI_WEEKLY = "bi_weekly", "Bi-weekly"
+        WEEKLY = "weekly", "Weekly"
+        SEMI_MONTHLY = "semi_monthly", "Semi-monthly"
+    
+    payroll_schedule = models.CharField(
+        max_length=16, 
+        choices=PayrollSchedule.choices, 
+        default=PayrollSchedule.MONTHLY
+    )
+    payroll_day_of_month = models.PositiveSmallIntegerField(
+        default=25,  # e.g., 25th of every month
+        help_text="Used for monthly / semi-monthly schedules"
+    )
+    payroll_weekday = models.CharField(
+        max_length=10, 
+        default="friday",
+        help_text="Used for weekly / bi-weekly schedules (monday-friday)"
+    )
 
 class OrganizationMember(models.Model):
     """Join table: which users belong to which org, and their state within it."""

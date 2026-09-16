@@ -4,6 +4,13 @@ import type { User } from "@/types";
 export interface AttendanceDay { date: string; status: "present" | "absent" | "leave" | "holiday" | "weekend"; hours: number; }
 export interface LeaveBalance { type: string; total: number; used: number; }
 export interface Payslip { id: string; month: string; gross: number; net: number; status: "paid" | "processing"; }
+export interface NextPayday {
+  date: string;              // ISO: "2026-09-25"
+  label: string;             // "Sep 2026"
+  daysUntil: number;         // 9
+  estimatedNet: number;      // 7850
+  status: "confirmed" | "scheduled";
+}
 export interface Announcement { id: string; title: string; body: string; author: string; date: string; tag: "company" | "team" | "policy"; }
 export interface TaskItem { id: string; title: string; dueDate: string; priority: "low" | "medium" | "high"; status: "todo" | "in_progress" | "done"; }
 export interface Holiday { date: string; name: string; type: "public" | "restricted"; }
@@ -11,13 +18,32 @@ export interface NotificationItem { id: string; title: string; description: stri
 import { apiGet, camelizeKeys, unwrapList } from "@/lib/api";
 import { authService } from "@/lib/api/auth";
 
-let dashboardCache: Promise<any> | null = null;
-const getDashboard = () => (dashboardCache ??= apiGet<any>("/api/ess/dashboard"));
+const DASHBOARD_TTL_MS = 60 * 1000; // 1 minute cache (not forever!)
+let dashboardCache: { at: number; promise: Promise<any> } | null = null;
+
+async function getDashboard() {
+  const now = Date.now();
+  if (dashboardCache && now - dashboardCache.at < DASHBOARD_TTL_MS) {
+    return dashboardCache.promise;
+  }
+  const promise = apiGet<any>("/api/ess/dashboard").then((raw) => {
+    if (raw && typeof raw === "object") {
+      raw.nextPayday = raw.nextPayday ? camelizeKeys<NextPayday>(raw.nextPayday) : null;
+    }
+    return raw;
+  });
+  dashboardCache = { at: now, promise };
+  return promise;
+}
+
+export function _expireDashboardCache() {
+  dashboardCache = null;
+}
 
 export const dashboardService = {
   async getAttendanceTrend() { return (await getDashboard()).attendanceTrend; },
   async getPayrollTrend() { return (await getDashboard()).payrollTrend; },
-  async getNextPayday() { return (await getDashboard()).nextPayday; },
+  async getNextPayday(): Promise<NextPayday | null> { return (await getDashboard()).nextPayday; },
   async getWeeklyHoursSummary() { return (await getDashboard()).weeklyHours; },
   async getGoals() { return (await getDashboard()).goals; },
   async getInsights() { return (await getDashboard()).insights; },
