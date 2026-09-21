@@ -215,6 +215,11 @@ async function getBankDetails(): Promise<BankDetails | null> {
   return profile.bank ? camelizeKeys<BankDetails>(profile.bank as any) : null;
 }
 
+async function getSkillCatalog() {
+  const raw = await apiGet<any[]>("/api/ess/skill-catalog");
+  return raw.map((skill) => camelizeKeys(skill));
+}
+
 async function getTaxDocuments(): Promise<Payslip[]> {
   return getPayslips();
 }
@@ -301,6 +306,7 @@ export const essService = {
   getHolidays,
   getPayslips,
   downloadPayslip,
+  getSkillCatalog,
   emailPayslip,
   getSalaryBreakdown,
   getBankDetails,

@@ -167,7 +167,7 @@ function DashboardPage() {
                       </span>
                     )}
                     {nextPayday.daysUntil === 0 && (
-                      <span className="pb-1 text-xs text-success font-medium">Today! 🎉</span>
+                      <span className="pb-1 text-xs text-success font-medium">Today! </span>
                     )}
                   </div>
                   <div className="mt-2 flex items-center justify-between text-xs">

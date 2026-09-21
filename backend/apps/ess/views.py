@@ -25,17 +25,21 @@ from .models import (
     EmployeeSkill,
     Experience,
     FamilyMember,
+    Skill,
 )
 from .selectors import get_employee_for_user
 from .serializers import (
     DirectoryPersonSerializer,
-    EducationSerializer,
+    EducationSerializer,    
+    SkillSerializer,
     EmergencyContactSerializer,
     EmployeeProfileSerializer,
     EmployeeSkillSerializer,
     ExperienceSerializer,
     FamilyMemberSerializer,
 )
+from .services import update_address as _update_address
+from .services import update_bank as _update_bank
 from .services import update_employee
 
 
@@ -107,9 +111,39 @@ class ProfileView(APIView):
             "mobile",
             "work_phone",
         }
-        payload = {k: v for k, v in request.data.items() if k in allowed}
-        update_employee(emp, payload)
-        return Response(EmployeeProfileSerializer(emp).data)
+        payload = dict(request.data)
+
+        # ----- OneToOne sub-records: extract before filtering the top-level keys.
+        # We accept an optional nested dict for each sub-record and write it
+        # through the service layer (which does create-or-update safely).
+        address_data = payload.pop("address", None)
+        bank_data = payload.pop("bank", None)
+        # -------------------------------------------------------------------
+
+        employee_payload = {k: v for k, v in payload.items() if k in allowed}
+        if employee_payload:
+            update_employee(emp, employee_payload)
+
+        if address_data is not None and isinstance(address_data, dict):
+            # Only keep fields the model actually exposes — drop unknown keys.
+            clean = {
+                k: v
+                for k, v in address_data.items()
+                if k in {"line1", "line2", "city", "state", "country", "postal"}
+            }
+            _update_address(emp, clean)
+
+        if bank_data is not None and isinstance(bank_data, dict):
+            clean = {
+                k: v
+                for k, v in bank_data.items()
+                if k in {"account_name", "account_number", "ifsc", "bank", "branch", "type"}
+            }
+            _update_bank(emp, clean)
+
+        # Re-select the employee so select_related returns the fresh rows.
+        refreshed = get_employee_for_user(request.user) or emp
+        return Response(EmployeeProfileSerializer(refreshed).data)
 
 
 class DirectoryViewSet(viewsets.ReadOnlyModelViewSet):
@@ -169,3 +203,10 @@ class ExperienceViewSet(OwnedViewSet):
 class SkillViewSet(OwnedViewSet):
     serializer_class = EmployeeSkillSerializer
     related_name = "skills"
+
+class SkillCatalogView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        skills = Skill.objects.all().order_by("name")
+        return Response(SkillSerializer(skills, many=True).data)
