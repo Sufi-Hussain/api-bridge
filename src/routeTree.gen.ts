@@ -49,6 +49,7 @@ import { Route as AppPayrollBankDetailsRouteImport } from './routes/_app/payroll
 import { Route as AppPayrollPayslipsRouteImport } from './routes/_app.payroll.payslips'
 import { Route as AppPayrollSalaryRouteImport } from './routes/_app/payroll/salary'
 import { Route as AppPayrollTaxDocumentsRouteImport } from './routes/_app/payroll/tax-documents'
+import { Route as AppProfileEditRouteImport } from './routes/_app.profile.edit'
 import { Route as AppProfilePersonalRouteImport } from './routes/_app.profile.personal'
 import { Route as AppSettingsIndexRouteImport } from './routes/_app.settings.index'
 import { Route as AppSettingsPrivacyRouteImport } from './routes/_app.settings.privacy'
@@ -287,6 +288,11 @@ const AppPayrollTaxDocumentsRoute = AppPayrollTaxDocumentsRouteImport.update({
   path: '/payroll/tax-documents',
   getParentRoute: () => AppRoute,
 } as any)
+const AppProfileEditRoute = AppProfileEditRouteImport.update({
+  id: '/profile/edit',
+  path: '/profile/edit',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppProfilePersonalRoute = AppProfilePersonalRouteImport.update({
   id: '/profile/personal',
   path: '/profile/personal',
@@ -522,6 +528,7 @@ export interface FileRoutesByFullPath {
   '/payroll/payslips': typeof AppPayrollPayslipsRoute
   '/payroll/salary': typeof AppPayrollSalaryRoute
   '/payroll/tax-documents': typeof AppPayrollTaxDocumentsRoute
+  '/profile/edit': typeof AppProfileEditRoute
   '/profile/personal': typeof AppProfilePersonalRoute
   '/settings/privacy': typeof AppSettingsPrivacyRoute
   '/admin/': typeof AppAdminIndexRoute
@@ -600,6 +607,7 @@ export interface FileRoutesByTo {
   '/payroll/payslips': typeof AppPayrollPayslipsRoute
   '/payroll/salary': typeof AppPayrollSalaryRoute
   '/payroll/tax-documents': typeof AppPayrollTaxDocumentsRoute
+  '/profile/edit': typeof AppProfileEditRoute
   '/profile/personal': typeof AppProfilePersonalRoute
   '/settings/privacy': typeof AppSettingsPrivacyRoute
   '/admin': typeof AppAdminIndexRoute
@@ -680,6 +688,7 @@ export interface FileRoutesById {
   '/_app/payroll/payslips': typeof AppPayrollPayslipsRoute
   '/_app/payroll/salary': typeof AppPayrollSalaryRoute
   '/_app/payroll/tax-documents': typeof AppPayrollTaxDocumentsRoute
+  '/_app/profile/edit': typeof AppProfileEditRoute
   '/_app/profile/personal': typeof AppProfilePersonalRoute
   '/_app/settings/privacy': typeof AppSettingsPrivacyRoute
   '/_app/admin/': typeof AppAdminIndexRoute
@@ -760,6 +769,7 @@ export interface FileRouteTypes {
     | '/payroll/payslips'
     | '/payroll/salary'
     | '/payroll/tax-documents'
+    | '/profile/edit'
     | '/profile/personal'
     | '/settings/privacy'
     | '/admin/'
@@ -838,6 +848,7 @@ export interface FileRouteTypes {
     | '/payroll/payslips'
     | '/payroll/salary'
     | '/payroll/tax-documents'
+    | '/profile/edit'
     | '/profile/personal'
     | '/settings/privacy'
     | '/admin'
@@ -917,6 +928,7 @@ export interface FileRouteTypes {
     | '/_app/payroll/payslips'
     | '/_app/payroll/salary'
     | '/_app/payroll/tax-documents'
+    | '/_app/profile/edit'
     | '/_app/profile/personal'
     | '/_app/settings/privacy'
     | '/_app/admin/'
@@ -1255,6 +1267,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPayrollTaxDocumentsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/profile/edit': {
+      id: '/_app/profile/edit'
+      path: '/profile/edit'
+      fullPath: '/profile/edit'
+      preLoaderRoute: typeof AppProfileEditRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/profile/personal': {
       id: '/_app/profile/personal'
       path: '/profile/personal'
@@ -1556,6 +1575,7 @@ interface AppRouteChildren {
   AppPayrollPayslipsRoute: typeof AppPayrollPayslipsRoute
   AppPayrollSalaryRoute: typeof AppPayrollSalaryRoute
   AppPayrollTaxDocumentsRoute: typeof AppPayrollTaxDocumentsRoute
+  AppProfileEditRoute: typeof AppProfileEditRoute
   AppProfilePersonalRoute: typeof AppProfilePersonalRoute
   AppSettingsPrivacyRoute: typeof AppSettingsPrivacyRoute
   AppAdminIndexRoute: typeof AppAdminIndexRoute
@@ -1626,6 +1646,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppPayrollPayslipsRoute: AppPayrollPayslipsRoute,
   AppPayrollSalaryRoute: AppPayrollSalaryRoute,
   AppPayrollTaxDocumentsRoute: AppPayrollTaxDocumentsRoute,
+  AppProfileEditRoute: AppProfileEditRoute,
   AppProfilePersonalRoute: AppProfilePersonalRoute,
   AppSettingsPrivacyRoute: AppSettingsPrivacyRoute,
   AppAdminIndexRoute: AppAdminIndexRoute,

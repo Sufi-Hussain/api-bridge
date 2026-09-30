@@ -37,7 +37,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useAuthStore } from "@/stores/auth.store";
-import { dashboardService, type Announcement, type LeaveBalance, type Payslip, type TaskItem, type Holiday } from "@/services/dashboard";
+import { dashboardService, type Announcement, type LeaveBalance, type Payslip, type TaskItem, type Holiday, type NextPayday } from "@/services/dashboard";
 import { motion } from "framer-motion";
 
 export const Route = createFileRoute("/_app/")({
@@ -63,6 +63,7 @@ function DashboardPage() {
   const user = useAuthStore((s) => s.user);
   const [balances, setBalances] = useState<LeaveBalance[]>([]);
   const [payslips, setPayslips] = useState<Payslip[]>([]);
+  const [nextPayday, setNextPayday] = useState<NextPayday | null>(null);
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [holidays, setHolidays] = useState<Holiday[]>([]);
@@ -83,6 +84,7 @@ function DashboardPage() {
     dashboardService.getTasks().then(setTasks);
     dashboardService.getAnnouncements().then(setAnnouncements);
     dashboardService.getHolidays().then(setHolidays);
+    dashboardService.getNextPayday().then(setNextPayday);
   }, []);
 
   const totalLeave = balances.reduce((s, b) => s + b.total, 0);
@@ -153,11 +155,47 @@ function DashboardPage() {
               <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                 Next payday
               </p>
-              <div className="mt-2 flex items-end gap-2">
-                <span className="text-2xl font-semibold">Unavailable</span>
-                <span className="pb-1 text-xs text-muted-foreground">not configured</span>
-              </div>
-              <p className="mt-2 text-xs text-muted-foreground">Est. net ${latestPayslip?.net.toLocaleString() ?? "—"}</p>
+              {nextPayday ? (
+                <>
+                  <div className="mt-2 flex items-end gap-2">
+                    <span className="text-2xl font-semibold">
+                      {new Date(nextPayday.date).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                    </span>
+                    {nextPayday.daysUntil > 0 && (
+                      <span className="pb-1 text-xs text-muted-foreground">
+                        in {nextPayday.daysUntil} day{nextPayday.daysUntil === 1 ? "" : "s"}
+                      </span>
+                    )}
+                    {nextPayday.daysUntil === 0 && (
+                      <span className="pb-1 text-xs text-success font-medium">Today! </span>
+                    )}
+                  </div>
+                  <div className="mt-2 flex items-center justify-between text-xs">
+                    <span className="text-muted-foreground">
+                      Est. net ${nextPayday.estimatedNet.toLocaleString()}
+                    </span>
+                    <StatusBadge tone={nextPayday.status === "confirmed" ? "success" : "info"}>
+                      {nextPayday.status}
+                    </StatusBadge>
+                  </div>
+                  {nextPayday.daysUntil > 0 && nextPayday.daysUntil <= 14 && (
+                    <Progress 
+                      value={100 - (nextPayday.daysUntil / 30 * 100)} 
+                      className="mt-2 h-1" 
+                    />
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className="mt-2 flex items-end gap-2">
+                    <span className="text-2xl font-semibold text-muted-foreground/70">Unavailable</span>
+                    <span className="pb-1 text-xs text-muted-foreground">not configured</span>
+                  </div>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    Est. net ${latestPayslip?.net.toLocaleString() ?? "—"}
+                  </p>
+                </>
+              )}
             </div>
           </div>
         </div>

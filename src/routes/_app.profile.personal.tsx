@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Building2, Briefcase, Calendar, Camera, GraduationCap, Mail, MapPin, Pencil, Phone, ShieldAlert, Users, Award, Sparkles } from "lucide-react";
@@ -32,7 +32,9 @@ function Row({ label, value }: { label: string; value: React.ReactNode }) {
 }
 
 function ProfilePage() {
+  const navigate = useNavigate();
   const [p, setP] = useState<EmployeeProfile | null>(null);
+
   useEffect(() => { essService.getProfile().then(setP); }, []);
 
   if (!p) return null;
@@ -42,9 +44,16 @@ function ProfilePage() {
     <div className="space-y-6">
       <PageHeader
         title="My Profile"
-        description="Your personal, employment and family information — kept in sync with HR."
+        description="Your personal, employment and family information - kept in sync with HR."
         breadcrumbs={[{ label: "Me" }, { label: "Profile" }]}
-        actions={<Button size="sm"><Pencil className="mr-1.5 h-3.5 w-3.5" /> Edit profile</Button>}
+        actions={<Button
+          size="sm"
+          onClick={() => navigate({ to: "/profile/edit" })}
+        >
+          <Pencil className="mr-1.5 h-3.5 w-3.5" />
+          Edit profile
+        </Button>
+        }
       />
 
       <motion.div

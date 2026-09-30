@@ -76,6 +76,32 @@ async function getAttendance(days = 30): Promise<AttendancePunch[]> {
   return unwrapList<AttendancePunch>(raw, (r) => camelizeKeys<AttendancePunch>(r));
 }
 
+export async function exportAttendanceCsv(params: { days?: number; start?: string; end?: string } = {}): Promise<void> {
+  const qs: Record<string, string | number> = {};
+  if (params.start) qs.start = params.start;
+  if (params.end) qs.end = params.end;
+  if (!params.start && !params.end && params.days) qs.days = params.days;
+
+  const token = (await import("@/lib/api/tokens")).tokenStore.getAccess();
+  const base = (await import("@/lib/api/client")).api;
+  const { data, headers } = await base.get("/api/attendance/punches/export-csv/", {
+    params: qs,
+    responseType: "blob",
+  });
+
+  let filename = `attendance_${new Date().toISOString().slice(0, 10)}.csv`;
+  const disposition = headers?.["content-disposition"];
+  const match = disposition?.match(/filename="?([^";]+)"?/);
+  if (match?.[1]) filename = match[1];
+
+  const url = URL.createObjectURL(new Blob([data], { type: "text/csv" }));
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.click();
+  URL.revokeObjectURL(url);
+}
+
 async function getTodayAttendance(): Promise<AttendancePunch | null> {
   const raw = await apiGet<any>("/api/attendance/punches/today/");
   if (!raw || Object.keys(raw).length === 0) return null;
@@ -189,6 +215,11 @@ async function getBankDetails(): Promise<BankDetails | null> {
   return profile.bank ? camelizeKeys<BankDetails>(profile.bank as any) : null;
 }
 
+async function getSkillCatalog() {
+  const raw = await apiGet<any[]>("/api/ess/skill-catalog");
+  return raw.map((skill) => camelizeKeys(skill));
+}
+
 async function getTaxDocuments(): Promise<Payslip[]> {
   return getPayslips();
 }
@@ -259,6 +290,7 @@ export const essService = {
   getAttendance,
   getTodayAttendance,
   getAttendanceSummary,
+  exportAttendanceCsv,
   clockIn,
   clockOut,
   getTimesheets,
@@ -274,6 +306,7 @@ export const essService = {
   getHolidays,
   getPayslips,
   downloadPayslip,
+  getSkillCatalog,
   emailPayslip,
   getSalaryBreakdown,
   getBankDetails,

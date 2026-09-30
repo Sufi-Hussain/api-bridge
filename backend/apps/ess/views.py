@@ -12,6 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.payroll.selectors import get_next_payday
 from apps.attendance.models import AttendancePunch, TimesheetEntry
 from apps.leave.models import Holiday, LeaveRequest
 from apps.payroll.models import Payslip
@@ -24,17 +25,21 @@ from .models import (
     EmployeeSkill,
     Experience,
     FamilyMember,
+    Skill,
 )
 from .selectors import get_employee_for_user
 from .serializers import (
     DirectoryPersonSerializer,
-    EducationSerializer,
+    EducationSerializer,    
+    SkillSerializer,
     EmergencyContactSerializer,
     EmployeeProfileSerializer,
     EmployeeSkillSerializer,
     ExperienceSerializer,
     FamilyMemberSerializer,
 )
+from .services import update_address as _update_address
+from .services import update_bank as _update_bank
 from .services import update_employee
 
 
@@ -57,6 +62,7 @@ class DashboardView(APIView):
         punches = AttendancePunch.objects.filter(employee=employee, date__gte=start, date__lte=today)
         attendance = list(punches.values("date", "status", "worked_hours"))
         payroll = list(Payslip.objects.filter(employee=employee).order_by("month").values("id", "month", "gross", "net", "status"))
+        next_payday = get_next_payday(employee)
         goals = Goal.objects.filter(owner=employee)
         employment = getattr(employee, "employment", None)
         manager = employment.manager if employment else None
@@ -74,7 +80,7 @@ class DashboardView(APIView):
         return Response({
             "attendanceTrend": [{"date": row["date"], "status": row["status"], "hours": row["worked_hours"]} for row in attendance],
             "payrollTrend": payroll,
-            "nextPayday": None,
+            "nextPayday": next_payday,
             "weeklyHours": {"worked": week_hours, "target": Decimal("40"), "previous": previous_hours},
             "goals": {"onTrack": goals.filter(status__in=[Goal.Status.ON_TRACK, Goal.Status.COMPLETED]).count(), "total": goals.count()},
             "insights": ([{"type": "action", "message": f"You have {pending_leave} pending leave request(s)."}] if pending_leave else []) + ([{"type": "action", "message": f"You have {missing_timesheets} draft timesheet entries."}] if missing_timesheets else []) + ([{"type": "profile", "message": f"Complete your profile: {', '.join(missing)}."}] if missing else []),
@@ -105,9 +111,39 @@ class ProfileView(APIView):
             "mobile",
             "work_phone",
         }
-        payload = {k: v for k, v in request.data.items() if k in allowed}
-        update_employee(emp, payload)
-        return Response(EmployeeProfileSerializer(emp).data)
+        payload = dict(request.data)
+
+        # ----- OneToOne sub-records: extract before filtering the top-level keys.
+        # We accept an optional nested dict for each sub-record and write it
+        # through the service layer (which does create-or-update safely).
+        address_data = payload.pop("address", None)
+        bank_data = payload.pop("bank", None)
+        # -------------------------------------------------------------------
+
+        employee_payload = {k: v for k, v in payload.items() if k in allowed}
+        if employee_payload:
+            update_employee(emp, employee_payload)
+
+        if address_data is not None and isinstance(address_data, dict):
+            # Only keep fields the model actually exposes — drop unknown keys.
+            clean = {
+                k: v
+                for k, v in address_data.items()
+                if k in {"line1", "line2", "city", "state", "country", "postal"}
+            }
+            _update_address(emp, clean)
+
+        if bank_data is not None and isinstance(bank_data, dict):
+            clean = {
+                k: v
+                for k, v in bank_data.items()
+                if k in {"account_name", "account_number", "ifsc", "bank", "branch", "type"}
+            }
+            _update_bank(emp, clean)
+
+        # Re-select the employee so select_related returns the fresh rows.
+        refreshed = get_employee_for_user(request.user) or emp
+        return Response(EmployeeProfileSerializer(refreshed).data)
 
 
 class DirectoryViewSet(viewsets.ReadOnlyModelViewSet):
@@ -167,3 +203,10 @@ class ExperienceViewSet(OwnedViewSet):
 class SkillViewSet(OwnedViewSet):
     serializer_class = EmployeeSkillSerializer
     related_name = "skills"
+
+class SkillCatalogView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        skills = Skill.objects.all().order_by("name")
+        return Response(SkillSerializer(skills, many=True).data)
